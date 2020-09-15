@@ -1,0 +1,11 @@
+{
+    "AppSyncApiName": "maspecs",
+    "DynamoDBBillingMode": "PAY_PER_REQUEST",
+    "DynamoDBEnableServerSideEncryption": "false",
+    "AuthCognitoUserPoolId": {
+        "Fn::GetAtt": [
+            "authmaspecs16ab8784",
+            "Outputs.UserPoolId"
+        ]
+    }
+}
