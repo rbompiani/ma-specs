@@ -9,8 +9,10 @@ import { API, graphqlOperation } from 'aws-amplify'
 function App() {
   return (
     <div className="App">
+      <AmplifyGreetings username="testUsername"></AmplifyGreetings>
+      App goes here
     </div>
   );
 }
 
-export default withAuthenticator(App);
+export default withAuthenticator(App, { includeGreetings: true });
