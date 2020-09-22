@@ -1,56 +1,34 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
-export const onCreateBlog = /* GraphQL */ `
-  subscription OnCreateBlog {
-    onCreateBlog {
+export const onCreateProject = /* GraphQL */ `
+  subscription OnCreateProject {
+    onCreateProject {
       id
-      name
-      posts {
+      title
+      divisionsOn {
         items {
           id
           title
-          blogID
           createdAt
           updatedAt
         }
         nextToken
       }
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const onUpdateBlog = /* GraphQL */ `
-  subscription OnUpdateBlog {
-    onUpdateBlog {
-      id
-      name
-      posts {
+      sectionsOn {
         items {
           id
           title
-          blogID
           createdAt
           updatedAt
         }
         nextToken
       }
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const onDeleteBlog = /* GraphQL */ `
-  subscription OnDeleteBlog {
-    onDeleteBlog {
-      id
-      name
-      posts {
+      paragraphsOn {
         items {
           id
           title
-          blogID
+          isStandard
           createdAt
           updatedAt
         }
@@ -61,26 +39,34 @@ export const onDeleteBlog = /* GraphQL */ `
     }
   }
 `;
-export const onCreatePost = /* GraphQL */ `
-  subscription OnCreatePost {
-    onCreatePost {
+export const onUpdateProject = /* GraphQL */ `
+  subscription OnUpdateProject {
+    onUpdateProject {
       id
       title
-      blogID
-      blog {
-        id
-        name
-        posts {
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
-      comments {
+      divisionsOn {
         items {
           id
-          postID
-          content
+          title
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      sectionsOn {
+        items {
+          id
+          title
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      paragraphsOn {
+        items {
+          id
+          title
+          isStandard
           createdAt
           updatedAt
         }
@@ -91,142 +77,39 @@ export const onCreatePost = /* GraphQL */ `
     }
   }
 `;
-export const onUpdatePost = /* GraphQL */ `
-  subscription OnUpdatePost {
-    onUpdatePost {
+export const onDeleteProject = /* GraphQL */ `
+  subscription OnDeleteProject {
+    onDeleteProject {
       id
       title
-      blogID
-      blog {
-        id
-        name
-        posts {
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
-      comments {
+      divisionsOn {
         items {
           id
-          postID
-          content
+          title
           createdAt
           updatedAt
         }
         nextToken
       }
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const onDeletePost = /* GraphQL */ `
-  subscription OnDeletePost {
-    onDeletePost {
-      id
-      title
-      blogID
-      blog {
-        id
-        name
-        posts {
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
-      comments {
+      sectionsOn {
         items {
           id
-          postID
-          content
+          title
           createdAt
           updatedAt
         }
         nextToken
       }
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const onCreateComment = /* GraphQL */ `
-  subscription OnCreateComment {
-    onCreateComment {
-      id
-      postID
-      post {
-        id
-        title
-        blogID
-        blog {
+      paragraphsOn {
+        items {
           id
-          name
+          title
+          isStandard
           createdAt
           updatedAt
         }
-        comments {
-          nextToken
-        }
-        createdAt
-        updatedAt
+        nextToken
       }
-      content
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const onUpdateComment = /* GraphQL */ `
-  subscription OnUpdateComment {
-    onUpdateComment {
-      id
-      postID
-      post {
-        id
-        title
-        blogID
-        blog {
-          id
-          name
-          createdAt
-          updatedAt
-        }
-        comments {
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
-      content
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const onDeleteComment = /* GraphQL */ `
-  subscription OnDeleteComment {
-    onDeleteComment {
-      id
-      postID
-      post {
-        id
-        title
-        blogID
-        blog {
-          id
-          name
-          createdAt
-          updatedAt
-        }
-        comments {
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
-      content
       createdAt
       updatedAt
     }
@@ -237,18 +120,6 @@ export const onCreateDivision = /* GraphQL */ `
     onCreateDivision {
       id
       title
-      isOn
-      sections {
-        items {
-          id
-          title
-          isOn
-          divisionID
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
       createdAt
       updatedAt
     }
@@ -259,18 +130,6 @@ export const onUpdateDivision = /* GraphQL */ `
     onUpdateDivision {
       id
       title
-      isOn
-      sections {
-        items {
-          id
-          title
-          isOn
-          divisionID
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
       createdAt
       updatedAt
     }
@@ -281,18 +140,6 @@ export const onDeleteDivision = /* GraphQL */ `
     onDeleteDivision {
       id
       title
-      isOn
-      sections {
-        items {
-          id
-          title
-          isOn
-          divisionID
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
       createdAt
       updatedAt
     }
@@ -303,29 +150,6 @@ export const onCreateSection = /* GraphQL */ `
     onCreateSection {
       id
       title
-      isOn
-      divisionID
-      division {
-        id
-        title
-        isOn
-        sections {
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
-      parts {
-        items {
-          id
-          title
-          isOn
-          sectionID
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
       createdAt
       updatedAt
     }
@@ -336,29 +160,6 @@ export const onUpdateSection = /* GraphQL */ `
     onUpdateSection {
       id
       title
-      isOn
-      divisionID
-      division {
-        id
-        title
-        isOn
-        sections {
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
-      parts {
-        items {
-          id
-          title
-          isOn
-          sectionID
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
       createdAt
       updatedAt
     }
@@ -369,29 +170,6 @@ export const onDeleteSection = /* GraphQL */ `
     onDeleteSection {
       id
       title
-      isOn
-      divisionID
-      division {
-        id
-        title
-        isOn
-        sections {
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
-      parts {
-        items {
-          id
-          title
-          isOn
-          sectionID
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
       createdAt
       updatedAt
     }
@@ -402,37 +180,6 @@ export const onCreatePart = /* GraphQL */ `
     onCreatePart {
       id
       title
-      isOn
-      sectionID
-      section {
-        id
-        title
-        isOn
-        divisionID
-        division {
-          id
-          title
-          isOn
-          createdAt
-          updatedAt
-        }
-        parts {
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
-      subPart {
-        items {
-          id
-          title
-          isOn
-          partID
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
       createdAt
       updatedAt
     }
@@ -443,37 +190,6 @@ export const onUpdatePart = /* GraphQL */ `
     onUpdatePart {
       id
       title
-      isOn
-      sectionID
-      section {
-        id
-        title
-        isOn
-        divisionID
-        division {
-          id
-          title
-          isOn
-          createdAt
-          updatedAt
-        }
-        parts {
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
-      subPart {
-        items {
-          id
-          title
-          isOn
-          partID
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
       createdAt
       updatedAt
     }
@@ -484,256 +200,57 @@ export const onDeletePart = /* GraphQL */ `
     onDeletePart {
       id
       title
-      isOn
-      sectionID
-      section {
-        id
-        title
-        isOn
-        divisionID
-        division {
-          id
-          title
-          isOn
-          createdAt
-          updatedAt
-        }
-        parts {
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
-      subPart {
-        items {
-          id
-          title
-          isOn
-          partID
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
       createdAt
       updatedAt
     }
   }
 `;
-export const onCreateSubPart = /* GraphQL */ `
-  subscription OnCreateSubPart {
-    onCreateSubPart {
+export const onCreateParagraph = /* GraphQL */ `
+  subscription OnCreateParagraph {
+    onCreateParagraph {
       id
+      part {
+        id
+        title
+        createdAt
+        updatedAt
+      }
       title
-      isOn
-      partID
-      part {
-        id
-        title
-        isOn
-        sectionID
-        section {
-          id
-          title
-          isOn
-          divisionID
-          createdAt
-          updatedAt
-        }
-        subPart {
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
-      items {
-        items {
-          id
-          partID
-          content
-          tier
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
+      isStandard
       createdAt
       updatedAt
     }
   }
 `;
-export const onUpdateSubPart = /* GraphQL */ `
-  subscription OnUpdateSubPart {
-    onUpdateSubPart {
+export const onUpdateParagraph = /* GraphQL */ `
+  subscription OnUpdateParagraph {
+    onUpdateParagraph {
       id
+      part {
+        id
+        title
+        createdAt
+        updatedAt
+      }
       title
-      isOn
-      partID
-      part {
-        id
-        title
-        isOn
-        sectionID
-        section {
-          id
-          title
-          isOn
-          divisionID
-          createdAt
-          updatedAt
-        }
-        subPart {
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
-      items {
-        items {
-          id
-          partID
-          content
-          tier
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
+      isStandard
       createdAt
       updatedAt
     }
   }
 `;
-export const onDeleteSubPart = /* GraphQL */ `
-  subscription OnDeleteSubPart {
-    onDeleteSubPart {
+export const onDeleteParagraph = /* GraphQL */ `
+  subscription OnDeleteParagraph {
+    onDeleteParagraph {
       id
+      part {
+        id
+        title
+        createdAt
+        updatedAt
+      }
       title
-      isOn
-      partID
-      part {
-        id
-        title
-        isOn
-        sectionID
-        section {
-          id
-          title
-          isOn
-          divisionID
-          createdAt
-          updatedAt
-        }
-        subPart {
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
-      items {
-        items {
-          id
-          partID
-          content
-          tier
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const onCreateItem = /* GraphQL */ `
-  subscription OnCreateItem {
-    onCreateItem {
-      id
-      partID
-      part {
-        id
-        title
-        isOn
-        partID
-        part {
-          id
-          title
-          isOn
-          sectionID
-          createdAt
-          updatedAt
-        }
-        items {
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
-      content
-      tier
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const onUpdateItem = /* GraphQL */ `
-  subscription OnUpdateItem {
-    onUpdateItem {
-      id
-      partID
-      part {
-        id
-        title
-        isOn
-        partID
-        part {
-          id
-          title
-          isOn
-          sectionID
-          createdAt
-          updatedAt
-        }
-        items {
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
-      content
-      tier
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const onDeleteItem = /* GraphQL */ `
-  subscription OnDeleteItem {
-    onDeleteItem {
-      id
-      partID
-      part {
-        id
-        title
-        isOn
-        partID
-        part {
-          id
-          title
-          isOn
-          sectionID
-          createdAt
-          updatedAt
-        }
-        items {
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
-      content
-      tier
+      isStandard
       createdAt
       updatedAt
     }

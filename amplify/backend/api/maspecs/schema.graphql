@@ -1,100 +1,36 @@
-type Blog @model {
-  id: ID!
-  name: String!
-  posts: [Post] @connection(keyName: "byBlog", fields: ["id"])
-}
 
-type Post @model @key(name: "byBlog", fields: ["blogID"]) {
-  id: ID!
-  title: String!
-  blogID: ID!
-  blog: Blog @connection(fields: ["blogID"])
-  comments: [Comment] @connection(keyName: "byPost", fields: ["id"])
-}
-
-type Comment @model @key(name: "byPost", fields: ["postID", "content"]) {
-  id: ID!
-  postID: ID!
-  post: Post @connection(fields: ["postID"])
-  content: String!
-}
-type Division @model (
-  queries: null,
-  mutations: {
-    create: "createDivision",
-    update: "updateDivision",
-    delete: "deleteDivision"
-  }
-) 
-{
-  id: Int!
-  title: String!
-  isOn: Boolean!
-  sections: [Section] @connection(name: "DivisionSections")
-}
-
-type Section @model (
-  queries: null,
-  mutations: {
-    create: "createSection",
-    update: "updateSection",
-    delete: "deleteSection"
-  }
-) 
-{
-  id: Int!
-  title: String!
-  isOn: Boolean!
-  divisionID: Int!
-  division: Division @connection(name: "DivisionSections")
-  parts: [Part] @connection(name: "SectionParts")
-}
-
-type Part @model (
-  queries: null,
-  mutations: {
-    create: "createPart",
-    update: "updatePart",
-    delete: "deletePart"
-  }
-)
+type Project @model
 {
   id: ID!
   title: String!
-  isOn: Boolean!
-  sectionID: Int!
-  section: Section @connection(name: "SectionParts")
-  subPart: [SubPart] @connection(name: "PartSubpart")
+  divisionsOn: [Division] @connection
+  sectionsOn: [Section] @connection
+  paragraphsOn: [Paragraph] @connection
+  #content: [Subparagraph] @connection
 }
 
-type SubPart @model (
-  queries: null,
-  mutations: {
-    create: "createSubPart",
-    update: "updateSubPart",
-    delete: "deleteSubPart"
-  }
-)
+type Division @model 
 {
   id: ID!
   title: String!
-  isOn: Boolean!
-  partID: Int!
-  part: Part @connection(name: "PartSubpart")
-  items: [Item] @connection(name: "SubPartItems")
 }
 
-type Item @model (
-  queries: null,
-  mutations: { 
-    create: "createItem",
-    update: "updateItem",
-    delete: "deleteItem"
-    },
-) {
+type Section @model 
+{
   id: ID!
-  partID: Int!
-  part: SubPart @connection(name: "SubPartItems")
-  content: String!
-  tier: Int!
+  title: String!
+}
+
+type Part @model
+{
+  id: ID!
+  title: String!
+}
+
+type Paragraph @model 
+{
+  id: ID!
+  part: Part @connection
+  title: String!
+  isStandard: Boolean
 }

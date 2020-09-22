@@ -1,65 +1,37 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
-export const createBlog = /* GraphQL */ `
-  mutation CreateBlog(
-    $input: CreateBlogInput!
-    $condition: ModelBlogConditionInput
+export const createProject = /* GraphQL */ `
+  mutation CreateProject(
+    $input: CreateProjectInput!
+    $condition: ModelProjectConditionInput
   ) {
-    createBlog(input: $input, condition: $condition) {
+    createProject(input: $input, condition: $condition) {
       id
-      name
-      posts {
+      title
+      divisionsOn {
         items {
           id
           title
-          blogID
           createdAt
           updatedAt
         }
         nextToken
       }
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const updateBlog = /* GraphQL */ `
-  mutation UpdateBlog(
-    $input: UpdateBlogInput!
-    $condition: ModelBlogConditionInput
-  ) {
-    updateBlog(input: $input, condition: $condition) {
-      id
-      name
-      posts {
+      sectionsOn {
         items {
           id
           title
-          blogID
           createdAt
           updatedAt
         }
         nextToken
       }
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const deleteBlog = /* GraphQL */ `
-  mutation DeleteBlog(
-    $input: DeleteBlogInput!
-    $condition: ModelBlogConditionInput
-  ) {
-    deleteBlog(input: $input, condition: $condition) {
-      id
-      name
-      posts {
+      paragraphsOn {
         items {
           id
           title
-          blogID
+          isStandard
           createdAt
           updatedAt
         }
@@ -70,29 +42,37 @@ export const deleteBlog = /* GraphQL */ `
     }
   }
 `;
-export const createPost = /* GraphQL */ `
-  mutation CreatePost(
-    $input: CreatePostInput!
-    $condition: ModelPostConditionInput
+export const updateProject = /* GraphQL */ `
+  mutation UpdateProject(
+    $input: UpdateProjectInput!
+    $condition: ModelProjectConditionInput
   ) {
-    createPost(input: $input, condition: $condition) {
+    updateProject(input: $input, condition: $condition) {
       id
       title
-      blogID
-      blog {
-        id
-        name
-        posts {
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
-      comments {
+      divisionsOn {
         items {
           id
-          postID
-          content
+          title
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      sectionsOn {
+        items {
+          id
+          title
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      paragraphsOn {
+        items {
+          id
+          title
+          isStandard
           createdAt
           updatedAt
         }
@@ -103,157 +83,42 @@ export const createPost = /* GraphQL */ `
     }
   }
 `;
-export const updatePost = /* GraphQL */ `
-  mutation UpdatePost(
-    $input: UpdatePostInput!
-    $condition: ModelPostConditionInput
+export const deleteProject = /* GraphQL */ `
+  mutation DeleteProject(
+    $input: DeleteProjectInput!
+    $condition: ModelProjectConditionInput
   ) {
-    updatePost(input: $input, condition: $condition) {
+    deleteProject(input: $input, condition: $condition) {
       id
       title
-      blogID
-      blog {
-        id
-        name
-        posts {
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
-      comments {
+      divisionsOn {
         items {
           id
-          postID
-          content
+          title
           createdAt
           updatedAt
         }
         nextToken
       }
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const deletePost = /* GraphQL */ `
-  mutation DeletePost(
-    $input: DeletePostInput!
-    $condition: ModelPostConditionInput
-  ) {
-    deletePost(input: $input, condition: $condition) {
-      id
-      title
-      blogID
-      blog {
-        id
-        name
-        posts {
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
-      comments {
+      sectionsOn {
         items {
           id
-          postID
-          content
+          title
           createdAt
           updatedAt
         }
         nextToken
       }
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const createComment = /* GraphQL */ `
-  mutation CreateComment(
-    $input: CreateCommentInput!
-    $condition: ModelCommentConditionInput
-  ) {
-    createComment(input: $input, condition: $condition) {
-      id
-      postID
-      post {
-        id
-        title
-        blogID
-        blog {
+      paragraphsOn {
+        items {
           id
-          name
+          title
+          isStandard
           createdAt
           updatedAt
         }
-        comments {
-          nextToken
-        }
-        createdAt
-        updatedAt
+        nextToken
       }
-      content
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const updateComment = /* GraphQL */ `
-  mutation UpdateComment(
-    $input: UpdateCommentInput!
-    $condition: ModelCommentConditionInput
-  ) {
-    updateComment(input: $input, condition: $condition) {
-      id
-      postID
-      post {
-        id
-        title
-        blogID
-        blog {
-          id
-          name
-          createdAt
-          updatedAt
-        }
-        comments {
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
-      content
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const deleteComment = /* GraphQL */ `
-  mutation DeleteComment(
-    $input: DeleteCommentInput!
-    $condition: ModelCommentConditionInput
-  ) {
-    deleteComment(input: $input, condition: $condition) {
-      id
-      postID
-      post {
-        id
-        title
-        blogID
-        blog {
-          id
-          name
-          createdAt
-          updatedAt
-        }
-        comments {
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
-      content
       createdAt
       updatedAt
     }
@@ -267,18 +132,6 @@ export const createDivision = /* GraphQL */ `
     createDivision(input: $input, condition: $condition) {
       id
       title
-      isOn
-      sections {
-        items {
-          id
-          title
-          isOn
-          divisionID
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
       createdAt
       updatedAt
     }
@@ -292,18 +145,6 @@ export const updateDivision = /* GraphQL */ `
     updateDivision(input: $input, condition: $condition) {
       id
       title
-      isOn
-      sections {
-        items {
-          id
-          title
-          isOn
-          divisionID
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
       createdAt
       updatedAt
     }
@@ -317,18 +158,6 @@ export const deleteDivision = /* GraphQL */ `
     deleteDivision(input: $input, condition: $condition) {
       id
       title
-      isOn
-      sections {
-        items {
-          id
-          title
-          isOn
-          divisionID
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
       createdAt
       updatedAt
     }
@@ -342,29 +171,6 @@ export const createSection = /* GraphQL */ `
     createSection(input: $input, condition: $condition) {
       id
       title
-      isOn
-      divisionID
-      division {
-        id
-        title
-        isOn
-        sections {
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
-      parts {
-        items {
-          id
-          title
-          isOn
-          sectionID
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
       createdAt
       updatedAt
     }
@@ -378,29 +184,6 @@ export const updateSection = /* GraphQL */ `
     updateSection(input: $input, condition: $condition) {
       id
       title
-      isOn
-      divisionID
-      division {
-        id
-        title
-        isOn
-        sections {
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
-      parts {
-        items {
-          id
-          title
-          isOn
-          sectionID
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
       createdAt
       updatedAt
     }
@@ -414,29 +197,6 @@ export const deleteSection = /* GraphQL */ `
     deleteSection(input: $input, condition: $condition) {
       id
       title
-      isOn
-      divisionID
-      division {
-        id
-        title
-        isOn
-        sections {
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
-      parts {
-        items {
-          id
-          title
-          isOn
-          sectionID
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
       createdAt
       updatedAt
     }
@@ -450,37 +210,6 @@ export const createPart = /* GraphQL */ `
     createPart(input: $input, condition: $condition) {
       id
       title
-      isOn
-      sectionID
-      section {
-        id
-        title
-        isOn
-        divisionID
-        division {
-          id
-          title
-          isOn
-          createdAt
-          updatedAt
-        }
-        parts {
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
-      subPart {
-        items {
-          id
-          title
-          isOn
-          partID
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
       createdAt
       updatedAt
     }
@@ -494,37 +223,6 @@ export const updatePart = /* GraphQL */ `
     updatePart(input: $input, condition: $condition) {
       id
       title
-      isOn
-      sectionID
-      section {
-        id
-        title
-        isOn
-        divisionID
-        division {
-          id
-          title
-          isOn
-          createdAt
-          updatedAt
-        }
-        parts {
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
-      subPart {
-        items {
-          id
-          title
-          isOn
-          partID
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
       createdAt
       updatedAt
     }
@@ -538,274 +236,66 @@ export const deletePart = /* GraphQL */ `
     deletePart(input: $input, condition: $condition) {
       id
       title
-      isOn
-      sectionID
-      section {
-        id
-        title
-        isOn
-        divisionID
-        division {
-          id
-          title
-          isOn
-          createdAt
-          updatedAt
-        }
-        parts {
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
-      subPart {
-        items {
-          id
-          title
-          isOn
-          partID
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
       createdAt
       updatedAt
     }
   }
 `;
-export const createSubPart = /* GraphQL */ `
-  mutation CreateSubPart(
-    $input: CreateSubPartInput!
-    $condition: ModelSubPartConditionInput
+export const createParagraph = /* GraphQL */ `
+  mutation CreateParagraph(
+    $input: CreateParagraphInput!
+    $condition: ModelParagraphConditionInput
   ) {
-    createSubPart(input: $input, condition: $condition) {
+    createParagraph(input: $input, condition: $condition) {
       id
+      part {
+        id
+        title
+        createdAt
+        updatedAt
+      }
       title
-      isOn
-      partID
-      part {
-        id
-        title
-        isOn
-        sectionID
-        section {
-          id
-          title
-          isOn
-          divisionID
-          createdAt
-          updatedAt
-        }
-        subPart {
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
-      items {
-        items {
-          id
-          partID
-          content
-          tier
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
+      isStandard
       createdAt
       updatedAt
     }
   }
 `;
-export const updateSubPart = /* GraphQL */ `
-  mutation UpdateSubPart(
-    $input: UpdateSubPartInput!
-    $condition: ModelSubPartConditionInput
+export const updateParagraph = /* GraphQL */ `
+  mutation UpdateParagraph(
+    $input: UpdateParagraphInput!
+    $condition: ModelParagraphConditionInput
   ) {
-    updateSubPart(input: $input, condition: $condition) {
+    updateParagraph(input: $input, condition: $condition) {
       id
+      part {
+        id
+        title
+        createdAt
+        updatedAt
+      }
       title
-      isOn
-      partID
-      part {
-        id
-        title
-        isOn
-        sectionID
-        section {
-          id
-          title
-          isOn
-          divisionID
-          createdAt
-          updatedAt
-        }
-        subPart {
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
-      items {
-        items {
-          id
-          partID
-          content
-          tier
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
+      isStandard
       createdAt
       updatedAt
     }
   }
 `;
-export const deleteSubPart = /* GraphQL */ `
-  mutation DeleteSubPart(
-    $input: DeleteSubPartInput!
-    $condition: ModelSubPartConditionInput
+export const deleteParagraph = /* GraphQL */ `
+  mutation DeleteParagraph(
+    $input: DeleteParagraphInput!
+    $condition: ModelParagraphConditionInput
   ) {
-    deleteSubPart(input: $input, condition: $condition) {
+    deleteParagraph(input: $input, condition: $condition) {
       id
+      part {
+        id
+        title
+        createdAt
+        updatedAt
+      }
       title
-      isOn
-      partID
-      part {
-        id
-        title
-        isOn
-        sectionID
-        section {
-          id
-          title
-          isOn
-          divisionID
-          createdAt
-          updatedAt
-        }
-        subPart {
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
-      items {
-        items {
-          id
-          partID
-          content
-          tier
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const createItem = /* GraphQL */ `
-  mutation CreateItem(
-    $input: CreateItemInput!
-    $condition: ModelItemConditionInput
-  ) {
-    createItem(input: $input, condition: $condition) {
-      id
-      partID
-      part {
-        id
-        title
-        isOn
-        partID
-        part {
-          id
-          title
-          isOn
-          sectionID
-          createdAt
-          updatedAt
-        }
-        items {
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
-      content
-      tier
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const updateItem = /* GraphQL */ `
-  mutation UpdateItem(
-    $input: UpdateItemInput!
-    $condition: ModelItemConditionInput
-  ) {
-    updateItem(input: $input, condition: $condition) {
-      id
-      partID
-      part {
-        id
-        title
-        isOn
-        partID
-        part {
-          id
-          title
-          isOn
-          sectionID
-          createdAt
-          updatedAt
-        }
-        items {
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
-      content
-      tier
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const deleteItem = /* GraphQL */ `
-  mutation DeleteItem(
-    $input: DeleteItemInput!
-    $condition: ModelItemConditionInput
-  ) {
-    deleteItem(input: $input, condition: $condition) {
-      id
-      partID
-      part {
-        id
-        title
-        isOn
-        partID
-        part {
-          id
-          title
-          isOn
-          sectionID
-          createdAt
-          updatedAt
-        }
-        items {
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
-      content
-      tier
+      isStandard
       createdAt
       updatedAt
     }
