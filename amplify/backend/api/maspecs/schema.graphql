@@ -1,36 +1,57 @@
 
 type Project @model
-{
-  id: ID!
-  title: String!
-  divisionsOn: [Division] @connection
-  sectionsOn: [Section] @connection
-  paragraphsOn: [Paragraph] @connection
-  #content: [Subparagraph] @connection
-}
-
+@key(name: "byNumber", fields:["baseType", "id"], queryField: "projectsByNumber" )
+ {
+   id: ID!
+   title: String!
+#   divisionsOn: [Int]
+#   sectionsOn: [Int]
+#   #paragraphsOn: [Paragraph] @connection
+#   #content: [Subparagraph] @connection
+    baseType: String!
+ }
+ 
 type Division @model 
+@key(name: "byNumber", fields:["baseType", "id"], queryField: "divisionsByNumber" )
 {
   id: ID!
-  title: String!
+   title: String!
+   sections: [Section] @connection(name:"DivisionSections")
+   baseType: String!
 }
-
+ 
 type Section @model 
 {
   id: ID!
   title: String!
+  division: Division! @connection(name:"DivisionSections")
+  baseType: String!
+#  parts: [Part] @connection
 }
 
-type Part @model
-{
-  id: ID!
-  title: String!
-}
+#type Part @model
+# {
+#  id: ID!
+#  title: String!
+#  baseType: String!
+# }
 
-type Paragraph @model 
-{
-  id: ID!
-  part: Part @connection
-  title: String!
-  isStandard: Boolean
-}
+# type Paragraph @model 
+# {
+#   id: ID!
+#   section: Part @connection
+#   title: String!
+#   isStandard: Boolean
+#   baseType: String!
+# }
+# 
+# type Subparagraph @model
+# @key(name: byProject, fields:["project", "section"], queryField: "subparagraphsByProject")
+# {
+#   id: ID!
+#   paragraph: Paragraph! @connection
+#   orderInParagraph: Int!
+#   listTier: Int!
+#   content: String!
+#   isOn: Boolean!
+# }

@@ -9,34 +9,7 @@ export const createProject = /* GraphQL */ `
     createProject(input: $input, condition: $condition) {
       id
       title
-      divisionsOn {
-        items {
-          id
-          title
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
-      sectionsOn {
-        items {
-          id
-          title
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
-      paragraphsOn {
-        items {
-          id
-          title
-          isStandard
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
+      baseType
       createdAt
       updatedAt
     }
@@ -50,34 +23,7 @@ export const updateProject = /* GraphQL */ `
     updateProject(input: $input, condition: $condition) {
       id
       title
-      divisionsOn {
-        items {
-          id
-          title
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
-      sectionsOn {
-        items {
-          id
-          title
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
-      paragraphsOn {
-        items {
-          id
-          title
-          isStandard
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
+      baseType
       createdAt
       updatedAt
     }
@@ -91,34 +37,7 @@ export const deleteProject = /* GraphQL */ `
     deleteProject(input: $input, condition: $condition) {
       id
       title
-      divisionsOn {
-        items {
-          id
-          title
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
-      sectionsOn {
-        items {
-          id
-          title
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
-      paragraphsOn {
-        items {
-          id
-          title
-          isStandard
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
+      baseType
       createdAt
       updatedAt
     }
@@ -132,6 +51,17 @@ export const createDivision = /* GraphQL */ `
     createDivision(input: $input, condition: $condition) {
       id
       title
+      sections {
+        items {
+          id
+          title
+          baseType
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      baseType
       createdAt
       updatedAt
     }
@@ -145,6 +75,17 @@ export const updateDivision = /* GraphQL */ `
     updateDivision(input: $input, condition: $condition) {
       id
       title
+      sections {
+        items {
+          id
+          title
+          baseType
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      baseType
       createdAt
       updatedAt
     }
@@ -158,6 +99,17 @@ export const deleteDivision = /* GraphQL */ `
     deleteDivision(input: $input, condition: $condition) {
       id
       title
+      sections {
+        items {
+          id
+          title
+          baseType
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      baseType
       createdAt
       updatedAt
     }
@@ -171,6 +123,17 @@ export const createSection = /* GraphQL */ `
     createSection(input: $input, condition: $condition) {
       id
       title
+      division {
+        id
+        title
+        sections {
+          nextToken
+        }
+        baseType
+        createdAt
+        updatedAt
+      }
+      baseType
       createdAt
       updatedAt
     }
@@ -184,6 +147,17 @@ export const updateSection = /* GraphQL */ `
     updateSection(input: $input, condition: $condition) {
       id
       title
+      division {
+        id
+        title
+        sections {
+          nextToken
+        }
+        baseType
+        createdAt
+        updatedAt
+      }
+      baseType
       createdAt
       updatedAt
     }
@@ -197,105 +171,17 @@ export const deleteSection = /* GraphQL */ `
     deleteSection(input: $input, condition: $condition) {
       id
       title
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const createPart = /* GraphQL */ `
-  mutation CreatePart(
-    $input: CreatePartInput!
-    $condition: ModelPartConditionInput
-  ) {
-    createPart(input: $input, condition: $condition) {
-      id
-      title
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const updatePart = /* GraphQL */ `
-  mutation UpdatePart(
-    $input: UpdatePartInput!
-    $condition: ModelPartConditionInput
-  ) {
-    updatePart(input: $input, condition: $condition) {
-      id
-      title
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const deletePart = /* GraphQL */ `
-  mutation DeletePart(
-    $input: DeletePartInput!
-    $condition: ModelPartConditionInput
-  ) {
-    deletePart(input: $input, condition: $condition) {
-      id
-      title
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const createParagraph = /* GraphQL */ `
-  mutation CreateParagraph(
-    $input: CreateParagraphInput!
-    $condition: ModelParagraphConditionInput
-  ) {
-    createParagraph(input: $input, condition: $condition) {
-      id
-      part {
+      division {
         id
         title
+        sections {
+          nextToken
+        }
+        baseType
         createdAt
         updatedAt
       }
-      title
-      isStandard
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const updateParagraph = /* GraphQL */ `
-  mutation UpdateParagraph(
-    $input: UpdateParagraphInput!
-    $condition: ModelParagraphConditionInput
-  ) {
-    updateParagraph(input: $input, condition: $condition) {
-      id
-      part {
-        id
-        title
-        createdAt
-        updatedAt
-      }
-      title
-      isStandard
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const deleteParagraph = /* GraphQL */ `
-  mutation DeleteParagraph(
-    $input: DeleteParagraphInput!
-    $condition: ModelParagraphConditionInput
-  ) {
-    deleteParagraph(input: $input, condition: $condition) {
-      id
-      part {
-        id
-        title
-        createdAt
-        updatedAt
-      }
-      title
-      isStandard
+      baseType
       createdAt
       updatedAt
     }

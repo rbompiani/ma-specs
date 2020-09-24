@@ -6,34 +6,7 @@ export const getProject = /* GraphQL */ `
     getProject(id: $id) {
       id
       title
-      divisionsOn {
-        items {
-          id
-          title
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
-      sectionsOn {
-        items {
-          id
-          title
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
-      paragraphsOn {
-        items {
-          id
-          title
-          isStandard
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
+      baseType
       createdAt
       updatedAt
     }
@@ -49,15 +22,7 @@ export const listProjects = /* GraphQL */ `
       items {
         id
         title
-        divisionsOn {
-          nextToken
-        }
-        sectionsOn {
-          nextToken
-        }
-        paragraphsOn {
-          nextToken
-        }
+        baseType
         createdAt
         updatedAt
       }
@@ -70,6 +35,17 @@ export const getDivision = /* GraphQL */ `
     getDivision(id: $id) {
       id
       title
+      sections {
+        items {
+          id
+          title
+          baseType
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      baseType
       createdAt
       updatedAt
     }
@@ -85,6 +61,10 @@ export const listDivisions = /* GraphQL */ `
       items {
         id
         title
+        sections {
+          nextToken
+        }
+        baseType
         createdAt
         updatedAt
       }
@@ -97,6 +77,17 @@ export const getSection = /* GraphQL */ `
     getSection(id: $id) {
       id
       title
+      division {
+        id
+        title
+        sections {
+          nextToken
+        }
+        baseType
+        createdAt
+        updatedAt
+      }
+      baseType
       createdAt
       updatedAt
     }
@@ -112,74 +103,76 @@ export const listSections = /* GraphQL */ `
       items {
         id
         title
-        createdAt
-        updatedAt
-      }
-      nextToken
-    }
-  }
-`;
-export const getPart = /* GraphQL */ `
-  query GetPart($id: ID!) {
-    getPart(id: $id) {
-      id
-      title
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const listParts = /* GraphQL */ `
-  query ListParts(
-    $filter: ModelPartFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
-    listParts(filter: $filter, limit: $limit, nextToken: $nextToken) {
-      items {
-        id
-        title
-        createdAt
-        updatedAt
-      }
-      nextToken
-    }
-  }
-`;
-export const getParagraph = /* GraphQL */ `
-  query GetParagraph($id: ID!) {
-    getParagraph(id: $id) {
-      id
-      part {
-        id
-        title
-        createdAt
-        updatedAt
-      }
-      title
-      isStandard
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const listParagraphs = /* GraphQL */ `
-  query ListParagraphs(
-    $filter: ModelParagraphFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
-    listParagraphs(filter: $filter, limit: $limit, nextToken: $nextToken) {
-      items {
-        id
-        part {
+        division {
           id
           title
+          baseType
           createdAt
           updatedAt
         }
+        baseType
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
+export const projectsByNumber = /* GraphQL */ `
+  query ProjectsByNumber(
+    $baseType: String
+    $id: ModelIDKeyConditionInput
+    $sortDirection: ModelSortDirection
+    $filter: ModelProjectFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    projectsByNumber(
+      baseType: $baseType
+      id: $id
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
         title
-        isStandard
+        baseType
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
+export const divisionsByNumber = /* GraphQL */ `
+  query DivisionsByNumber(
+    $baseType: String
+    $id: ModelIDKeyConditionInput
+    $sortDirection: ModelSortDirection
+    $filter: ModelDivisionFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    divisionsByNumber(
+      baseType: $baseType
+      id: $id
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        title
+        sections {
+          items {
+            id
+            title
+          }
+        }
+        baseType
         createdAt
         updatedAt
       }
