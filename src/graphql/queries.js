@@ -6,6 +6,9 @@ export const getProject = /* GraphQL */ `
     getProject(id: $id) {
       id
       title
+      divisionsOn
+      sectionsOn
+      paragraphsOn
       baseType
       createdAt
       updatedAt
@@ -22,6 +25,9 @@ export const listProjects = /* GraphQL */ `
       items {
         id
         title
+        divisionsOn
+        sectionsOn
+        paragraphsOn
         baseType
         createdAt
         updatedAt
@@ -88,6 +94,16 @@ export const getSection = /* GraphQL */ `
         updatedAt
       }
       baseType
+      parts {
+        items {
+          id
+          title
+          baseType
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
       createdAt
       updatedAt
     }
@@ -110,6 +126,100 @@ export const listSections = /* GraphQL */ `
           createdAt
           updatedAt
         }
+        baseType
+        parts {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
+export const getPart = /* GraphQL */ `
+  query GetPart($id: ID!) {
+    getPart(id: $id) {
+      id
+      title
+      paragraphs {
+        items {
+          id
+          title
+          isStandard
+          baseType
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      baseType
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const listParts = /* GraphQL */ `
+  query ListParts(
+    $filter: ModelPartFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listParts(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        title
+        paragraphs {
+          nextToken
+        }
+        baseType
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
+export const getParagraph = /* GraphQL */ `
+  query GetParagraph($id: ID!) {
+    getParagraph(id: $id) {
+      id
+      title
+      part {
+        id
+        title
+        paragraphs {
+          nextToken
+        }
+        baseType
+        createdAt
+        updatedAt
+      }
+      isStandard
+      baseType
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const listParagraphs = /* GraphQL */ `
+  query ListParagraphs(
+    $filter: ModelParagraphFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listParagraphs(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        title
+        part {
+          id
+          title
+          baseType
+          createdAt
+          updatedAt
+        }
+        isStandard
         baseType
         createdAt
         updatedAt
@@ -138,6 +248,9 @@ export const projectsByNumber = /* GraphQL */ `
       items {
         id
         title
+        divisionsOn
+        sectionsOn
+        paragraphsOn
         baseType
         createdAt
         updatedAt
@@ -167,10 +280,42 @@ export const divisionsByNumber = /* GraphQL */ `
         id
         title
         sections {
-          items {
+          nextToken
+          items{
             id
             title
           }
+        }
+        baseType
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
+export const partsByNumber = /* GraphQL */ `
+  query PartsByNumber(
+    $baseType: String
+    $id: ModelIDKeyConditionInput
+    $sortDirection: ModelSortDirection
+    $filter: ModelPartFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    partsByNumber(
+      baseType: $baseType
+      id: $id
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        title
+        paragraphs {
+          nextToken
         }
         baseType
         createdAt

@@ -6,6 +6,9 @@ export const onCreateProject = /* GraphQL */ `
     onCreateProject {
       id
       title
+      divisionsOn
+      sectionsOn
+      paragraphsOn
       baseType
       createdAt
       updatedAt
@@ -17,6 +20,9 @@ export const onUpdateProject = /* GraphQL */ `
     onUpdateProject {
       id
       title
+      divisionsOn
+      sectionsOn
+      paragraphsOn
       baseType
       createdAt
       updatedAt
@@ -28,6 +34,9 @@ export const onDeleteProject = /* GraphQL */ `
     onDeleteProject {
       id
       title
+      divisionsOn
+      sectionsOn
+      paragraphsOn
       baseType
       createdAt
       updatedAt
@@ -113,6 +122,16 @@ export const onCreateSection = /* GraphQL */ `
         updatedAt
       }
       baseType
+      parts {
+        items {
+          id
+          title
+          baseType
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
       createdAt
       updatedAt
     }
@@ -134,6 +153,16 @@ export const onUpdateSection = /* GraphQL */ `
         updatedAt
       }
       baseType
+      parts {
+        items {
+          id
+          title
+          baseType
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
       createdAt
       updatedAt
     }
@@ -154,6 +183,148 @@ export const onDeleteSection = /* GraphQL */ `
         createdAt
         updatedAt
       }
+      baseType
+      parts {
+        items {
+          id
+          title
+          baseType
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onCreatePart = /* GraphQL */ `
+  subscription OnCreatePart {
+    onCreatePart {
+      id
+      title
+      paragraphs {
+        items {
+          id
+          title
+          isStandard
+          baseType
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      baseType
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onUpdatePart = /* GraphQL */ `
+  subscription OnUpdatePart {
+    onUpdatePart {
+      id
+      title
+      paragraphs {
+        items {
+          id
+          title
+          isStandard
+          baseType
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      baseType
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onDeletePart = /* GraphQL */ `
+  subscription OnDeletePart {
+    onDeletePart {
+      id
+      title
+      paragraphs {
+        items {
+          id
+          title
+          isStandard
+          baseType
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      baseType
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onCreateParagraph = /* GraphQL */ `
+  subscription OnCreateParagraph {
+    onCreateParagraph {
+      id
+      title
+      part {
+        id
+        title
+        paragraphs {
+          nextToken
+        }
+        baseType
+        createdAt
+        updatedAt
+      }
+      isStandard
+      baseType
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onUpdateParagraph = /* GraphQL */ `
+  subscription OnUpdateParagraph {
+    onUpdateParagraph {
+      id
+      title
+      part {
+        id
+        title
+        paragraphs {
+          nextToken
+        }
+        baseType
+        createdAt
+        updatedAt
+      }
+      isStandard
+      baseType
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onDeleteParagraph = /* GraphQL */ `
+  subscription OnDeleteParagraph {
+    onDeleteParagraph {
+      id
+      title
+      part {
+        id
+        title
+        paragraphs {
+          nextToken
+        }
+        baseType
+        createdAt
+        updatedAt
+      }
+      isStandard
       baseType
       createdAt
       updatedAt

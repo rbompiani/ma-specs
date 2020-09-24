@@ -9,6 +9,9 @@ export const createProject = /* GraphQL */ `
     createProject(input: $input, condition: $condition) {
       id
       title
+      divisionsOn
+      sectionsOn
+      paragraphsOn
       baseType
       createdAt
       updatedAt
@@ -23,6 +26,9 @@ export const updateProject = /* GraphQL */ `
     updateProject(input: $input, condition: $condition) {
       id
       title
+      divisionsOn
+      sectionsOn
+      paragraphsOn
       baseType
       createdAt
       updatedAt
@@ -37,6 +43,9 @@ export const deleteProject = /* GraphQL */ `
     deleteProject(input: $input, condition: $condition) {
       id
       title
+      divisionsOn
+      sectionsOn
+      paragraphsOn
       baseType
       createdAt
       updatedAt
@@ -134,6 +143,16 @@ export const createSection = /* GraphQL */ `
         updatedAt
       }
       baseType
+      parts {
+        items {
+          id
+          title
+          baseType
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
       createdAt
       updatedAt
     }
@@ -158,6 +177,16 @@ export const updateSection = /* GraphQL */ `
         updatedAt
       }
       baseType
+      parts {
+        items {
+          id
+          title
+          baseType
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
       createdAt
       updatedAt
     }
@@ -181,6 +210,166 @@ export const deleteSection = /* GraphQL */ `
         createdAt
         updatedAt
       }
+      baseType
+      parts {
+        items {
+          id
+          title
+          baseType
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const createPart = /* GraphQL */ `
+  mutation CreatePart(
+    $input: CreatePartInput!
+    $condition: ModelPartConditionInput
+  ) {
+    createPart(input: $input, condition: $condition) {
+      id
+      title
+      paragraphs {
+        items {
+          id
+          title
+          isStandard
+          baseType
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      baseType
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const updatePart = /* GraphQL */ `
+  mutation UpdatePart(
+    $input: UpdatePartInput!
+    $condition: ModelPartConditionInput
+  ) {
+    updatePart(input: $input, condition: $condition) {
+      id
+      title
+      paragraphs {
+        items {
+          id
+          title
+          isStandard
+          baseType
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      baseType
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const deletePart = /* GraphQL */ `
+  mutation DeletePart(
+    $input: DeletePartInput!
+    $condition: ModelPartConditionInput
+  ) {
+    deletePart(input: $input, condition: $condition) {
+      id
+      title
+      paragraphs {
+        items {
+          id
+          title
+          isStandard
+          baseType
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      baseType
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const createParagraph = /* GraphQL */ `
+  mutation CreateParagraph(
+    $input: CreateParagraphInput!
+    $condition: ModelParagraphConditionInput
+  ) {
+    createParagraph(input: $input, condition: $condition) {
+      id
+      title
+      part {
+        id
+        title
+        paragraphs {
+          nextToken
+        }
+        baseType
+        createdAt
+        updatedAt
+      }
+      isStandard
+      baseType
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const updateParagraph = /* GraphQL */ `
+  mutation UpdateParagraph(
+    $input: UpdateParagraphInput!
+    $condition: ModelParagraphConditionInput
+  ) {
+    updateParagraph(input: $input, condition: $condition) {
+      id
+      title
+      part {
+        id
+        title
+        paragraphs {
+          nextToken
+        }
+        baseType
+        createdAt
+        updatedAt
+      }
+      isStandard
+      baseType
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const deleteParagraph = /* GraphQL */ `
+  mutation DeleteParagraph(
+    $input: DeleteParagraphInput!
+    $condition: ModelParagraphConditionInput
+  ) {
+    deleteParagraph(input: $input, condition: $condition) {
+      id
+      title
+      part {
+        id
+        title
+        paragraphs {
+          nextToken
+        }
+        baseType
+        createdAt
+        updatedAt
+      }
+      isStandard
       baseType
       createdAt
       updatedAt

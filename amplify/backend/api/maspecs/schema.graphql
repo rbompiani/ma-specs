@@ -1,15 +1,15 @@
 
 type Project @model
 @key(name: "byNumber", fields:["baseType", "id"], queryField: "projectsByNumber" )
- {
-   id: ID!
-   title: String!
-#   divisionsOn: [Int]
-#   sectionsOn: [Int]
-#   #paragraphsOn: [Paragraph] @connection
-#   #content: [Subparagraph] @connection
-    baseType: String!
- }
+{
+  id: ID!
+  title: String!
+  divisionsOn: [Int]
+  sectionsOn: [Int]
+  paragraphsOn: [Int]
+  #content: [Subparagraph] @connection(name:"ProjectSubparagraphs")
+  baseType: String!
+}
  
 type Division @model 
 @key(name: "byNumber", fields:["baseType", "id"], queryField: "divisionsByNumber" )
@@ -26,29 +26,33 @@ type Section @model
   title: String!
   division: Division! @connection(name:"DivisionSections")
   baseType: String!
-#  parts: [Part] @connection
+  parts: [Part] @connection
 }
 
-#type Part @model
-# {
-#  id: ID!
-#  title: String!
-#  baseType: String!
-# }
+type Part @model
+@key(name:"byId", fields:["baseType", "id"], queryField: "partsByNumber" )
+ {
+  id: ID!
+  title: String!
+  paragraphs: [Paragraph] @connection(name:"partParagraphs")
+  baseType: String!
+ }
 
-# type Paragraph @model 
-# {
-#   id: ID!
-#   section: Part @connection
-#   title: String!
-#   isStandard: Boolean
-#   baseType: String!
-# }
-# 
+type Paragraph @model
+ {
+  id: ID!
+  title: String!
+  part: Part! @connection(name:"partParagraphs")
+  isStandard: Boolean!
+  baseType: String!
+}
+
 # type Subparagraph @model
 # @key(name: byProject, fields:["project", "section"], queryField: "subparagraphsByProject")
 # {
 #   id: ID!
+#   project: Project! @connection(name:"ProjectSubparagraphs")
+#   section: Section! @connection
 #   paragraph: Paragraph! @connection
 #   orderInParagraph: Int!
 #   listTier: Int!
