@@ -9,6 +9,9 @@ import { API, graphqlOperation } from 'aws-amplify'
 // graphql imports
 import { divisionsByNumber, partsByNumber, getParagraph, listParagraphs } from './graphql/queries'
 
+// component imports
+import DivisionBrowser from './containers/DivisionBrowser'
+
 const App = () => {
   const [allDivisions, setAllDivisions] = useState([]);
   const [parts, setParts] = useState([]);
@@ -54,6 +57,9 @@ const App = () => {
   return (
     <div>
       <AmplifyGreetings />
+      <div>
+        <DivisionBrowser divisions={allDivisions} />
+      </div>
       <ul>
         {allDivisions.map((divis) => {
           return (

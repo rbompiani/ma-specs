@@ -9,6 +9,18 @@ export const onCreateProject = /* GraphQL */ `
       divisionsOn
       sectionsOn
       paragraphsOn
+      content {
+        items {
+          id
+          orderInParagraph
+          listTier
+          content
+          isOn
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
       baseType
       createdAt
       updatedAt
@@ -23,6 +35,18 @@ export const onUpdateProject = /* GraphQL */ `
       divisionsOn
       sectionsOn
       paragraphsOn
+      content {
+        items {
+          id
+          orderInParagraph
+          listTier
+          content
+          isOn
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
       baseType
       createdAt
       updatedAt
@@ -37,6 +61,18 @@ export const onDeleteProject = /* GraphQL */ `
       divisionsOn
       sectionsOn
       paragraphsOn
+      content {
+        items {
+          id
+          orderInParagraph
+          listTier
+          content
+          isOn
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
       baseType
       createdAt
       updatedAt
@@ -326,6 +362,180 @@ export const onDeleteParagraph = /* GraphQL */ `
       }
       isStandard
       baseType
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onCreateSubparagraph = /* GraphQL */ `
+  subscription OnCreateSubparagraph {
+    onCreateSubparagraph {
+      id
+      project {
+        id
+        title
+        divisionsOn
+        sectionsOn
+        paragraphsOn
+        content {
+          nextToken
+        }
+        baseType
+        createdAt
+        updatedAt
+      }
+      section {
+        id
+        title
+        division {
+          id
+          title
+          baseType
+          createdAt
+          updatedAt
+        }
+        baseType
+        parts {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      paragraph {
+        id
+        title
+        part {
+          id
+          title
+          baseType
+          createdAt
+          updatedAt
+        }
+        isStandard
+        baseType
+        createdAt
+        updatedAt
+      }
+      orderInParagraph
+      listTier
+      content
+      isOn
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onUpdateSubparagraph = /* GraphQL */ `
+  subscription OnUpdateSubparagraph {
+    onUpdateSubparagraph {
+      id
+      project {
+        id
+        title
+        divisionsOn
+        sectionsOn
+        paragraphsOn
+        content {
+          nextToken
+        }
+        baseType
+        createdAt
+        updatedAt
+      }
+      section {
+        id
+        title
+        division {
+          id
+          title
+          baseType
+          createdAt
+          updatedAt
+        }
+        baseType
+        parts {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      paragraph {
+        id
+        title
+        part {
+          id
+          title
+          baseType
+          createdAt
+          updatedAt
+        }
+        isStandard
+        baseType
+        createdAt
+        updatedAt
+      }
+      orderInParagraph
+      listTier
+      content
+      isOn
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onDeleteSubparagraph = /* GraphQL */ `
+  subscription OnDeleteSubparagraph {
+    onDeleteSubparagraph {
+      id
+      project {
+        id
+        title
+        divisionsOn
+        sectionsOn
+        paragraphsOn
+        content {
+          nextToken
+        }
+        baseType
+        createdAt
+        updatedAt
+      }
+      section {
+        id
+        title
+        division {
+          id
+          title
+          baseType
+          createdAt
+          updatedAt
+        }
+        baseType
+        parts {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      paragraph {
+        id
+        title
+        part {
+          id
+          title
+          baseType
+          createdAt
+          updatedAt
+        }
+        isStandard
+        baseType
+        createdAt
+        updatedAt
+      }
+      orderInParagraph
+      listTier
+      content
+      isOn
       createdAt
       updatedAt
     }

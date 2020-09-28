@@ -4,10 +4,10 @@ type Project @model
 {
   id: ID!
   title: String!
-  divisionsOn: [Int]
-  sectionsOn: [Int]
-  paragraphsOn: [Int]
-  #content: [Subparagraph] @connection(name:"ProjectSubparagraphs")
+  divisionsOn: [String]
+  sectionsOn: [String]
+  paragraphsOn: [String]
+  content: [Subparagraph] @connection(name:"projectSubparagraphs")
   baseType: String!
 }
  
@@ -47,15 +47,14 @@ type Paragraph @model
   baseType: String!
 }
 
-# type Subparagraph @model
-# @key(name: byProject, fields:["project", "section"], queryField: "subparagraphsByProject")
-# {
-#   id: ID!
-#   project: Project! @connection(name:"ProjectSubparagraphs")
-#   section: Section! @connection
-#   paragraph: Paragraph! @connection
-#   orderInParagraph: Int!
-#   listTier: Int!
-#   content: String!
-#   isOn: Boolean!
-# }
+type Subparagraph @model
+{
+  id: ID!
+  project: Project! @connection(name:"projectSubparagraphs")
+  section: Section! @connection
+  paragraph: Paragraph! @connection
+  orderInParagraph: Int!
+  listTier: Int!
+  content: String!
+  isOn: Boolean!
+}
