@@ -1,7 +1,5 @@
 import React from "react"
 
-import './DivisionBrowser.css'
-
 import BrowserItem from '../components/BrowserItem'
 
 const DivisionBrowser = (props) => {

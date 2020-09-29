@@ -1,9 +1,11 @@
 import React from 'react';
 
+import Checkbox from './Checkbox'
+
 const BrowserItem = (props) => {
     return (
         <li className={`browserItem ${props.class}`}>
-            <li>{props.class == "division" ? "Division" : null} {props.id} - {props.title}</li>
+            <Checkbox /> {props.id} - {props.title}
         </li>
     )
 }
