@@ -20,6 +20,12 @@ const App = () => {
   const [parts, setParts] = useState([]);
   const [paragraphs, setParagraphs] = useState([]);
 
+  const [projDivs, setProjDivs] = useState(["00", "011000"]);
+
+  const checkHandler = (id) => {
+    setProjDivs([...projDivs, id])
+  }
+
   useEffect(() => {
     const fetchDivisions = async () => {
       const results = await API.graphql(graphqlOperation(divisionsByNumber, { baseType: "Division" }));
@@ -60,7 +66,7 @@ const App = () => {
   return (
     <div className="wrapper">
       <Header />
-      <DivisionBrowser divisions={allDivisions} />
+      <DivisionBrowser divisions={allDivisions} divisionsOn={projDivs} check={checkHandler} />
       <SectionContent />
       <Notes />
       <ul>

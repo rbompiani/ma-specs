@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useState } from "react"
 
 import BrowserItem from '../components/BrowserItem'
 
@@ -11,9 +11,9 @@ const DivisionBrowser = (props) => {
                 {divisions.map((divis) => {
                     return (
                         <div>
-                            <BrowserItem id={divis.id} title={divis.title} class="division" />
+                            <BrowserItem id={divis.id} title={divis.title} class="division" check={props.check} isOn={props.divisionsOn.includes(divis.id) ? true : false} />
                             <ul>
-                                {divis.sections.items.map((sec) => <BrowserItem id={sec.id} title={sec.title} class="section" />)}
+                                {divis.sections.items.map((sec) => <BrowserItem id={sec.id} title={sec.title} class="section" check={props.check} isOn={props.divisionsOn.includes(sec.id) ? true : false} />)}
                             </ul>
                         </div>
                     )
