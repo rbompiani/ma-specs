@@ -6,20 +6,20 @@ const DivisionBrowser = (props) => {
     const divisions = props.divisions;
 
     return (
-        <div className="divBrowser">
-            <ul>
+        <article className="divBrowser">
+            <ul className="divisions">
                 {divisions.map((divis) => {
                     return (
-                        <div>
+                        <section>
                             <BrowserItem id={divis.id} title={divis.title} class="division" check={props.check} isOn={props.divisionsOn.includes(divis.id) ? true : false} />
-                            <ul>
+                            <ul className="sections">
                                 {divis.sections.items.map((sec) => <BrowserItem id={sec.id} title={sec.title} class="section" check={props.check} isOn={props.divisionsOn.includes(sec.id) ? true : false} />)}
                             </ul>
-                        </div>
+                        </section>
                     )
                 })}
             </ul>
-        </div>
+        </article>
     )
 }
 

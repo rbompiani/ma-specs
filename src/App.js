@@ -7,68 +7,98 @@ import { withAuthenticator, AmplifyGreetings } from '@aws-amplify/ui-react';
 import { API, graphqlOperation } from 'aws-amplify'
 
 // graphql imports
-import { divisionsByNumber, partsByNumber, getParagraph, listParagraphs } from './graphql/queries'
+import { getProject, divisionsByNumber, partsByNumber, getParagraph, listParagraphs } from './graphql/queries'
 
 // component imports
 import Header from './containers/Header'
+import Title from './containers/Title'
 import DivisionBrowser from './containers/DivisionBrowser'
 import SectionContent from './containers/SectionContent'
 import Notes from './containers/Notes'
 
 const App = () => {
+
+  //-------- STATE --------//
+
+  // outline state
   const [allDivisions, setAllDivisions] = useState([]);
   const [parts, setParts] = useState([]);
   const [paragraphs, setParagraphs] = useState([]);
 
+  // project state
   const [projDivs, setProjDivs] = useState(["00", "011000"]);
+  const [project, setProject] = useState()
 
-  const checkHandler = (id) => {
-    setProjDivs([...projDivs, id])
-  }
+  // current display state
+  const [currentSection, setCurrentSection] = useState();
 
+
+  //-------- FETCHING DATA --------//
+
+  // fetch outline data
   useEffect(() => {
-    const fetchDivisions = async () => {
-      const results = await API.graphql(graphqlOperation(divisionsByNumber, { baseType: "Division" }));
-      setAllDivisions(results.data.divisionsByNumber.items);
+    const fetchOutline = async () => {
+      const divisionResults = await API.graphql(graphqlOperation(divisionsByNumber, { baseType: "Division" }));
+      const partResults = await API.graphql(graphqlOperation(partsByNumber, { baseType: "Part" }));
+      setAllDivisions(divisionResults.data.divisionsByNumber.items);
+      setParts(partResults.data.partsByNumber.items);
     }
-    fetchDivisions();
+    fetchOutline();
   },
     []
   )
 
+  // fetch project specific data
   useEffect(() => {
-    const fetchParts = async () => {
-      const results = await API.graphql(graphqlOperation(partsByNumber, { baseType: "Part" }));
-      setParts(results.data.partsByNumber.items);
+    const fetchProject = async () => {
+      const results = await API.graphql(graphqlOperation(getProject, { id: "1905" }));
+      setProject(results.data.getProject);
     }
-    fetchParts();
+    fetchProject();
   },
-    []
+    {}
   )
+
 
   useEffect(() => {
     const fetchParagraphs = async () => {
       const results = await API.graphql(graphqlOperation(listParagraphs));
+      /*
       const flatResults = results.data.listParagraphs.items.map(e => {
         const partID = e.part.id
         e.part = partID
         return e
       })
       console.log(flatResults)
+      */
       setParagraphs(results.data.listParagraphs.items);
-      console.log(results)
     }
     fetchParagraphs();
   },
     []
   )
 
+  //-------- HANDLERS --------//
+  const checkHandler = (id, isOn) => {
+    const newDivisions = project.divisionsOn
+    console.log(newDivisions)
+    if (isOn) {
+      setProject({ ...project, divisionsOn: newDivisions.filter(div => div != id) });
+    } else {
+      setProject({ ...project, divisionsOn: [...newDivisions, id] })
+    }
+
+  }
+
+  //-------- RENDERED COMPONENTS --------//
   return (
-    <div className="wrapper">
+    <main>
       <Header />
-      <DivisionBrowser divisions={allDivisions} divisionsOn={projDivs} check={checkHandler} />
+      <Title id="000000" title="This is the title" />
+      {project && <DivisionBrowser divisions={allDivisions} divisionsOn={project.divisionsOn} check={checkHandler} />}
       <SectionContent />
       <Notes />
+      <div>{project ? project.divisionsOn[0] : "nothing here"}</div>
       <ul>
         {allDivisions.map((divis) => {
           return (
@@ -89,7 +119,7 @@ const App = () => {
           )
         })}
       </ul>
-    </div>
+    </main>
   )
 };
 

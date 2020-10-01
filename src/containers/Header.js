@@ -4,9 +4,9 @@ import { AmplifyGreetings } from '@aws-amplify/ui-react';
 
 const Header = () => {
     return (
-        <div className="header">
+        <header>
             <AmplifyGreetings />
-        </div>
+        </header>
     )
 }
 

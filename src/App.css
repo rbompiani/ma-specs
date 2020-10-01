@@ -1,11 +1,17 @@
-.wrapper {
+main {
   display: grid;
-  grid-template-columns: 320px auto 240px;
+  grid-template-columns: 400px auto 240px;
 }
 
-.header {
+header {
   grid-column-start: 1;
   grid-column-end: 4;
+}
+
+h1 {
+  grid-column-start: 2;
+  grid-column-end: 4;
+  font-size: 36px
 }
 
 .divBrowser {
@@ -14,13 +20,22 @@
 
 .divBrowser ul  {
   list-style-type: none;
+  padding: 0px;
+}
+
+.sections {
+  margin: 0px 0px 10px 24px;
+}
+
+.browserItem:hover {
+  background-color: #f3f3f3;
 }
 
 .sectionContent {
   border: 1px solid green
 }
 
-.notes {
+aside {
   border: 1px solid blue
 }
 
@@ -41,3 +56,9 @@
 .section {
   font-size: 12px
 }
+
+.inactive {
+  color: #999999;
+}
+
+
