@@ -1,5 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react'
 import SpecContextProvider from './context/SpecContext'
+import { BrowserRouter } from 'react-router-dom'
+import Router from './routing/Router'
 import logo from './logo.svg';
 import './App.css';
 
@@ -17,35 +19,11 @@ const App = () => {
 
   //-------- RENDERED COMPONENTS --------//
   return (
-    <main>
-      <Header />
+    <BrowserRouter>
       <SpecContextProvider>
-        <Title />
-        <DivisionBrowser />
-        <SectionContent />
-        <Notes />
-        {/* <ul>
-          {allDivisions.map((divis) => {
-            return (
-              <div>
-                <li>Division {divis.id} - {divis.title}</li>
-                <ul>
-                  {divis.sections.items.map((sec) => <li>{sec.id} - {sec.title}</li>)}
-                  {parts.map((p) => {
-                    return (
-                      <div>
-                        <div>Part {p.id} - {p.title}</div>
-                        {paragraphs.filter(e => e.part == p.id).map(par => <div>{par.title}</div>)}
-                      </div>
-                    )
-                  })}
-                </ul>
-              </div>
-            )
-          })}
-        </ul> */}
+        <Router />
       </SpecContextProvider>
-    </main>
+    </BrowserRouter>
   )
 };
 
