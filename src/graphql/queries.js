@@ -12,6 +12,15 @@ export const getProject = /* GraphQL */ `
       content {
         items {
           id
+          section {
+            id
+          }
+          paragraph {
+            id
+            part {
+              id
+            }
+          }
           orderInParagraph
           listTier
           content

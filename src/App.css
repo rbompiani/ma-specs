@@ -61,4 +61,8 @@ aside {
   color: #999999;
 }
 
+.expanded {
+  border: 1px solid #999999
+}
+
 

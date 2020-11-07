@@ -7,7 +7,7 @@ import { withAuthenticator, AmplifyGreetings } from '@aws-amplify/ui-react';
 import { API, graphqlOperation } from 'aws-amplify'
 
 // graphql imports
-import { getProject, divisionsByNumber, partsByNumber, getParagraph, listParagraphs } from './graphql/queries'
+import { getProject, divisionsByNumber, getSection, partsByNumber, getParagraph, listParagraphs, listSubparagraphs } from './graphql/queries'
 
 // component imports
 import Header from './containers/Header'
@@ -26,11 +26,10 @@ const App = () => {
   const [paragraphs, setParagraphs] = useState([]);
 
   // project state
-  const [projDivs, setProjDivs] = useState(["00", "011000"]);
-  const [project, setProject] = useState()
+  const [project, setProject] = useState({})
 
   // current display state
-  const [currentSection, setCurrentSection] = useState();
+  const [currentSection, setCurrentSection] = useState({});
 
 
   //-------- FETCHING DATA --------//
@@ -44,20 +43,18 @@ const App = () => {
       setParts(partResults.data.partsByNumber.items);
     }
     fetchOutline();
+    fetchProject();
   },
     []
   )
 
   // fetch project specific data
-  useEffect(() => {
-    const fetchProject = async () => {
-      const results = await API.graphql(graphqlOperation(getProject, { id: "1905" }));
-      setProject(results.data.getProject);
-    }
-    fetchProject();
-  },
-    {}
-  )
+  const fetchProject = async () => {
+    const results = await API.graphql(graphqlOperation(getProject, { id: "1905" }));
+    console.log(results.data.getProject.content)
+    setProject(results.data.getProject)
+    setCurrentSection(results.data.getProject.divisionsOn[0])
+  }
 
 
   useEffect(() => {
@@ -78,14 +75,16 @@ const App = () => {
     []
   )
 
+
+
+
   //-------- HANDLERS --------//
   const checkHandler = (id, isOn) => {
-    const newDivisions = project.divisionsOn
-    console.log(newDivisions)
+    const oldDivisions = project.divisionsOn
     if (isOn) {
-      setProject({ ...project, divisionsOn: newDivisions.filter(div => div != id) });
+      setProject({ ...project, divisionsOn: oldDivisions.filter(div => div != id) });
     } else {
-      setProject({ ...project, divisionsOn: [...newDivisions, id] })
+      setProject({ ...project, divisionsOn: [...oldDivisions, id] })
     }
 
   }
@@ -94,11 +93,10 @@ const App = () => {
   return (
     <main>
       <Header />
-      <Title id="000000" title="This is the title" />
+      {currentSection.id ? <Title id={currentSection.id} title={currentSection.title} /> : <Title />}
       {project && <DivisionBrowser divisions={allDivisions} divisionsOn={project.divisionsOn} check={checkHandler} />}
       <SectionContent />
       <Notes />
-      <div>{project ? project.divisionsOn[0] : "nothing here"}</div>
       <ul>
         {allDivisions.map((divis) => {
           return (
