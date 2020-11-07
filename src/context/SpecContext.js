@@ -86,7 +86,7 @@ const SpecContextProvider = (props) => {
     }
 
     return (
-        <SpecContext.Provider value={{ allDivisions, parts, paragraphs, project, currentSection }}>
+        <SpecContext.Provider value={{ allDivisions, parts, paragraphs, project, currentSection, checkHandler }}>
             {props.children}
         </SpecContext.Provider>
     );

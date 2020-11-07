@@ -8,16 +8,8 @@ import './App.css';
 // AWS imports
 import { withAuthenticator, AmplifyGreetings } from '@aws-amplify/ui-react';
 
-// component imports
-import Header from './containers/Header'
-import Title from './containers/Title'
-import DivisionBrowser from './containers/DivisionBrowser'
-import SectionContent from './containers/SectionContent'
-import Notes from './containers/Notes'
-
 const App = () => {
 
-  //-------- RENDERED COMPONENTS --------//
   return (
     <BrowserRouter>
       <SpecContextProvider>

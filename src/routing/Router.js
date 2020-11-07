@@ -3,12 +3,12 @@ import {
     Switch,
     Route,
 } from 'react-router-dom'
-import ProjectEditor from '../containers/ProjectEditor'
+import SpecEditor from '../containers/SpecEditor'
 
 const Router = () => {
     return (
         <Switch>
-            <Route path="/" exact component={ProjectEditor} />
+            <Route path="/" exact component={SpecEditor} />
         </Switch>
     )
 }
