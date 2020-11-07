@@ -1,9 +1,11 @@
-import React, { useState } from "react"
+import React, { useContext } from "react"
+import { SpecContext } from '../context/SpecContext';
 
 import BrowserItem from '../components/BrowserItem'
 
 const DivisionBrowser = (props) => {
-    const divisions = props.divisions;
+    const divisions = useContext(SpecContext).allDivisions;
+    const divisionsOn = useContext(SpecContext).project.divisionsOn;
 
     return (
         <article className="divBrowser">
@@ -11,9 +13,26 @@ const DivisionBrowser = (props) => {
                 {divisions.map((divis) => {
                     return (
                         <section>
-                            <BrowserItem id={divis.id} title={divis.title} class="division" check={props.check} isOn={props.divisionsOn.includes(divis.id) ? true : false} />
+                            {divisions &&
+                                <BrowserItem
+                                    id={divis.id}
+                                    title={divis.title}
+                                    class="division"
+                                    //check={props.check}
+                                    isOn={divisionsOn.includes(divis.id) ? true : false}
+                                />}
                             <ul className="sections">
-                                {divis.sections.items.map((sec) => <BrowserItem id={sec.id} title={sec.title} class="section" check={props.check} isOn={props.divisionsOn.includes(sec.id) ? true : false} />)}
+                                {divis.sections.items.map((sec) => {
+                                    return (
+                                        <BrowserItem
+                                            id={sec.id}
+                                            title={sec.title}
+                                            class="section"
+                                            //check={props.check} 
+                                            isOn={divisionsOn.includes(sec.id) ? true : false}
+                                        />
+                                    )
+                                })}
                             </ul>
                         </section>
                     )
