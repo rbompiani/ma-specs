@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { SpecContext } from '../context/SpecContext'
+import { SpecContext } from '../../context/SpecContext'
 //import { attachEventProps } from '@aws-amplify/ui-react/lib-esm/react-component-lib/utils';
 
 const BrowserItem = (props) => {
@@ -7,7 +7,11 @@ const BrowserItem = (props) => {
     const sectionClickHandler = useContext(SpecContext).sectionClickHandler
 
     return (
-        <li className={`browserItem ${props.class} ${!props.isOn ? "inactive" : ""} `}>
+        <li
+            className={
+                `browserItem ${props.class} 
+                ${!props.isOn && "inactive"}`
+            }>
             <input
                 type="checkbox"
                 key={props.id}
@@ -18,6 +22,7 @@ const BrowserItem = (props) => {
                 checked={props.isOn}
             />
             <label onClick={() => sectionClickHandler(props.id)} >{props.id} - {props.title}</label>
+            {props.toggleExpanded && <div class={props.isExpanded ? "arrow-up" : "arrow-down"} onClick={props.toggleExpanded}></div>}
         </li>
     )
 }

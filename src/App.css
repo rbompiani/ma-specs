@@ -14,23 +14,6 @@ h1 {
   font-size: 36px
 }
 
-.divBrowser {
-  border: 1px solid red
-}
-
-.divBrowser ul  {
-  list-style-type: none;
-  padding: 0px;
-}
-
-.sections {
-  margin: 0px 0px 10px 24px;
-}
-
-.browserItem:hover {
-  background-color: #f3f3f3;
-}
-
 .sectionContent {
   border: 1px solid green
 }
@@ -49,20 +32,11 @@ aside {
   width: 12px;
 }
 
-.division {
-  font-size: 16px
-}
-
-.section {
-  font-size: 12px
-}
-
 .inactive {
   color: #999999;
 }
 
-.expanded {
-  border: 1px solid #999999
+.hidden {
+  display: none;
 }
-
 

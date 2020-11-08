@@ -3,7 +3,7 @@ import React from 'react'
 // component imports
 import Header from '../containers/Header'
 import Title from '../containers/Title'
-import DivisionBrowser from '../containers/DivisionBrowser'
+import DivisionBrowser from '../containers/divisionBrowser/DivisionBrowser'
 import SectionContent from '../containers/SectionContent'
 import Notes from '../containers/Notes'
 
