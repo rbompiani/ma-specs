@@ -13,7 +13,7 @@ const DivisionBrowser = (props) => {
             <ul className="divisions">
                 {divisions.map((division) => {
                     return (
-                        <DivisionWrapper {...division} />
+                        <DivisionWrapper {...division} key={division.id} />
                     )
                 })}
             </ul>

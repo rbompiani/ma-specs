@@ -11,9 +11,10 @@ import {
     partsByNumber,
     getParagraph,
     listParagraphs,
-    listSubparagraphs
+    listSubparagraphs,
 } from '../graphql/queries'
 
+import { updateProject } from '../graphql/mutations'
 
 export const SpecContext = createContext();
 
@@ -77,13 +78,17 @@ const SpecContextProvider = (props) => {
     )
 
     //-------- HANDLERS --------//
-    const checkHandler = (id, isOn) => {
+    const checkHandler = async (id, isOn) => {
         const oldDivisions = project.divisionsOn
+        let newDivisions;
         if (isOn) {
-            setProject({ ...project, divisionsOn: oldDivisions.filter(div => div != id) });
+            newDivisions = oldDivisions.filter(div => div != id)
         } else {
-            setProject({ ...project, divisionsOn: [...oldDivisions, id] })
+            newDivisions = [...oldDivisions, id]
         }
+        console.log(newDivisions)
+        const result = await API.graphql(graphqlOperation(updateProject, { input: { id: project.id, divisionsOn: newDivisions } }))
+        setProject({ ...project, divisionsOn: newDivisions });
     }
 
 
