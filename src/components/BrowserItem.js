@@ -4,18 +4,20 @@ import { SpecContext } from '../context/SpecContext'
 
 const BrowserItem = (props) => {
     const checkHandler = useContext(SpecContext).checkHandler
+    const sectionClickHandler = useContext(SpecContext).sectionClickHandler
 
     return (
         <li className={`browserItem ${props.class} ${!props.isOn ? "inactive" : ""} `}>
             <input
                 type="checkbox"
+                key={props.id}
                 id={props.id}
                 value={props.id}
                 className={`checkbox-${props.class} `}
                 onChange={(e) => checkHandler(props.id, props.isOn)}
                 checked={props.isOn}
             />
-            <label>{props.id} - {props.title}</label>
+            <label onClick={() => sectionClickHandler(props.id)} >{props.id} - {props.title}</label>
         </li>
     )
 }

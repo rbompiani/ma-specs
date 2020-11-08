@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { useContext } from 'react'
+import { SpecContext } from '../context/SpecContext'
 
-const Title = (props) => {
+const Title = () => {
+    const currentSection = useContext(SpecContext).currentSection
     return (
-        <h1>{props.id} - {props.title}</h1>
+        <h1>{currentSection.id} - {currentSection.title}</h1>
     )
 }
 

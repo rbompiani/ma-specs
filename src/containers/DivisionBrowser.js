@@ -12,23 +12,22 @@ const DivisionBrowser = (props) => {
             <ul className="divisions">
                 {divisions.map((divis) => {
                     return (
-                        <section>
+                        <section key={divis.id}>
                             {divisions &&
                                 <BrowserItem
                                     id={divis.id}
                                     title={divis.title}
                                     class="division"
-                                    //check={props.check}
                                     isOn={divisionsOn.includes(divis.id) ? true : false}
                                 />}
                             <ul className="sections">
                                 {divis.sections.items.map((sec) => {
                                     return (
                                         <BrowserItem
+                                            key={sec.id}
                                             id={sec.id}
                                             title={sec.title}
                                             class="section"
-                                            //check={props.check} 
                                             isOn={divisionsOn.includes(sec.id) ? true : false}
                                         />
                                     )

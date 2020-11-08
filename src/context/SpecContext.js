@@ -18,6 +18,7 @@ import {
 export const SpecContext = createContext();
 
 const SpecContextProvider = (props) => {
+
     //-------- STATE --------//
 
     // outline state
@@ -85,8 +86,28 @@ const SpecContextProvider = (props) => {
         }
     }
 
+
+    const sectionClickHandler = (id) => {
+        let divisionId;
+        let sectionId;
+
+        if (id.length > 2) {
+            divisionId = id.slice(0, 2)
+            sectionId = id
+        } else {
+            divisionId = id
+            sectionId = id.concat("0000")
+        }
+
+        const containingDivision = allDivisions.find(div => div.id == divisionId)
+        const selectedSection = containingDivision.sections.items.find(sect => sect.id == sectionId)
+
+        setCurrentSection(selectedSection);
+    }
+
+
     return (
-        <SpecContext.Provider value={{ allDivisions, parts, paragraphs, project, currentSection, checkHandler }}>
+        <SpecContext.Provider value={{ allDivisions, parts, paragraphs, project, currentSection, checkHandler, sectionClickHandler }}>
             {props.children}
         </SpecContext.Provider>
     );
