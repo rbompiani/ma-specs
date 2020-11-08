@@ -9,10 +9,15 @@ const SectionContent = () => {
 
     return (
         <div className="sectionContent" >
-            test
-            <ol>
-                {parts.map(part => <li className="part">Part {part.id} {part.title} </li>)}
-            </ol>
+
+            {parts.map((p) => {
+                return (
+                    <div>
+                        <div>Part {p.id} - {p.title}</div>
+                        {paragraphs.filter(e => e.part.id == p.id).map(par => <div>{par.title}</div>)}
+                    </div>
+                )
+            })}
         </div>
     )
 }
