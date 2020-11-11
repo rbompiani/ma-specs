@@ -1,6 +1,7 @@
 import React, { useContext, useState } from 'react'
 import { SpecContext } from '../../context/SpecContext'
 import BrowserItem from './BrowserItem'
+import AddSection from './AddSection'
 
 const DivisionWrapper = (props) => {
     const divisionsOn = useContext(SpecContext).project.divisionsOn;
@@ -37,8 +38,11 @@ const DivisionWrapper = (props) => {
                             />
                         )
                     })
+
                 }
+                <AddSection id={props.id} />
             </ul>
+
 
         </section>
     )
