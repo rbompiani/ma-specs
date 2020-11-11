@@ -41,7 +41,9 @@ const SpecContextProvider = (props) => {
         const fetchOutline = async () => {
             const divisionResults = await API.graphql(graphqlOperation(divisionsByNumber, { baseType: "Division" }));
             const partResults = await API.graphql(graphqlOperation(partsByNumber, { baseType: "Part" }));
-            setAllDivisions(divisionResults.data.divisionsByNumber.items);
+            let tempDivisions = divisionResults.data.divisionsByNumber.items;
+            tempDivisions.map(div => { div.sections.items.sort((a, b) => a.id - b.id) });
+            setAllDivisions(tempDivisions);
             setParts(partResults.data.partsByNumber.items);
         }
         fetchOutline();
