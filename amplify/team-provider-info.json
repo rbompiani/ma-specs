@@ -1,19 +1,19 @@
 {
     "dev": {
         "awscloudformation": {
-            "AuthRoleName": "amplify-maspecs-dev-114609-authRole",
-            "UnauthRoleArn": "arn:aws:iam::614993782651:role/amplify-maspecs-dev-114609-unauthRole",
-            "AuthRoleArn": "arn:aws:iam::614993782651:role/amplify-maspecs-dev-114609-authRole",
+            "AuthRoleName": "amplify-maspecs-dev-185042-authRole",
+            "UnauthRoleArn": "arn:aws:iam::614993782651:role/amplify-maspecs-dev-185042-unauthRole",
+            "AuthRoleArn": "arn:aws:iam::614993782651:role/amplify-maspecs-dev-185042-authRole",
             "Region": "us-west-2",
-            "DeploymentBucketName": "amplify-maspecs-dev-114609-deployment",
-            "UnauthRoleName": "amplify-maspecs-dev-114609-unauthRole",
-            "StackName": "amplify-maspecs-dev-114609",
-            "StackId": "arn:aws:cloudformation:us-west-2:614993782651:stack/amplify-maspecs-dev-114609/92a0ca90-ed4c-11ea-83da-0a69c8c90ac5",
-            "AmplifyAppId": "dinrv77pi3l52"
+            "DeploymentBucketName": "amplify-maspecs-dev-185042-deployment",
+            "UnauthRoleName": "amplify-maspecs-dev-185042-unauthRole",
+            "StackName": "amplify-maspecs-dev-185042",
+            "StackId": "arn:aws:cloudformation:us-west-2:614993782651:stack/amplify-maspecs-dev-185042/dc18c200-2491-11eb-a45e-0a2139e0d637",
+            "AmplifyAppId": "d34lk99hral03r"
         },
         "categories": {
             "auth": {
-                "maspecs16ab8784": {}
+                "maspecsbca673d3": {}
             }
         }
     }

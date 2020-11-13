@@ -22,7 +22,7 @@ const BrowserItem = (props) => {
                 checked={props.isOn}
             />
             <label onClick={() => sectionClickHandler(props.id)} >{props.id} - {props.title}</label>
-            {props.toggleExpanded && <div class={props.isExpanded ? "arrow-up" : "arrow-down"} onClick={props.toggleExpanded}></div>}
+            {props.toggleExpanded && <div className={props.isExpanded ? "arrow-up" : "arrow-down"} onClick={props.toggleExpanded}></div>}
         </li>
     )
 }

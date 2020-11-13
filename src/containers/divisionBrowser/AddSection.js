@@ -24,7 +24,7 @@ const AddSection = (props) => {
     const submitSectionHandler = async (e) => {
         e.preventDefault();
         console.log("Adding this to the database:", newSection)
-        const result = await API.graphql(graphqlOperation(createSection, { input: newSection }))
+        await API.graphql(graphqlOperation(createSection, { input: newSection }))
     }
 
     return (

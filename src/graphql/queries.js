@@ -12,16 +12,7 @@ export const getProject = /* GraphQL */ `
       content {
         items {
           id
-          section {
-            id
-          }
-          paragraph {
-            id
-            part {
-              id
-            }
-          }
-          orderInParagraph
+          orderInArticle
           listTier
           content
           isOn
@@ -92,6 +83,10 @@ export const listDivisions = /* GraphQL */ `
         id
         title
         sections {
+          items {
+            id
+            title
+          }
           nextToken
         }
         baseType
@@ -170,6 +165,7 @@ export const getPart = /* GraphQL */ `
         items {
           id
           title
+          orderInPart
           isStandard
           baseType
           createdAt
@@ -204,9 +200,9 @@ export const listParts = /* GraphQL */ `
     }
   }
 `;
-export const getParagraph = /* GraphQL */ `
-  query GetParagraph($id: ID!) {
-    getParagraph(id: $id) {
+export const getArticle = /* GraphQL */ `
+  query GetArticle($id: ID!) {
+    getArticle(id: $id) {
       id
       title
       part {
@@ -219,6 +215,7 @@ export const getParagraph = /* GraphQL */ `
         createdAt
         updatedAt
       }
+      orderInPart
       isStandard
       baseType
       createdAt
@@ -226,13 +223,13 @@ export const getParagraph = /* GraphQL */ `
     }
   }
 `;
-export const listParagraphs = /* GraphQL */ `
-  query ListParagraphs(
-    $filter: ModelParagraphFilterInput
+export const listArticles = /* GraphQL */ `
+  query ListArticles(
+    $filter: ModelArticleFilterInput
     $limit: Int
     $nextToken: String
   ) {
-    listParagraphs(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    listArticles(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
         id
         title
@@ -243,6 +240,7 @@ export const listParagraphs = /* GraphQL */ `
           createdAt
           updatedAt
         }
+        orderInPart
         isStandard
         baseType
         createdAt
@@ -252,9 +250,9 @@ export const listParagraphs = /* GraphQL */ `
     }
   }
 `;
-export const getSubparagraph = /* GraphQL */ `
-  query GetSubparagraph($id: ID!) {
-    getSubparagraph(id: $id) {
+export const getParagraph = /* GraphQL */ `
+  query GetParagraph($id: ID!) {
+    getParagraph(id: $id) {
       id
       project {
         id
@@ -286,7 +284,7 @@ export const getSubparagraph = /* GraphQL */ `
         createdAt
         updatedAt
       }
-      paragraph {
+      article {
         id
         title
         part {
@@ -296,12 +294,13 @@ export const getSubparagraph = /* GraphQL */ `
           createdAt
           updatedAt
         }
+        orderInPart
         isStandard
         baseType
         createdAt
         updatedAt
       }
-      orderInParagraph
+      orderInArticle
       listTier
       content
       isOn
@@ -310,13 +309,13 @@ export const getSubparagraph = /* GraphQL */ `
     }
   }
 `;
-export const listSubparagraphs = /* GraphQL */ `
-  query ListSubparagraphs(
-    $filter: ModelSubparagraphFilterInput
+export const listParagraphs = /* GraphQL */ `
+  query ListParagraphs(
+    $filter: ModelParagraphFilterInput
     $limit: Int
     $nextToken: String
   ) {
-    listSubparagraphs(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    listParagraphs(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
         id
         project {
@@ -336,15 +335,16 @@ export const listSubparagraphs = /* GraphQL */ `
           createdAt
           updatedAt
         }
-        paragraph {
+        article {
           id
           title
+          orderInPart
           isStandard
           baseType
           createdAt
           updatedAt
         }
-        orderInParagraph
+        orderInArticle
         listTier
         content
         isOn
@@ -410,11 +410,11 @@ export const divisionsByNumber = /* GraphQL */ `
         id
         title
         sections {
-          nextToken
           items {
             id
             title
           }
+          nextToken
         }
         baseType
         createdAt
