@@ -20,9 +20,8 @@ const SpecContextProvider = (props) => {
     //-------- STATE --------//
 
     // outline state
-    const [allDivisions, setAllDivisions] = useState([]);
+    const [divisions, setDivisions] = useState([]);
     const [parts, setParts] = useState([]);
-    const [articles, setArticles] = useState([]);
 
     // project state
     const [project, setProject] = useState({})
@@ -38,16 +37,14 @@ const SpecContextProvider = (props) => {
         const fetchOutline = async () => {
             const divisionResults = await API.graphql(graphqlOperation(divisionsByNumber, { baseType: "division" }));
             const partResults = await API.graphql(graphqlOperation(partsByNumber, { baseType: "part" }));
-            const articleResults = await API.graphql(graphqlOperation(listArticles));
             let tempDivisions = divisionResults.data.divisionsByNumber.items;
             tempDivisions.map(div => {
                 return (
                     div.sections.items.sort((a, b) => a.id - b.id)
                 )
             });
-            setAllDivisions(tempDivisions);
+            setDivisions(tempDivisions);
             setParts(partResults.data.partsByNumber.items);
-            setArticles(articleResults.data.listArticles.items.sort((a, b) => a.orderInPart - b.orderInPart));
         }
         fetchOutline();
         fetchProject();
@@ -90,7 +87,7 @@ const SpecContextProvider = (props) => {
             sectionId = id.concat("0000")
         }
 
-        const containingDivision = allDivisions.find(div => div.id === divisionId)
+        const containingDivision = divisions.find(div => div.id === divisionId)
         const selectedSection = containingDivision.sections.items.find(sect => sect.id === sectionId)
 
         setCurrentSection(selectedSection);
@@ -98,7 +95,7 @@ const SpecContextProvider = (props) => {
 
 
     return (
-        <SpecContext.Provider value={{ allDivisions, parts, articles, project, currentSection, checkHandler, sectionClickHandler }}>
+        <SpecContext.Provider value={{ divisions, parts, project, currentSection, checkHandler, sectionClickHandler }}>
             {props.children}
         </SpecContext.Provider>
     );

@@ -270,7 +270,7 @@ export const createPart = /* GraphQL */ `
     createPart(input: $input, condition: $condition) {
       id
       title
-      paragraphs {
+      articles {
         items {
           id
           title
@@ -296,7 +296,7 @@ export const updatePart = /* GraphQL */ `
     updatePart(input: $input, condition: $condition) {
       id
       title
-      paragraphs {
+      articles {
         items {
           id
           title
@@ -322,7 +322,7 @@ export const deletePart = /* GraphQL */ `
     deletePart(input: $input, condition: $condition) {
       id
       title
-      paragraphs {
+      articles {
         items {
           id
           title
@@ -351,7 +351,7 @@ export const createArticle = /* GraphQL */ `
       part {
         id
         title
-        paragraphs {
+        articles {
           nextToken
         }
         baseType
@@ -361,6 +361,17 @@ export const createArticle = /* GraphQL */ `
       orderInPart
       isStandard
       baseType
+      paragraphHints {
+        items {
+          id
+          orderInArticle
+          content
+          isOn
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
       createdAt
       updatedAt
     }
@@ -377,7 +388,7 @@ export const updateArticle = /* GraphQL */ `
       part {
         id
         title
-        paragraphs {
+        articles {
           nextToken
         }
         baseType
@@ -387,6 +398,17 @@ export const updateArticle = /* GraphQL */ `
       orderInPart
       isStandard
       baseType
+      paragraphHints {
+        items {
+          id
+          orderInArticle
+          content
+          isOn
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
       createdAt
       updatedAt
     }
@@ -403,7 +425,7 @@ export const deleteArticle = /* GraphQL */ `
       part {
         id
         title
-        paragraphs {
+        articles {
           nextToken
         }
         baseType
@@ -413,6 +435,17 @@ export const deleteArticle = /* GraphQL */ `
       orderInPart
       isStandard
       baseType
+      paragraphHints {
+        items {
+          id
+          orderInArticle
+          content
+          isOn
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
       createdAt
       updatedAt
     }
@@ -468,6 +501,9 @@ export const createParagraph = /* GraphQL */ `
         orderInPart
         isStandard
         baseType
+        paragraphHints {
+          nextToken
+        }
         createdAt
         updatedAt
       }
@@ -530,6 +566,9 @@ export const updateParagraph = /* GraphQL */ `
         orderInPart
         isStandard
         baseType
+        paragraphHints {
+          nextToken
+        }
         createdAt
         updatedAt
       }
@@ -592,11 +631,116 @@ export const deleteParagraph = /* GraphQL */ `
         orderInPart
         isStandard
         baseType
+        paragraphHints {
+          nextToken
+        }
         createdAt
         updatedAt
       }
       orderInArticle
       listTier
+      content
+      isOn
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const createParagraphHint = /* GraphQL */ `
+  mutation CreateParagraphHint(
+    $input: CreateParagraphHintInput!
+    $condition: ModelParagraphHintConditionInput
+  ) {
+    createParagraphHint(input: $input, condition: $condition) {
+      id
+      article {
+        id
+        title
+        part {
+          id
+          title
+          baseType
+          createdAt
+          updatedAt
+        }
+        orderInPart
+        isStandard
+        baseType
+        paragraphHints {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      orderInArticle
+      content
+      isOn
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const updateParagraphHint = /* GraphQL */ `
+  mutation UpdateParagraphHint(
+    $input: UpdateParagraphHintInput!
+    $condition: ModelParagraphHintConditionInput
+  ) {
+    updateParagraphHint(input: $input, condition: $condition) {
+      id
+      article {
+        id
+        title
+        part {
+          id
+          title
+          baseType
+          createdAt
+          updatedAt
+        }
+        orderInPart
+        isStandard
+        baseType
+        paragraphHints {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      orderInArticle
+      content
+      isOn
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const deleteParagraphHint = /* GraphQL */ `
+  mutation DeleteParagraphHint(
+    $input: DeleteParagraphHintInput!
+    $condition: ModelParagraphHintConditionInput
+  ) {
+    deleteParagraphHint(input: $input, condition: $condition) {
+      id
+      article {
+        id
+        title
+        part {
+          id
+          title
+          baseType
+          createdAt
+          updatedAt
+        }
+        orderInPart
+        isStandard
+        baseType
+        paragraphHints {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      orderInArticle
       content
       isOn
       createdAt

@@ -1,0 +1,16 @@
+.part {
+    font-size: 14px;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+}
+
+.article {
+    font-size: 12px;
+    margin-left: 24px;
+    margin-bottom: 12px;
+}
+
+.paragraph {
+    margin-left: 48px;
+    margin-bottom: 12px;
+}

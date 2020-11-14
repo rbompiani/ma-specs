@@ -6,7 +6,7 @@ import DivisionWrapper from './DivisionWrapper'
 import './DivisionBrowser.css'
 
 const DivisionBrowser = (props) => {
-    const divisions = useContext(SpecContext).allDivisions;
+    const divisions = useContext(SpecContext).divisions;
 
     return (
         <article className="divBrowser">

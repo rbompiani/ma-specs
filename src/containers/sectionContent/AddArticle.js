@@ -29,8 +29,8 @@ const AddArticle = (props) => {
     }
 
     return (
-        <div>
-            <input type="tet" name="title" value={newArticle.title} onChange={articleInputHandler} />
+        <div className="article">
+            <input type="text" name="title" value={newArticle.title} onChange={articleInputHandler} />
             <button onClick={submitArticleHandler}>+</button>
         </div>
     )

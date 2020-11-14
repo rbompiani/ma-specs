@@ -83,10 +83,6 @@ export const listDivisions = /* GraphQL */ `
         id
         title
         sections {
-          items {
-            id
-            title
-          }
           nextToken
         }
         baseType
@@ -161,7 +157,7 @@ export const getPart = /* GraphQL */ `
     getPart(id: $id) {
       id
       title
-      paragraphs {
+      articles {
         items {
           id
           title
@@ -189,7 +185,18 @@ export const listParts = /* GraphQL */ `
       items {
         id
         title
-        paragraphs {
+        articles {
+          items {
+            orderInPart
+            isStandard
+            baseType
+            paragraphHints {
+              items {
+                orderInArticle
+              }
+              nextToken
+            }
+          }
           nextToken
         }
         baseType
@@ -208,7 +215,7 @@ export const getArticle = /* GraphQL */ `
       part {
         id
         title
-        paragraphs {
+        articles {
           nextToken
         }
         baseType
@@ -218,6 +225,17 @@ export const getArticle = /* GraphQL */ `
       orderInPart
       isStandard
       baseType
+      paragraphHints {
+        items {
+          id
+          orderInArticle
+          content
+          isOn
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
       createdAt
       updatedAt
     }
@@ -243,6 +261,9 @@ export const listArticles = /* GraphQL */ `
         orderInPart
         isStandard
         baseType
+        paragraphHints {
+          nextToken
+        }
         createdAt
         updatedAt
       }
@@ -297,6 +318,9 @@ export const getParagraph = /* GraphQL */ `
         orderInPart
         isStandard
         baseType
+        paragraphHints {
+          nextToken
+        }
         createdAt
         updatedAt
       }
@@ -346,6 +370,65 @@ export const listParagraphs = /* GraphQL */ `
         }
         orderInArticle
         listTier
+        content
+        isOn
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
+export const getParagraphHint = /* GraphQL */ `
+  query GetParagraphHint($id: ID!) {
+    getParagraphHint(id: $id) {
+      id
+      article {
+        id
+        title
+        part {
+          id
+          title
+          baseType
+          createdAt
+          updatedAt
+        }
+        orderInPart
+        isStandard
+        baseType
+        paragraphHints {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      orderInArticle
+      content
+      isOn
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const listParagraphHints = /* GraphQL */ `
+  query ListParagraphHints(
+    $filter: ModelParagraphHintFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listParagraphHints(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        article {
+          id
+          title
+          orderInPart
+          isStandard
+          baseType
+          createdAt
+          updatedAt
+        }
+        orderInArticle
         content
         isOn
         createdAt
@@ -410,7 +493,7 @@ export const divisionsByNumber = /* GraphQL */ `
         id
         title
         sections {
-          items {
+          items{
             id
             title
           }
@@ -444,7 +527,21 @@ export const partsByNumber = /* GraphQL */ `
       items {
         id
         title
-        paragraphs {
+        articles {
+          items{
+            id
+            title
+            orderInPart
+            isStandard
+            baseType
+            paragraphHints {
+              items{
+                orderInArticle
+                content
+              }
+              nextToken
+            }
+          }
           nextToken
         }
         baseType

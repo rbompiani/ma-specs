@@ -33,7 +33,7 @@ type Part @model
  {
   id: ID!
   title: String!
-  paragraphs: [Article] @connection(name:"partArticles")
+  articles: [Article] @connection(name:"partArticles")
   baseType: String!
  }
 
@@ -45,6 +45,7 @@ type Article @model
   orderInPart: String!
   isStandard: Boolean!
   baseType: String!
+  paragraphHints: [ParagraphHint] @connection(name:"articleParagraphs")
 }
 
 type Paragraph @model
@@ -55,6 +56,15 @@ type Paragraph @model
   article: Article! @connection
   orderInArticle: Int!
   listTier: Int!
+  content: String!
+  isOn: Boolean!
+}
+
+type ParagraphHint @model
+{
+  id: ID!
+  article: Article! @connection(name:"articleParagraphs")
+  orderInArticle: Int!
   content: String!
   isOn: Boolean!
 }

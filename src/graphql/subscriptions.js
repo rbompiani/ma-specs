@@ -240,7 +240,7 @@ export const onCreatePart = /* GraphQL */ `
     onCreatePart {
       id
       title
-      paragraphs {
+      articles {
         items {
           id
           title
@@ -263,7 +263,7 @@ export const onUpdatePart = /* GraphQL */ `
     onUpdatePart {
       id
       title
-      paragraphs {
+      articles {
         items {
           id
           title
@@ -286,7 +286,7 @@ export const onDeletePart = /* GraphQL */ `
     onDeletePart {
       id
       title
-      paragraphs {
+      articles {
         items {
           id
           title
@@ -312,7 +312,7 @@ export const onCreateArticle = /* GraphQL */ `
       part {
         id
         title
-        paragraphs {
+        articles {
           nextToken
         }
         baseType
@@ -322,6 +322,17 @@ export const onCreateArticle = /* GraphQL */ `
       orderInPart
       isStandard
       baseType
+      paragraphHints {
+        items {
+          id
+          orderInArticle
+          content
+          isOn
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
       createdAt
       updatedAt
     }
@@ -335,7 +346,7 @@ export const onUpdateArticle = /* GraphQL */ `
       part {
         id
         title
-        paragraphs {
+        articles {
           nextToken
         }
         baseType
@@ -345,6 +356,17 @@ export const onUpdateArticle = /* GraphQL */ `
       orderInPart
       isStandard
       baseType
+      paragraphHints {
+        items {
+          id
+          orderInArticle
+          content
+          isOn
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
       createdAt
       updatedAt
     }
@@ -358,7 +380,7 @@ export const onDeleteArticle = /* GraphQL */ `
       part {
         id
         title
-        paragraphs {
+        articles {
           nextToken
         }
         baseType
@@ -368,6 +390,17 @@ export const onDeleteArticle = /* GraphQL */ `
       orderInPart
       isStandard
       baseType
+      paragraphHints {
+        items {
+          id
+          orderInArticle
+          content
+          isOn
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
       createdAt
       updatedAt
     }
@@ -420,6 +453,9 @@ export const onCreateParagraph = /* GraphQL */ `
         orderInPart
         isStandard
         baseType
+        paragraphHints {
+          nextToken
+        }
         createdAt
         updatedAt
       }
@@ -479,6 +515,9 @@ export const onUpdateParagraph = /* GraphQL */ `
         orderInPart
         isStandard
         baseType
+        paragraphHints {
+          nextToken
+        }
         createdAt
         updatedAt
       }
@@ -538,11 +577,107 @@ export const onDeleteParagraph = /* GraphQL */ `
         orderInPart
         isStandard
         baseType
+        paragraphHints {
+          nextToken
+        }
         createdAt
         updatedAt
       }
       orderInArticle
       listTier
+      content
+      isOn
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onCreateParagraphHint = /* GraphQL */ `
+  subscription OnCreateParagraphHint {
+    onCreateParagraphHint {
+      id
+      article {
+        id
+        title
+        part {
+          id
+          title
+          baseType
+          createdAt
+          updatedAt
+        }
+        orderInPart
+        isStandard
+        baseType
+        paragraphHints {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      orderInArticle
+      content
+      isOn
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onUpdateParagraphHint = /* GraphQL */ `
+  subscription OnUpdateParagraphHint {
+    onUpdateParagraphHint {
+      id
+      article {
+        id
+        title
+        part {
+          id
+          title
+          baseType
+          createdAt
+          updatedAt
+        }
+        orderInPart
+        isStandard
+        baseType
+        paragraphHints {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      orderInArticle
+      content
+      isOn
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onDeleteParagraphHint = /* GraphQL */ `
+  subscription OnDeleteParagraphHint {
+    onDeleteParagraphHint {
+      id
+      article {
+        id
+        title
+        part {
+          id
+          title
+          baseType
+          createdAt
+          updatedAt
+        }
+        orderInPart
+        isStandard
+        baseType
+        paragraphHints {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      orderInArticle
       content
       isOn
       createdAt
