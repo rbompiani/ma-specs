@@ -149,27 +149,7 @@ export const onCreateSection = /* GraphQL */ `
       title
       division {
         id
-        title
-        sections {
-          nextToken
-        }
-        baseType
-        createdAt
-        updatedAt
       }
-      baseType
-      parts {
-        items {
-          id
-          title
-          baseType
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
-      createdAt
-      updatedAt
     }
   }
 `;

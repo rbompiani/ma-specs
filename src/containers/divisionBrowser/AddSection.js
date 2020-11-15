@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 import { API, graphqlOperation } from 'aws-amplify'
 
 // graphql imports
-import { createProject, createSection } from '../../graphql/mutations'
+import { createSection } from '../../graphql/mutations'
 
 
 const AddSection = (props) => {
@@ -23,7 +23,6 @@ const AddSection = (props) => {
 
     const submitSectionHandler = async (e) => {
         e.preventDefault();
-        console.log("Adding this to the database:", newSection)
         await API.graphql(graphqlOperation(createSection, { input: newSection }))
     }
 

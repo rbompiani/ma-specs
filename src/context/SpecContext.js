@@ -1,4 +1,4 @@
-import React, { createContext, useState, useEffect } from 'react';
+import React, { createContext, useState, useEffect, createRef, useRef } from 'react';
 
 // AWS imports
 import { API, graphqlOperation } from 'aws-amplify'
@@ -10,8 +10,8 @@ import {
     partsByNumber,
     listArticles,
 } from '../graphql/queries'
-
 import { updateProject } from '../graphql/mutations'
+import { onCreateSection } from '../graphql/subscriptions'
 
 export const SpecContext = createContext();
 
@@ -22,6 +22,9 @@ const SpecContextProvider = (props) => {
     // outline state
     const [divisions, setDivisions] = useState([]);
     const [parts, setParts] = useState([]);
+
+    const divisionsRef = useRef();
+    divisionsRef.current = divisions;
 
     // project state
     const [project, setProject] = useState({})
@@ -34,23 +37,36 @@ const SpecContextProvider = (props) => {
 
     // fetch outline data
     useEffect(() => {
-        const fetchOutline = async () => {
-            const divisionResults = await API.graphql(graphqlOperation(divisionsByNumber, { baseType: "division" }));
-            const partResults = await API.graphql(graphqlOperation(partsByNumber, { baseType: "part" }));
-            let tempDivisions = divisionResults.data.divisionsByNumber.items;
-            tempDivisions.map(div => {
-                return (
-                    div.sections.items.sort((a, b) => a.id - b.id)
-                )
-            });
-            setDivisions(tempDivisions);
-            setParts(partResults.data.partsByNumber.items);
-        }
         fetchOutline();
         fetchProject();
+        API.graphql(graphqlOperation(onCreateSection)).subscribe({
+            next: sectionData => {
+                console.log(sectionData.value.data.onCreateSection)
+                const newSection = sectionData.value.data.onCreateSection
+                let tempDivisions = [...divisionsRef.current]
+                const divIndex = tempDivisions.findIndex(({ id }) => id == newSection.division.id)
+                delete newSection.division
+                tempDivisions[divIndex].sections.items.push(newSection)
+                console.log("here are the new divisions", tempDivisions)
+                setDivisions(tempDivisions)
+            }
+        })
     },
         []
     )
+
+    const fetchOutline = async () => {
+        const divisionResults = await API.graphql(graphqlOperation(divisionsByNumber, { baseType: "division" }));
+        const partResults = await API.graphql(graphqlOperation(partsByNumber, { baseType: "part" }));
+        let tempDivisions = divisionResults.data.divisionsByNumber.items;
+        tempDivisions.map(div => {
+            return (
+                div.sections.items.sort((a, b) => a.id - b.id)
+            )
+        });
+        setDivisions(tempDivisions);
+        setParts(partResults.data.partsByNumber.items);
+    }
 
     // fetch project specific data
     const fetchProject = async () => {

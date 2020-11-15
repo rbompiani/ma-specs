@@ -6,12 +6,12 @@ import DivisionWrapper from './DivisionWrapper'
 import './DivisionBrowser.css'
 
 const DivisionBrowser = (props) => {
-    const divisions = useContext(SpecContext).divisions;
+    const specContext = useContext(SpecContext);
 
     return (
         <article className="divBrowser">
             <ul className="divisions">
-                {divisions.map((division) => {
+                {specContext.divisions.map((division) => {
                     return (
                         <DivisionWrapper {...division} key={division.id} />
                     )
