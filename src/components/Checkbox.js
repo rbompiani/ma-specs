@@ -1,8 +1,15 @@
 import React from 'react'
 
-const Checkbox = () => {
+const Checkbox = (props) => {
     return (
-        <div className="checkBox"></div>
+        <input
+            type="checkbox"
+            id={props.id}
+            value={props.id}
+            className={`checkbox-${props.baseType} `}
+            onChange={(e) => checkHandler(props.id, props.isOn)}
+            checked={props.isOn}
+        />
     )
 }
 

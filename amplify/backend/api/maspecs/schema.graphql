@@ -3,9 +3,7 @@ type Project @model
 {
   id: ID!
   title: String!
-  divisionsOn: [String]
   sectionsOn: [String]
-  paragraphsOn: [String]
   content: [Paragraph] @connection(name:"projectParagraphs")
   baseType: String!
 }
@@ -67,4 +65,15 @@ type ParagraphHint @model
   orderInArticle: Int!
   content: String!
   isOn: Boolean!
+}
+
+type SectionContent @model
+{
+  id: ID!
+  project: Project! @connection
+  section: Section! @connection
+  partsOn: [String]
+  articlesOn: [String]
+  paragraphsOn: [String]
+  notes: String
 }

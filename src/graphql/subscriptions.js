@@ -6,9 +6,7 @@ export const onCreateProject = /* GraphQL */ `
     onCreateProject {
       id
       title
-      divisionsOn
       sectionsOn
-      paragraphsOn
       content {
         items {
           id
@@ -32,9 +30,7 @@ export const onUpdateProject = /* GraphQL */ `
     onUpdateProject {
       id
       title
-      divisionsOn
       sectionsOn
-      paragraphsOn
       content {
         items {
           id
@@ -58,9 +54,7 @@ export const onDeleteProject = /* GraphQL */ `
     onDeleteProject {
       id
       title
-      divisionsOn
       sectionsOn
-      paragraphsOn
       content {
         items {
           id
@@ -149,7 +143,27 @@ export const onCreateSection = /* GraphQL */ `
       title
       division {
         id
+        title
+        sections {
+          nextToken
+        }
+        baseType
+        createdAt
+        updatedAt
       }
+      baseType
+      parts {
+        items {
+          id
+          title
+          baseType
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      createdAt
+      updatedAt
     }
   }
 `;
@@ -393,9 +407,7 @@ export const onCreateParagraph = /* GraphQL */ `
       project {
         id
         title
-        divisionsOn
         sectionsOn
-        paragraphsOn
         content {
           nextToken
         }
@@ -455,9 +467,7 @@ export const onUpdateParagraph = /* GraphQL */ `
       project {
         id
         title
-        divisionsOn
         sectionsOn
-        paragraphsOn
         content {
           nextToken
         }
@@ -517,9 +527,7 @@ export const onDeleteParagraph = /* GraphQL */ `
       project {
         id
         title
-        divisionsOn
         sectionsOn
-        paragraphsOn
         content {
           nextToken
         }
@@ -660,6 +668,129 @@ export const onDeleteParagraphHint = /* GraphQL */ `
       orderInArticle
       content
       isOn
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onCreateSectionContent = /* GraphQL */ `
+  subscription OnCreateSectionContent {
+    onCreateSectionContent {
+      id
+      project {
+        id
+        title
+        sectionsOn
+        content {
+          nextToken
+        }
+        baseType
+        createdAt
+        updatedAt
+      }
+      section {
+        id
+        title
+        division {
+          id
+          title
+          baseType
+          createdAt
+          updatedAt
+        }
+        baseType
+        parts {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      partsOn
+      articlesOn
+      paragraphsOn
+      notes
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onUpdateSectionContent = /* GraphQL */ `
+  subscription OnUpdateSectionContent {
+    onUpdateSectionContent {
+      id
+      project {
+        id
+        title
+        sectionsOn
+        content {
+          nextToken
+        }
+        baseType
+        createdAt
+        updatedAt
+      }
+      section {
+        id
+        title
+        division {
+          id
+          title
+          baseType
+          createdAt
+          updatedAt
+        }
+        baseType
+        parts {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      partsOn
+      articlesOn
+      paragraphsOn
+      notes
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onDeleteSectionContent = /* GraphQL */ `
+  subscription OnDeleteSectionContent {
+    onDeleteSectionContent {
+      id
+      project {
+        id
+        title
+        sectionsOn
+        content {
+          nextToken
+        }
+        baseType
+        createdAt
+        updatedAt
+      }
+      section {
+        id
+        title
+        division {
+          id
+          title
+          baseType
+          createdAt
+          updatedAt
+        }
+        baseType
+        parts {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      partsOn
+      articlesOn
+      paragraphsOn
+      notes
       createdAt
       updatedAt
     }

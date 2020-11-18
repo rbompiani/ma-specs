@@ -4,7 +4,7 @@ import BrowserItem from './BrowserItem'
 import AddSection from './AddSection'
 
 const DivisionWrapper = (props) => {
-    const divisionsOn = useContext(SpecContext).project.divisionsOn;
+    const sectionsOn = useContext(SpecContext).project.sectionsOn;
     const [isExpanded, setIsExpanded] = useState(true);
 
     const toggleExpandedHandler = () => {
@@ -19,7 +19,7 @@ const DivisionWrapper = (props) => {
                 id={props.id}
                 title={props.title}
                 class="division"
-                isOn={divisionsOn.includes(props.id) ? true : false}
+                isOn={sectionsOn.includes(props.id)}
                 toggleExpanded={toggleExpandedHandler}
                 isExpanded={isExpanded}
             />
@@ -34,7 +34,8 @@ const DivisionWrapper = (props) => {
                                 id={sec.id}
                                 title={sec.title}
                                 class="section"
-                                isOn={divisionsOn.includes(sec.id) ? true : false}
+                                isOn={sectionsOn.includes(sec.id)}
+                                baseType={sec.baseType}
                             />
                         )
                     })

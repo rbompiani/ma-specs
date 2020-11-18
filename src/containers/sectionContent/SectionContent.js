@@ -7,11 +7,12 @@ import './SectionContent.css'
 const SectionContent = () => {
     const currentSection = useContext(SpecContext).currentSection;
     const parts = useContext(SpecContext).parts
+    const partsOn = useContext(SpecContext).currentSection.partsOn
 
     return (
         <div className="sectionContent" >
 
-            {currentSection.id && parts.map((p) => <PartContainer key={p.id} {...p} />)}
+            {currentSection.id && parts.map((p) => <PartContainer key={p.id} isOn={partsOn.includes(p.id)} {...p} />)}
 
         </div>
     )

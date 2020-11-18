@@ -3,7 +3,7 @@ import { SpecContext } from '../../context/SpecContext'
 //import { attachEventProps } from '@aws-amplify/ui-react/lib-esm/react-component-lib/utils';
 
 const BrowserItem = (props) => {
-    const checkHandler = useContext(SpecContext).checkHandler
+    const checkHandler = useContext(SpecContext).browserCheckHandler
     const sectionClickHandler = useContext(SpecContext).sectionClickHandler
 
     return (
@@ -18,7 +18,7 @@ const BrowserItem = (props) => {
                 id={props.id}
                 value={props.id}
                 className={`checkbox-${props.class} `}
-                onChange={(e) => checkHandler(props.id, props.isOn)}
+                onChange={(e) => checkHandler(props.id, props.isOn, "section")}
                 checked={props.isOn}
             />
             <label onClick={() => sectionClickHandler(props.id)} >{props.id} - {props.title}</label>

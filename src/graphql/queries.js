@@ -6,9 +6,7 @@ export const getProject = /* GraphQL */ `
     getProject(id: $id) {
       id
       title
-      divisionsOn
       sectionsOn
-      paragraphsOn
       content {
         items {
           id
@@ -37,9 +35,7 @@ export const listProjects = /* GraphQL */ `
       items {
         id
         title
-        divisionsOn
         sectionsOn
-        paragraphsOn
         content {
           nextToken
         }
@@ -186,17 +182,6 @@ export const listParts = /* GraphQL */ `
         id
         title
         articles {
-          items {
-            orderInPart
-            isStandard
-            baseType
-            paragraphHints {
-              items {
-                orderInArticle
-              }
-              nextToken
-            }
-          }
           nextToken
         }
         baseType
@@ -278,9 +263,7 @@ export const getParagraph = /* GraphQL */ `
       project {
         id
         title
-        divisionsOn
         sectionsOn
-        paragraphsOn
         content {
           nextToken
         }
@@ -345,9 +328,7 @@ export const listParagraphs = /* GraphQL */ `
         project {
           id
           title
-          divisionsOn
           sectionsOn
-          paragraphsOn
           baseType
           createdAt
           updatedAt
@@ -438,6 +419,82 @@ export const listParagraphHints = /* GraphQL */ `
     }
   }
 `;
+export const getSectionContent = /* GraphQL */ `
+  query GetSectionContent($id: ID!) {
+    getSectionContent(id: $id) {
+      id
+      project {
+        id
+        title
+        sectionsOn
+        content {
+          nextToken
+        }
+        baseType
+        createdAt
+        updatedAt
+      }
+      section {
+        id
+        title
+        division {
+          id
+          title
+          baseType
+          createdAt
+          updatedAt
+        }
+        baseType
+        parts {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      partsOn
+      articlesOn
+      paragraphsOn
+      notes
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const listSectionContents = /* GraphQL */ `
+  query ListSectionContents(
+    $filter: ModelSectionContentFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listSectionContents(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        project {
+          id
+          title
+          sectionsOn
+          baseType
+          createdAt
+          updatedAt
+        }
+        section {
+          id
+          title
+          baseType
+          createdAt
+          updatedAt
+        }
+        partsOn
+        articlesOn
+        paragraphsOn
+        notes
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
 export const projectsByNumber = /* GraphQL */ `
   query ProjectsByNumber(
     $baseType: String
@@ -458,9 +515,7 @@ export const projectsByNumber = /* GraphQL */ `
       items {
         id
         title
-        divisionsOn
         sectionsOn
-        paragraphsOn
         content {
           nextToken
         }
@@ -496,6 +551,7 @@ export const divisionsByNumber = /* GraphQL */ `
           items{
             id
             title
+            baseType
           }
           nextToken
         }
@@ -528,18 +584,15 @@ export const partsByNumber = /* GraphQL */ `
         id
         title
         articles {
-          items{
+          items {
             id
             title
-            orderInPart
-            isStandard
             baseType
             paragraphHints {
-              items{
-                orderInArticle
+              items {
+                id
                 content
               }
-              nextToken
             }
           }
           nextToken

@@ -9,9 +9,7 @@ export const createProject = /* GraphQL */ `
     createProject(input: $input, condition: $condition) {
       id
       title
-      divisionsOn
       sectionsOn
-      paragraphsOn
       content {
         items {
           id
@@ -38,9 +36,7 @@ export const updateProject = /* GraphQL */ `
     updateProject(input: $input, condition: $condition) {
       id
       title
-      divisionsOn
       sectionsOn
-      paragraphsOn
       content {
         items {
           id
@@ -67,9 +63,7 @@ export const deleteProject = /* GraphQL */ `
     deleteProject(input: $input, condition: $condition) {
       id
       title
-      divisionsOn
       sectionsOn
-      paragraphsOn
       content {
         items {
           id
@@ -461,9 +455,7 @@ export const createParagraph = /* GraphQL */ `
       project {
         id
         title
-        divisionsOn
         sectionsOn
-        paragraphsOn
         content {
           nextToken
         }
@@ -526,9 +518,7 @@ export const updateParagraph = /* GraphQL */ `
       project {
         id
         title
-        divisionsOn
         sectionsOn
-        paragraphsOn
         content {
           nextToken
         }
@@ -591,9 +581,7 @@ export const deleteParagraph = /* GraphQL */ `
       project {
         id
         title
-        divisionsOn
         sectionsOn
-        paragraphsOn
         content {
           nextToken
         }
@@ -743,6 +731,138 @@ export const deleteParagraphHint = /* GraphQL */ `
       orderInArticle
       content
       isOn
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const createSectionContent = /* GraphQL */ `
+  mutation CreateSectionContent(
+    $input: CreateSectionContentInput!
+    $condition: ModelSectionContentConditionInput
+  ) {
+    createSectionContent(input: $input, condition: $condition) {
+      id
+      project {
+        id
+        title
+        sectionsOn
+        content {
+          nextToken
+        }
+        baseType
+        createdAt
+        updatedAt
+      }
+      section {
+        id
+        title
+        division {
+          id
+          title
+          baseType
+          createdAt
+          updatedAt
+        }
+        baseType
+        parts {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      partsOn
+      articlesOn
+      paragraphsOn
+      notes
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const updateSectionContent = /* GraphQL */ `
+  mutation UpdateSectionContent(
+    $input: UpdateSectionContentInput!
+    $condition: ModelSectionContentConditionInput
+  ) {
+    updateSectionContent(input: $input, condition: $condition) {
+      id
+      project {
+        id
+        title
+        sectionsOn
+        content {
+          nextToken
+        }
+        baseType
+        createdAt
+        updatedAt
+      }
+      section {
+        id
+        title
+        division {
+          id
+          title
+          baseType
+          createdAt
+          updatedAt
+        }
+        baseType
+        parts {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      partsOn
+      articlesOn
+      paragraphsOn
+      notes
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const deleteSectionContent = /* GraphQL */ `
+  mutation DeleteSectionContent(
+    $input: DeleteSectionContentInput!
+    $condition: ModelSectionContentConditionInput
+  ) {
+    deleteSectionContent(input: $input, condition: $condition) {
+      id
+      project {
+        id
+        title
+        sectionsOn
+        content {
+          nextToken
+        }
+        baseType
+        createdAt
+        updatedAt
+      }
+      section {
+        id
+        title
+        division {
+          id
+          title
+          baseType
+          createdAt
+          updatedAt
+        }
+        baseType
+        parts {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      partsOn
+      articlesOn
+      paragraphsOn
+      notes
       createdAt
       updatedAt
     }

@@ -8,9 +8,9 @@ import {
     getProject,
     divisionsByNumber,
     partsByNumber,
-    listArticles,
+    listSectionContents,
 } from '../graphql/queries'
-import { updateProject } from '../graphql/mutations'
+import { updateProject, updateSectionContent } from '../graphql/mutations'
 import { onCreateSection } from '../graphql/subscriptions'
 
 export const SpecContext = createContext();
@@ -28,6 +28,7 @@ const SpecContextProvider = (props) => {
 
     // project state
     const [project, setProject] = useState({})
+    const [sectionsContent, setSectionsContent] = useState();
 
     // current display state
     const [currentSection, setCurrentSection] = useState({});
@@ -47,7 +48,6 @@ const SpecContextProvider = (props) => {
                 const divIndex = tempDivisions.findIndex(({ id }) => id == newSection.division.id)
                 delete newSection.division
                 tempDivisions[divIndex].sections.items.push(newSection)
-                console.log("here are the new divisions", tempDivisions)
                 setDivisions(tempDivisions)
             }
         })
@@ -72,26 +72,27 @@ const SpecContextProvider = (props) => {
     const fetchProject = async () => {
         const results = await API.graphql(graphqlOperation(getProject, { id: "1905" }));
         setProject(results.data.getProject)
-        setCurrentSection(results.data.getProject.divisionsOn[0])
+
+        const sectionContentResults = await API.graphql(graphqlOperation(listSectionContents, { project: "1905" }))
+        setSectionsContent(sectionContentResults.data.listSectionContents.items);
     }
 
 
     //-------- HANDLERS --------//
-    const checkHandler = async (id, isOn) => {
-        const oldDivisions = project.divisionsOn
-        let newDivisions;
+    const browserCheckHandler = async (id, isOn, baseType) => {
+        const propName = baseType + "sOn";
+        const oldArray = project[propName]
+        let newArray;
         if (isOn) {
-            newDivisions = oldDivisions.filter(div => div !== id)
+            newArray = oldArray.filter(div => div !== id)
         } else {
-            newDivisions = [...oldDivisions, id]
+            newArray = [...oldArray, id]
         }
-        console.log(newDivisions)
-        await API.graphql(graphqlOperation(updateProject, { input: { id: project.id, divisionsOn: newDivisions } }))
-        setProject({ ...project, divisionsOn: newDivisions });
+        await API.graphql(graphqlOperation(updateProject, { input: { id: project.id, [propName]: newArray } }))
+        setProject({ ...project, [propName]: newArray });
     }
 
-
-    const sectionClickHandler = (id) => {
+    const sectionClickHandler = async (id) => {
         let divisionId;
         let sectionId;
 
@@ -103,15 +104,28 @@ const SpecContextProvider = (props) => {
             sectionId = id.concat("0000")
         }
 
-        const containingDivision = divisions.find(div => div.id === divisionId)
-        const selectedSection = containingDivision.sections.items.find(sect => sect.id === sectionId)
+        let currentSectionContent = sectionsContent.find(sect => sect.section.id === sectionId)
 
-        setCurrentSection(selectedSection);
+        setCurrentSection(currentSectionContent);
+        console.log(currentSectionContent);
+    }
+
+    const contentCheckHandler = async (id, isOn, baseType) => {
+        const propName = baseType + "sOn";
+        const oldArray = currentSection[propName]
+        let newArray;
+        if (isOn) {
+            newArray = oldArray.filter(item => item !== id)
+        } else {
+            newArray = [...oldArray, id]
+        }
+        await API.graphql(graphqlOperation(updateSectionContent, { input: { id: currentSection.id, [propName]: newArray } }))
+        setCurrentSection({ ...currentSection, [propName]: newArray });
     }
 
 
     return (
-        <SpecContext.Provider value={{ divisions, parts, project, currentSection, checkHandler, sectionClickHandler }}>
+        <SpecContext.Provider value={{ divisions, parts, project, currentSection, sectionsContent, browserCheckHandler, sectionClickHandler, contentCheckHandler }}>
             {props.children}
         </SpecContext.Provider>
     );

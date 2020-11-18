@@ -2,11 +2,11 @@ import React, { useContext } from 'react'
 import { SpecContext } from '../context/SpecContext'
 
 const Title = () => {
-    const currentSection = useContext(SpecContext).currentSection
+    const currentSection = useContext(SpecContext).currentSection.section
 
     return (
         <h1>
-            {currentSection.id ? `${currentSection.id} - ${currentSection.title}` : ""}
+            {currentSection && `${currentSection.id} - ${currentSection.title}`}
         </h1>
     )
 }
