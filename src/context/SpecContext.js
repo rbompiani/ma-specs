@@ -11,13 +11,16 @@ import {
     listSectionContents,
 } from '../graphql/queries'
 import { createSectionContent, updateProject, updateSectionContent } from '../graphql/mutations'
-import { onCreateSection } from '../graphql/subscriptions'
+import { onCreateSection, onCreateSectionContent } from '../graphql/subscriptions'
 
 export const SpecContext = createContext();
 
 const SpecContextProvider = (props) => {
 
     //-------- STATE --------//
+
+    //TODO - update project id with selected value
+    const projectId = "1905"
 
     // outline state
     const [divisions, setDivisions] = useState([]);
@@ -29,6 +32,9 @@ const SpecContextProvider = (props) => {
     // project state
     const [project, setProject] = useState({})
     const [sectionsContent, setSectionsContent] = useState();
+
+    const sectionsContentRef = useRef();
+    sectionsContentRef.current = sectionsContent;
 
     // current display state
     const [currentSection, setCurrentSection] = useState({});
@@ -42,7 +48,6 @@ const SpecContextProvider = (props) => {
         fetchProject();
         API.graphql(graphqlOperation(onCreateSection)).subscribe({
             next: sectionData => {
-                console.log(sectionData.value.data.onCreateSection)
                 const newSection = sectionData.value.data.onCreateSection
                 let tempDivisions = [...divisionsRef.current]
                 const divIndex = tempDivisions.findIndex(({ id }) => id == newSection.division.id)
@@ -52,6 +57,12 @@ const SpecContextProvider = (props) => {
             }
         })
         //TODO - Add listenter for onCreateSectionContent / onUpdateSectionContent
+        API.graphql(graphqlOperation(onCreateSectionContent)).subscribe({
+            next: sectionContentData => {
+                const newSectionContent = sectionContentData.value.data.onCreateSectionContent
+                newSectionContent.project = projectId && setSectionsContent([...sectionsContentRef.current, newSectionContent])
+            }
+        })
         //TODO - Add listener for onCreateParagraph / onUpdateParagraph
     },
         []
@@ -72,10 +83,10 @@ const SpecContextProvider = (props) => {
 
     // fetch project specific data
     const fetchProject = async () => {
-        const results = await API.graphql(graphqlOperation(getProject, { id: "1905" }));
+        const results = await API.graphql(graphqlOperation(getProject, { id: projectId }));
         setProject(results.data.getProject)
 
-        const sectionContentResults = await API.graphql(graphqlOperation(listSectionContents, { project: "1905" }))
+        const sectionContentResults = await API.graphql(graphqlOperation(listSectionContents, { project: projectId }))
         setSectionsContent(sectionContentResults.data.listSectionContents.items);
     }
 
@@ -110,7 +121,7 @@ const SpecContextProvider = (props) => {
 
         if (!currentSectionContent) {
             const newSectionContent = {
-                sectionContentProjectId: "1905",
+                sectionContentProjectId: projectId,
                 sectionContentSectionId: sectionId,
                 partsOn: [],
                 articlesOn: [],
@@ -122,7 +133,7 @@ const SpecContextProvider = (props) => {
             currentSectionContent = results.data.createSectionContent
         }
 
-        setSectionsContent([...sectionsContent, currentSectionContent]);
+        //setSectionsContent([...sectionsContent, currentSectionContent]);
         setCurrentSection(currentSectionContent);
         console.log(currentSectionContent);
     }
