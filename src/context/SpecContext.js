@@ -10,7 +10,7 @@ import {
     partsByNumber,
     listSectionContents,
 } from '../graphql/queries'
-import { updateProject, updateSectionContent } from '../graphql/mutations'
+import { createSectionContent, updateProject, updateSectionContent } from '../graphql/mutations'
 import { onCreateSection } from '../graphql/subscriptions'
 
 export const SpecContext = createContext();
@@ -51,6 +51,8 @@ const SpecContextProvider = (props) => {
                 setDivisions(tempDivisions)
             }
         })
+        //TODO - Add listenter for onCreateSectionContent / onUpdateSectionContent
+        //TODO - Add listener for onCreateParagraph / onUpdateParagraph
     },
         []
     )
@@ -104,8 +106,23 @@ const SpecContextProvider = (props) => {
             sectionId = id.concat("0000")
         }
 
-        let currentSectionContent = sectionsContent.find(sect => sect.section.id === sectionId)
+        let currentSectionContent = sectionsContent.find(sect => sect.section.id === sectionId);
 
+        if (!currentSectionContent) {
+            const newSectionContent = {
+                sectionContentProjectId: "1905",
+                sectionContentSectionId: sectionId,
+                partsOn: [],
+                articlesOn: [],
+                paragraphsOn: [],
+                notes: null
+            }
+
+            const results = await API.graphql(graphqlOperation(createSectionContent, { input: newSectionContent }))
+            currentSectionContent = results.data.createSectionContent
+        }
+
+        setSectionsContent([...sectionsContent, currentSectionContent]);
         setCurrentSection(currentSectionContent);
         console.log(currentSectionContent);
     }
