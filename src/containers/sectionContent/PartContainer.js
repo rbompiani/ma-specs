@@ -8,9 +8,10 @@ import './SectionContent.css'
 const PartContainer = (props) => {
     const articles = props.articles.items.sort((a, b) => a.orderInPart - b.orderInPart);
     const checkHandler = useContext(SpecContext).contentCheckHandler;
+    const articlesOn = useContext(SpecContext).currentSection.articlesOn;
 
     return (
-        <div key={props.id}>
+        <div>
             <input
                 type="checkbox"
                 id={props.id}
@@ -20,7 +21,7 @@ const PartContainer = (props) => {
                 checked={props.isOn}
             />
             <div className="part">Part {props.id} - {props.title}</div>
-            {articles.map(art => <ArticleContainer key={art.id} {...art} />)}
+            {articles.map(art => <ArticleContainer key={art.id} isOn={articlesOn.includes(art.id)} {...art} />)}
             <AddArticle id={props.id} nextNumberInPart={props.articles.items.length + 1} />
         </div>
     )

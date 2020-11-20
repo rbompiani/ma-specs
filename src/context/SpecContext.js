@@ -46,6 +46,7 @@ const SpecContextProvider = (props) => {
     useEffect(() => {
         fetchOutline();
         fetchProject();
+
         API.graphql(graphqlOperation(onCreateSection)).subscribe({
             next: sectionData => {
                 const newSection = sectionData.value.data.onCreateSection
@@ -70,7 +71,6 @@ const SpecContextProvider = (props) => {
                 newSectionContent.project = projectId && setSectionsContent([...tempSectionsContent, newSectionContent])
             }
         })
-
 
         //TODO - Add listener for onCreateParagraph / onUpdateParagraph
     },
