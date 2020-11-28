@@ -7,7 +7,7 @@ const ArticleContainer = (props) => {
     const checkHandler = useContext(SpecContext).contentCheckHandler;
 
     return (
-        <div className="article">
+        <div>
             <input
                 type="checkbox"
                 id={props.id}
@@ -16,9 +16,14 @@ const ArticleContainer = (props) => {
                 onChange={(e) => checkHandler(props.id, props.isOn, "article")}
                 checked={props.isOn}
             />
-            <div>{props.title}</div>
-            {paragraphHints.map(hint => <div className="paragraph">{hint.content}</div>)}
-            <AddParagraphHint id={props.id} nextNumberInArticle={paragraphHints.length} />
+            <div className="article">{props.title}</div>
+            {paragraphHints.length && props.isOn ? (
+                <select className="paragraphHints" name="hint" id="hint" onChange={(e) => { console.log(e.target.value) }}>
+                    {paragraphHints.map(hint => <option value={hint.content} className="paragraph">{hint.content}</option>)}
+                </select>
+            ) : null}
+            {props.isOn && <div><button>+</button><input type="text" disabled placeholder="add paragraph here"></input></div>}
+            {/*<AddParagraphHint id={props.id} nextNumberInArticle={paragraphHints.length} />*/}
         </div>
     )
 }

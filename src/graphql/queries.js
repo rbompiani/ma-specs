@@ -588,10 +588,12 @@ export const partsByNumber = /* GraphQL */ `
             id
             title
             baseType
+            orderInPart
             paragraphHints {
               items {
                 id
                 content
+                orderInArticle
               }
             }
           }

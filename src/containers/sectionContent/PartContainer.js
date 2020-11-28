@@ -22,7 +22,7 @@ const PartContainer = (props) => {
             />
             <div className="part">Part {props.id} - {props.title}</div>
             {articles.map(art => <ArticleContainer key={art.id} isOn={articlesOn.includes(art.id)} {...art} />)}
-            <AddArticle id={props.id} nextNumberInPart={props.articles.items.length + 1} />
+            {/*<AddArticle id={props.id} nextNumberInPart={props.articles.items.length + 1} />*/}
         </div>
     )
 }

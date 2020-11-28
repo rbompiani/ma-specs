@@ -86,8 +86,17 @@ const SpecContextProvider = (props) => {
                 div.sections.items.sort((a, b) => a.id - b.id)
             )
         });
+        let tempParts = partResults.data.partsByNumber.items;
+        tempParts.map(part => {
+            return (
+                part.articles.items.sort((a, b) => a.orderInPart - b.orderInPart).map(art => {
+                    art.paragraphHints.items.sort((a, b) => a.orderIArticle - b.orderInArticle)
+                }
+                )
+            )
+        });
         setDivisions(tempDivisions);
-        setParts(partResults.data.partsByNumber.items);
+        setParts(tempParts);
     }
 
     // fetch project specific data
