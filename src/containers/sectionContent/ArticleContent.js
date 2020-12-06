@@ -9,7 +9,7 @@ const ArticleContent = (props) => {
     // context
     const currentSectionId = useContext(SpecContext).currentSection.id
     const currentProjectId = useContext(SpecContext).project.id
-    const paragraphsInArticle = useContext(SpecContext).paragraphContent.filter(par => par.article == props.articleId)
+    const paragraphsInArticle = useContext(SpecContext).paragraphContent.filter(par => par.article == props.articleId).sort((a, b) => a.orderInArticle - b.orderInArticle)
 
     // props
     const paragraphHints = props.paragraphHints.sort((a, b) => a.orderInArticle - b.orderInArticle)
@@ -20,7 +20,7 @@ const ArticleContent = (props) => {
         paragraphProjectId: currentProjectId,
         section: currentSectionId,
         article: props.articleId,
-        orderInArticle: 0,
+        orderInArticle: paragraphsInArticle.length,
         listTier: 0,
         content: "",
         isOn: true,
