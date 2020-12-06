@@ -12,7 +12,7 @@ import {
     listParagraphs,
 } from '../graphql/queries'
 import { createSectionContent, updateProject, updateSectionContent } from '../graphql/mutations'
-import { onCreateSection, onCreateSectionContent, onUpdateSectionContent } from '../graphql/subscriptions'
+import { onCreateSection, onCreateSectionContent, onUpdateSectionContent, onCreateParagraph } from '../graphql/subscriptions'
 
 export const SpecContext = createContext();
 
@@ -37,6 +37,9 @@ const SpecContextProvider = (props) => {
 
     const sectionsContentRef = useRef();
     sectionsContentRef.current = sectionsContent;
+
+    const paragraphContentRef = useRef();
+    paragraphContentRef.current = paragraphContent;
 
     // current display state
     const [currentSection, setCurrentSection] = useState({});
@@ -71,6 +74,12 @@ const SpecContextProvider = (props) => {
                 const newSectionContent = sectionContentData.value.data.onUpdateSectionContent
                 const tempSectionsContent = sectionsContentRef.current.filter(sect => sect.id !== newSectionContent.id);
                 newSectionContent.project = projectId && setSectionsContent([...tempSectionsContent, newSectionContent])
+            }
+        })
+        API.graphql(graphqlOperation(onCreateParagraph)).subscribe({
+            next: createParagraphData => {
+                const newParagraphContent = createParagraphData.value.data.onCreateParagraph
+                setParagraphContent([...paragraphContentRef.current, newParagraphContent])
             }
         })
 
