@@ -50,8 +50,8 @@ type Paragraph @model
 {
   id: ID!
   project: Project! @connection(name:"projectParagraphs")
-  section: Section! @connection
-  article: Article! @connection
+  section: String!
+  article: String!
   orderInArticle: Int!
   listTier: Int!
   content: String!

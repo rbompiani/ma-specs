@@ -9,6 +9,7 @@ import {
     divisionsByNumber,
     partsByNumber,
     listSectionContents,
+    listParagraphs,
 } from '../graphql/queries'
 import { createSectionContent, updateProject, updateSectionContent } from '../graphql/mutations'
 import { onCreateSection, onCreateSectionContent, onUpdateSectionContent } from '../graphql/subscriptions'
@@ -31,7 +32,8 @@ const SpecContextProvider = (props) => {
 
     // project state
     const [project, setProject] = useState({})
-    const [sectionsContent, setSectionsContent] = useState();
+    const [sectionsContent, setSectionsContent] = useState()
+    const [paragraphContent, setParagraphContent] = useState()
 
     const sectionsContentRef = useRef();
     sectionsContentRef.current = sectionsContent;
@@ -106,6 +108,9 @@ const SpecContextProvider = (props) => {
 
         const sectionContentResults = await API.graphql(graphqlOperation(listSectionContents, { project: projectId }))
         setSectionsContent(sectionContentResults.data.listSectionContents.items);
+
+        const paragraphResults = await API.graphql(graphqlOperation(listParagraphs, { project: projectId }))
+        setParagraphContent(paragraphResults.data.listParagraphs.items)
     }
 
 
@@ -171,7 +176,7 @@ const SpecContextProvider = (props) => {
 
 
     return (
-        <SpecContext.Provider value={{ divisions, parts, project, currentSection, sectionsContent, browserCheckHandler, sectionClickHandler, contentCheckHandler }}>
+        <SpecContext.Provider value={{ divisions, parts, project, currentSection, sectionsContent, paragraphContent, browserCheckHandler, sectionClickHandler, contentCheckHandler }}>
             {props.children}
         </SpecContext.Provider>
     );

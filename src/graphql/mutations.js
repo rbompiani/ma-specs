@@ -13,6 +13,8 @@ export const createProject = /* GraphQL */ `
       content {
         items {
           id
+          section
+          article
           orderInArticle
           listTier
           content
@@ -40,6 +42,8 @@ export const updateProject = /* GraphQL */ `
       content {
         items {
           id
+          section
+          article
           orderInArticle
           listTier
           content
@@ -67,6 +71,8 @@ export const deleteProject = /* GraphQL */ `
       content {
         items {
           id
+          section
+          article
           orderInArticle
           listTier
           content
@@ -463,42 +469,8 @@ export const createParagraph = /* GraphQL */ `
         createdAt
         updatedAt
       }
-      section {
-        id
-        title
-        division {
-          id
-          title
-          baseType
-          createdAt
-          updatedAt
-        }
-        baseType
-        parts {
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
-      article {
-        id
-        title
-        part {
-          id
-          title
-          baseType
-          createdAt
-          updatedAt
-        }
-        orderInPart
-        isStandard
-        baseType
-        paragraphHints {
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
+      section
+      article
       orderInArticle
       listTier
       content
@@ -526,42 +498,8 @@ export const updateParagraph = /* GraphQL */ `
         createdAt
         updatedAt
       }
-      section {
-        id
-        title
-        division {
-          id
-          title
-          baseType
-          createdAt
-          updatedAt
-        }
-        baseType
-        parts {
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
-      article {
-        id
-        title
-        part {
-          id
-          title
-          baseType
-          createdAt
-          updatedAt
-        }
-        orderInPart
-        isStandard
-        baseType
-        paragraphHints {
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
+      section
+      article
       orderInArticle
       listTier
       content
@@ -589,42 +527,8 @@ export const deleteParagraph = /* GraphQL */ `
         createdAt
         updatedAt
       }
-      section {
-        id
-        title
-        division {
-          id
-          title
-          baseType
-          createdAt
-          updatedAt
-        }
-        baseType
-        parts {
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
-      article {
-        id
-        title
-        part {
-          id
-          title
-          baseType
-          createdAt
-          updatedAt
-        }
-        orderInPart
-        isStandard
-        baseType
-        paragraphHints {
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
+      section
+      article
       orderInArticle
       listTier
       content

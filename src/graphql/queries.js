@@ -7,18 +7,20 @@ export const getProject = /* GraphQL */ `
       id
       title
       sectionsOn
-      content {
-        items {
-          id
-          orderInArticle
-          listTier
-          content
-          isOn
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
+      # content {
+      #   items {
+      #     id
+      #     section
+      #     article
+      #     orderInArticle
+      #     listTier
+      #     content
+      #     isOn
+      #     createdAt
+      #     updatedAt
+      #   }
+      #   nextToken
+      # }
       baseType
       createdAt
       updatedAt
@@ -271,42 +273,8 @@ export const getParagraph = /* GraphQL */ `
         createdAt
         updatedAt
       }
-      section {
-        id
-        title
-        division {
-          id
-          title
-          baseType
-          createdAt
-          updatedAt
-        }
-        baseType
-        parts {
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
-      article {
-        id
-        title
-        part {
-          id
-          title
-          baseType
-          createdAt
-          updatedAt
-        }
-        orderInPart
-        isStandard
-        baseType
-        paragraphHints {
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
+      section
+      article
       orderInArticle
       listTier
       content
@@ -333,22 +301,8 @@ export const listParagraphs = /* GraphQL */ `
           createdAt
           updatedAt
         }
-        section {
-          id
-          title
-          baseType
-          createdAt
-          updatedAt
-        }
-        article {
-          id
-          title
-          orderInPart
-          isStandard
-          baseType
-          createdAt
-          updatedAt
-        }
+        section
+        article
         orderInArticle
         listTier
         content
@@ -548,7 +502,7 @@ export const divisionsByNumber = /* GraphQL */ `
         id
         title
         sections {
-          items{
+          items {
             id
             title
             baseType
@@ -587,14 +541,17 @@ export const partsByNumber = /* GraphQL */ `
           items {
             id
             title
+            orderInPart 
+            isStandard
             baseType
-            orderInPart
             paragraphHints {
-              items {
-                id
-                content
-                orderInArticle
+              items{
+                  id
+                  orderInArticle
+                  content
+                  isOn
               }
+
             }
           }
           nextToken
