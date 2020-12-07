@@ -12,6 +12,7 @@ export const getProject = /* GraphQL */ `
           id
           section {
               id
+              title
           }
           partsOn
           articlesOn

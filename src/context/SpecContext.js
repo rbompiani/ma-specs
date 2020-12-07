@@ -48,6 +48,7 @@ const SpecContextProvider = (props) => {
         fetchOutline();
         fetchProject();
 
+        // Listeners - onCreateSectionContent / onUpdateSectionContent
         API.graphql(graphqlOperation(onCreateSection)).subscribe({
             next: sectionData => {
                 const newSection = sectionData.value.data.onCreateSection
@@ -58,20 +59,27 @@ const SpecContextProvider = (props) => {
                 setDivisions(tempDivisions)
             }
         })
-        //Listeners - onCreateSectionContent / onUpdateSectionContent
+
+
         API.graphql(graphqlOperation(onCreateSectionContent)).subscribe({
             next: sectionContentData => {
                 const newSectionContent = sectionContentData.value.data.onCreateSectionContent
-                //newSectionContent.project = projectId && setSectionsContent([...sectionsContentRef.current, newSectionContent])
+                let tempContent = projectRef.current.content;
+                tempContent.items.push(newSectionContent)
+                setProject({ ...projectRef.current, content: tempContent })
             }
         })
+
         API.graphql(graphqlOperation(onUpdateSectionContent)).subscribe({
             next: sectionContentData => {
-                const newSectionContent = sectionContentData.value.data.onUpdateSectionContent
-                //const tempSectionsContent = sectionsContentRef.current.filter(sect => sect.id !== newSectionContent.id);
-                //newSectionContent.project = projectId && setSectionsContent([...tempSectionsContent, newSectionContent])
+                const updatedSectionContent = sectionContentData.value.data.onUpdateSectionContent
+                let tempContent = projectRef.current.content;
+                const updatedSectionIndex = tempContent.items.findIndex(item => item.id === updatedSectionContent.id)
+                tempContent.items.splice(updatedSectionIndex, 1, updatedSectionContent)
+                setProject({ ...projectRef.current, content: tempContent })
             }
         })
+
         API.graphql(graphqlOperation(onCreateParagraph)).subscribe({
             next: createParagraphData => {
                 const newParagraphContent = createParagraphData.value.data.onCreateParagraph
@@ -83,7 +91,7 @@ const SpecContextProvider = (props) => {
             }
         })
 
-        //TODO - Add listener for onCreateParagraph / onUpdateParagraph
+        //TODO - Add listener for onDeleteParagraph / onUpdateParagraph
     },
         []
     )
@@ -114,12 +122,6 @@ const SpecContextProvider = (props) => {
     const fetchProject = async () => {
         const results = await API.graphql(graphqlOperation(getProject, { id: projectId }));
         setProject(results.data.getProject)
-
-        // const sectionContentResults = await API.graphql(graphqlOperation(listSectionContents, { project: projectId }))
-        // setSectionsContent(sectionContentResults.data.listSectionContents.items);
-
-        // const paragraphResults = await API.graphql(graphqlOperation(listParagraphs, { project: projectId }))
-        // setParagraphContent(paragraphResults.data.listParagraphs.items)
     }
 
 
