@@ -7,9 +7,8 @@ import { createParagraph } from '../../graphql/mutations'
 
 const ArticleContent = (props) => {
     // context
-    const currentSectionId = useContext(SpecContext).currentSection.id
-    const currentProjectId = useContext(SpecContext).project.id
-    const paragraphsInArticle = useContext(SpecContext).paragraphContent.filter(par => par.article == props.articleId).sort((a, b) => a.orderInArticle - b.orderInArticle)
+    const currentSection = useContext(SpecContext).currentSection
+    const paragraphsInArticle = currentSection.paragraphs.items.filter(par => par.article == props.articleId).sort((a, b) => a.orderInArticle - b.orderInArticle)
 
     // props
     const paragraphHints = props.paragraphHints.sort((a, b) => a.orderInArticle - b.orderInArticle)
@@ -17,13 +16,12 @@ const ArticleContent = (props) => {
     // state
     const [isActive, setIsActive] = useState(false);
     const [newParagraph, setNewParagraph] = useState({
-        paragraphProjectId: currentProjectId,
-        section: currentSectionId,
+        paragraphSectionId: currentSection.id,
         article: props.articleId,
         orderInArticle: paragraphsInArticle.length,
-        listTier: 0,
         content: "",
         isOn: true,
+        baseType: "paragraph"
     })
 
     //TODO - Determine how many paragraphs exist in the current article, auto increment new paragraph to be next
@@ -45,6 +43,7 @@ const ArticleContent = (props) => {
         console.log("Adding this to the database:", newParagraph)
         await API.graphql(graphqlOperation(createParagraph, { input: newParagraph }))
         setIsActive(false);
+        setNewParagraph({ ...newParagraph, content: "" })
     }
 
     return (

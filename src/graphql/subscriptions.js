@@ -10,12 +10,9 @@ export const onCreateProject = /* GraphQL */ `
       content {
         items {
           id
-          section
-          article
-          orderInArticle
-          listTier
-          content
-          isOn
+          partsOn
+          articlesOn
+          notes
           createdAt
           updatedAt
         }
@@ -36,12 +33,9 @@ export const onUpdateProject = /* GraphQL */ `
       content {
         items {
           id
-          section
-          article
-          orderInArticle
-          listTier
-          content
-          isOn
+          partsOn
+          articlesOn
+          notes
           createdAt
           updatedAt
         }
@@ -62,12 +56,9 @@ export const onDeleteProject = /* GraphQL */ `
       content {
         items {
           id
-          section
-          article
-          orderInArticle
-          listTier
-          content
-          isOn
+          partsOn
+          articlesOn
+          notes
           createdAt
           updatedAt
         }
@@ -327,7 +318,6 @@ export const onCreateArticle = /* GraphQL */ `
           id
           orderInArticle
           content
-          isOn
           createdAt
           updatedAt
         }
@@ -361,7 +351,6 @@ export const onUpdateArticle = /* GraphQL */ `
           id
           orderInArticle
           content
-          isOn
           createdAt
           updatedAt
         }
@@ -395,90 +384,11 @@ export const onDeleteArticle = /* GraphQL */ `
           id
           orderInArticle
           content
-          isOn
           createdAt
           updatedAt
         }
         nextToken
       }
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const onCreateParagraph = /* GraphQL */ `
-  subscription OnCreateParagraph {
-    onCreateParagraph {
-      id
-      project {
-        id
-        title
-        sectionsOn
-        content {
-          nextToken
-        }
-        baseType
-        createdAt
-        updatedAt
-      }
-      section
-      article
-      orderInArticle
-      listTier
-      content
-      isOn
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const onUpdateParagraph = /* GraphQL */ `
-  subscription OnUpdateParagraph {
-    onUpdateParagraph {
-      id
-      project {
-        id
-        title
-        sectionsOn
-        content {
-          nextToken
-        }
-        baseType
-        createdAt
-        updatedAt
-      }
-      section
-      article
-      orderInArticle
-      listTier
-      content
-      isOn
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const onDeleteParagraph = /* GraphQL */ `
-  subscription OnDeleteParagraph {
-    onDeleteParagraph {
-      id
-      project {
-        id
-        title
-        sectionsOn
-        content {
-          nextToken
-        }
-        baseType
-        createdAt
-        updatedAt
-      }
-      section
-      article
-      orderInArticle
-      listTier
-      content
-      isOn
       createdAt
       updatedAt
     }
@@ -509,7 +419,6 @@ export const onCreateParagraphHint = /* GraphQL */ `
       }
       orderInArticle
       content
-      isOn
       createdAt
       updatedAt
     }
@@ -540,7 +449,6 @@ export const onUpdateParagraphHint = /* GraphQL */ `
       }
       orderInArticle
       content
-      isOn
       createdAt
       updatedAt
     }
@@ -571,7 +479,264 @@ export const onDeleteParagraphHint = /* GraphQL */ `
       }
       orderInArticle
       content
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onCreateParagraph = /* GraphQL */ `
+  subscription OnCreateParagraph {
+    onCreateParagraph {
+      id
+      section {
+        id
+        project {
+          id
+          title
+          sectionsOn
+          baseType
+          createdAt
+          updatedAt
+        }
+        section {
+          id
+          title
+          baseType
+          createdAt
+          updatedAt
+        }
+        partsOn
+        articlesOn
+        paragraphs {
+          nextToken
+        }
+        notes
+        createdAt
+        updatedAt
+      }
+      article
+      orderInArticle
+      content
       isOn
+      subparagraphs {
+        items {
+          id
+          orderInParagraph
+          content
+          isOn
+          baseType
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      baseType
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onUpdateParagraph = /* GraphQL */ `
+  subscription OnUpdateParagraph {
+    onUpdateParagraph {
+      id
+      section {
+        id
+        project {
+          id
+          title
+          sectionsOn
+          baseType
+          createdAt
+          updatedAt
+        }
+        section {
+          id
+          title
+          baseType
+          createdAt
+          updatedAt
+        }
+        partsOn
+        articlesOn
+        paragraphs {
+          nextToken
+        }
+        notes
+        createdAt
+        updatedAt
+      }
+      article
+      orderInArticle
+      content
+      isOn
+      subparagraphs {
+        items {
+          id
+          orderInParagraph
+          content
+          isOn
+          baseType
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      baseType
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onDeleteParagraph = /* GraphQL */ `
+  subscription OnDeleteParagraph {
+    onDeleteParagraph {
+      id
+      section {
+        id
+        project {
+          id
+          title
+          sectionsOn
+          baseType
+          createdAt
+          updatedAt
+        }
+        section {
+          id
+          title
+          baseType
+          createdAt
+          updatedAt
+        }
+        partsOn
+        articlesOn
+        paragraphs {
+          nextToken
+        }
+        notes
+        createdAt
+        updatedAt
+      }
+      article
+      orderInArticle
+      content
+      isOn
+      subparagraphs {
+        items {
+          id
+          orderInParagraph
+          content
+          isOn
+          baseType
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      baseType
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onCreateSubParagraph = /* GraphQL */ `
+  subscription OnCreateSubParagraph {
+    onCreateSubParagraph {
+      id
+      paragraph {
+        id
+        section {
+          id
+          partsOn
+          articlesOn
+          notes
+          createdAt
+          updatedAt
+        }
+        article
+        orderInArticle
+        content
+        isOn
+        subparagraphs {
+          nextToken
+        }
+        baseType
+        createdAt
+        updatedAt
+      }
+      orderInParagraph
+      content
+      isOn
+      baseType
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onUpdateSubParagraph = /* GraphQL */ `
+  subscription OnUpdateSubParagraph {
+    onUpdateSubParagraph {
+      id
+      paragraph {
+        id
+        section {
+          id
+          partsOn
+          articlesOn
+          notes
+          createdAt
+          updatedAt
+        }
+        article
+        orderInArticle
+        content
+        isOn
+        subparagraphs {
+          nextToken
+        }
+        baseType
+        createdAt
+        updatedAt
+      }
+      orderInParagraph
+      content
+      isOn
+      baseType
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onDeleteSubParagraph = /* GraphQL */ `
+  subscription OnDeleteSubParagraph {
+    onDeleteSubParagraph {
+      id
+      paragraph {
+        id
+        section {
+          id
+          partsOn
+          articlesOn
+          notes
+          createdAt
+          updatedAt
+        }
+        article
+        orderInArticle
+        content
+        isOn
+        subparagraphs {
+          nextToken
+        }
+        baseType
+        createdAt
+        updatedAt
+      }
+      orderInParagraph
+      content
+      isOn
+      baseType
       createdAt
       updatedAt
     }
@@ -611,7 +776,19 @@ export const onCreateSectionContent = /* GraphQL */ `
       }
       partsOn
       articlesOn
-      paragraphsOn
+      paragraphs {
+        items {
+          id
+          article
+          orderInArticle
+          content
+          isOn
+          baseType
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
       notes
       createdAt
       updatedAt
@@ -652,7 +829,19 @@ export const onUpdateSectionContent = /* GraphQL */ `
       }
       partsOn
       articlesOn
-      paragraphsOn
+      paragraphs {
+        items {
+          id
+          article
+          orderInArticle
+          content
+          isOn
+          baseType
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
       notes
       createdAt
       updatedAt
@@ -693,7 +882,19 @@ export const onDeleteSectionContent = /* GraphQL */ `
       }
       partsOn
       articlesOn
-      paragraphsOn
+      paragraphs {
+        items {
+          id
+          article
+          orderInArticle
+          content
+          isOn
+          baseType
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
       notes
       createdAt
       updatedAt

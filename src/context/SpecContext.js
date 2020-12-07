@@ -32,17 +32,13 @@ const SpecContextProvider = (props) => {
 
     // project state
     const [project, setProject] = useState({})
-    const [sectionsContent, setSectionsContent] = useState()
-    const [paragraphContent, setParagraphContent] = useState()
 
-    const sectionsContentRef = useRef();
-    sectionsContentRef.current = sectionsContent;
-
-    const paragraphContentRef = useRef();
-    paragraphContentRef.current = paragraphContent;
+    const projectRef = useRef();
+    projectRef.current = project;
 
     // current display state
     const [currentSection, setCurrentSection] = useState({});
+
 
 
     //-------- FETCHING DATA --------//
@@ -66,20 +62,24 @@ const SpecContextProvider = (props) => {
         API.graphql(graphqlOperation(onCreateSectionContent)).subscribe({
             next: sectionContentData => {
                 const newSectionContent = sectionContentData.value.data.onCreateSectionContent
-                newSectionContent.project = projectId && setSectionsContent([...sectionsContentRef.current, newSectionContent])
+                //newSectionContent.project = projectId && setSectionsContent([...sectionsContentRef.current, newSectionContent])
             }
         })
         API.graphql(graphqlOperation(onUpdateSectionContent)).subscribe({
             next: sectionContentData => {
                 const newSectionContent = sectionContentData.value.data.onUpdateSectionContent
-                const tempSectionsContent = sectionsContentRef.current.filter(sect => sect.id !== newSectionContent.id);
-                newSectionContent.project = projectId && setSectionsContent([...tempSectionsContent, newSectionContent])
+                //const tempSectionsContent = sectionsContentRef.current.filter(sect => sect.id !== newSectionContent.id);
+                //newSectionContent.project = projectId && setSectionsContent([...tempSectionsContent, newSectionContent])
             }
         })
         API.graphql(graphqlOperation(onCreateParagraph)).subscribe({
             next: createParagraphData => {
                 const newParagraphContent = createParagraphData.value.data.onCreateParagraph
-                setParagraphContent([...paragraphContentRef.current, newParagraphContent])
+                let tempContent = projectRef.current.content;
+                let contentIndex = tempContent.items.findIndex(cont => cont.id == newParagraphContent.section.id)
+                tempContent.items[contentIndex].paragraphs.items.push(newParagraphContent)
+                console.log(tempContent)
+                setProject({ ...projectRef.current, content: tempContent })
             }
         })
 
@@ -115,11 +115,11 @@ const SpecContextProvider = (props) => {
         const results = await API.graphql(graphqlOperation(getProject, { id: projectId }));
         setProject(results.data.getProject)
 
-        const sectionContentResults = await API.graphql(graphqlOperation(listSectionContents, { project: projectId }))
-        setSectionsContent(sectionContentResults.data.listSectionContents.items);
+        // const sectionContentResults = await API.graphql(graphqlOperation(listSectionContents, { project: projectId }))
+        // setSectionsContent(sectionContentResults.data.listSectionContents.items);
 
-        const paragraphResults = await API.graphql(graphqlOperation(listParagraphs, { project: projectId }))
-        setParagraphContent(paragraphResults.data.listParagraphs.items)
+        // const paragraphResults = await API.graphql(graphqlOperation(listParagraphs, { project: projectId }))
+        // setParagraphContent(paragraphResults.data.listParagraphs.items)
     }
 
 
@@ -149,7 +149,7 @@ const SpecContextProvider = (props) => {
             sectionId = id.concat("0000")
         }
 
-        let currentSectionContent = sectionsContent.find(sect => sect.section.id === sectionId);
+        let currentSectionContent = project.content.items.find(sect => sect.section.id === sectionId);
 
         if (!currentSectionContent) {
             const newSectionContent = {
@@ -157,7 +157,6 @@ const SpecContextProvider = (props) => {
                 sectionContentSectionId: sectionId,
                 partsOn: ["1", "2", "3"],
                 articlesOn: [],
-                paragraphsOn: [],
                 notes: null
             }
 
@@ -185,7 +184,7 @@ const SpecContextProvider = (props) => {
 
 
     return (
-        <SpecContext.Provider value={{ divisions, parts, project, currentSection, sectionsContent, paragraphContent, browserCheckHandler, sectionClickHandler, contentCheckHandler }}>
+        <SpecContext.Provider value={{ divisions, parts, project, currentSection, browserCheckHandler, sectionClickHandler, contentCheckHandler }}>
             {props.children}
         </SpecContext.Provider>
     );

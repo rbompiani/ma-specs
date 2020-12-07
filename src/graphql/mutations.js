@@ -13,12 +13,9 @@ export const createProject = /* GraphQL */ `
       content {
         items {
           id
-          section
-          article
-          orderInArticle
-          listTier
-          content
-          isOn
+          partsOn
+          articlesOn
+          notes
           createdAt
           updatedAt
         }
@@ -42,12 +39,9 @@ export const updateProject = /* GraphQL */ `
       content {
         items {
           id
-          section
-          article
-          orderInArticle
-          listTier
-          content
-          isOn
+          partsOn
+          articlesOn
+          notes
           createdAt
           updatedAt
         }
@@ -71,12 +65,9 @@ export const deleteProject = /* GraphQL */ `
       content {
         items {
           id
-          section
-          article
-          orderInArticle
-          listTier
-          content
-          isOn
+          partsOn
+          articlesOn
+          notes
           createdAt
           updatedAt
         }
@@ -366,7 +357,6 @@ export const createArticle = /* GraphQL */ `
           id
           orderInArticle
           content
-          isOn
           createdAt
           updatedAt
         }
@@ -403,7 +393,6 @@ export const updateArticle = /* GraphQL */ `
           id
           orderInArticle
           content
-          isOn
           createdAt
           updatedAt
         }
@@ -440,99 +429,11 @@ export const deleteArticle = /* GraphQL */ `
           id
           orderInArticle
           content
-          isOn
           createdAt
           updatedAt
         }
         nextToken
       }
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const createParagraph = /* GraphQL */ `
-  mutation CreateParagraph(
-    $input: CreateParagraphInput!
-    $condition: ModelParagraphConditionInput
-  ) {
-    createParagraph(input: $input, condition: $condition) {
-      id
-      project {
-        id
-        title
-        sectionsOn
-        content {
-          nextToken
-        }
-        baseType
-        createdAt
-        updatedAt
-      }
-      section
-      article
-      orderInArticle
-      listTier
-      content
-      isOn
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const updateParagraph = /* GraphQL */ `
-  mutation UpdateParagraph(
-    $input: UpdateParagraphInput!
-    $condition: ModelParagraphConditionInput
-  ) {
-    updateParagraph(input: $input, condition: $condition) {
-      id
-      project {
-        id
-        title
-        sectionsOn
-        content {
-          nextToken
-        }
-        baseType
-        createdAt
-        updatedAt
-      }
-      section
-      article
-      orderInArticle
-      listTier
-      content
-      isOn
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const deleteParagraph = /* GraphQL */ `
-  mutation DeleteParagraph(
-    $input: DeleteParagraphInput!
-    $condition: ModelParagraphConditionInput
-  ) {
-    deleteParagraph(input: $input, condition: $condition) {
-      id
-      project {
-        id
-        title
-        sectionsOn
-        content {
-          nextToken
-        }
-        baseType
-        createdAt
-        updatedAt
-      }
-      section
-      article
-      orderInArticle
-      listTier
-      content
-      isOn
       createdAt
       updatedAt
     }
@@ -566,7 +467,6 @@ export const createParagraphHint = /* GraphQL */ `
       }
       orderInArticle
       content
-      isOn
       createdAt
       updatedAt
     }
@@ -600,7 +500,6 @@ export const updateParagraphHint = /* GraphQL */ `
       }
       orderInArticle
       content
-      isOn
       createdAt
       updatedAt
     }
@@ -634,7 +533,282 @@ export const deleteParagraphHint = /* GraphQL */ `
       }
       orderInArticle
       content
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const createParagraph = /* GraphQL */ `
+  mutation CreateParagraph(
+    $input: CreateParagraphInput!
+    $condition: ModelParagraphConditionInput
+  ) {
+    createParagraph(input: $input, condition: $condition) {
+      id
+      section {
+        id
+        project {
+          id
+          title
+          sectionsOn
+          baseType
+          createdAt
+          updatedAt
+        }
+        section {
+          id
+          title
+          baseType
+          createdAt
+          updatedAt
+        }
+        partsOn
+        articlesOn
+        paragraphs {
+          nextToken
+        }
+        notes
+        createdAt
+        updatedAt
+      }
+      article
+      orderInArticle
+      content
       isOn
+      subparagraphs {
+        items {
+          id
+          orderInParagraph
+          content
+          isOn
+          baseType
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      baseType
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const updateParagraph = /* GraphQL */ `
+  mutation UpdateParagraph(
+    $input: UpdateParagraphInput!
+    $condition: ModelParagraphConditionInput
+  ) {
+    updateParagraph(input: $input, condition: $condition) {
+      id
+      section {
+        id
+        project {
+          id
+          title
+          sectionsOn
+          baseType
+          createdAt
+          updatedAt
+        }
+        section {
+          id
+          title
+          baseType
+          createdAt
+          updatedAt
+        }
+        partsOn
+        articlesOn
+        paragraphs {
+          nextToken
+        }
+        notes
+        createdAt
+        updatedAt
+      }
+      article
+      orderInArticle
+      content
+      isOn
+      subparagraphs {
+        items {
+          id
+          orderInParagraph
+          content
+          isOn
+          baseType
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      baseType
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const deleteParagraph = /* GraphQL */ `
+  mutation DeleteParagraph(
+    $input: DeleteParagraphInput!
+    $condition: ModelParagraphConditionInput
+  ) {
+    deleteParagraph(input: $input, condition: $condition) {
+      id
+      section {
+        id
+        project {
+          id
+          title
+          sectionsOn
+          baseType
+          createdAt
+          updatedAt
+        }
+        section {
+          id
+          title
+          baseType
+          createdAt
+          updatedAt
+        }
+        partsOn
+        articlesOn
+        paragraphs {
+          nextToken
+        }
+        notes
+        createdAt
+        updatedAt
+      }
+      article
+      orderInArticle
+      content
+      isOn
+      subparagraphs {
+        items {
+          id
+          orderInParagraph
+          content
+          isOn
+          baseType
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      baseType
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const createSubParagraph = /* GraphQL */ `
+  mutation CreateSubParagraph(
+    $input: CreateSubParagraphInput!
+    $condition: ModelSubParagraphConditionInput
+  ) {
+    createSubParagraph(input: $input, condition: $condition) {
+      id
+      paragraph {
+        id
+        section {
+          id
+          partsOn
+          articlesOn
+          notes
+          createdAt
+          updatedAt
+        }
+        article
+        orderInArticle
+        content
+        isOn
+        subparagraphs {
+          nextToken
+        }
+        baseType
+        createdAt
+        updatedAt
+      }
+      orderInParagraph
+      content
+      isOn
+      baseType
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const updateSubParagraph = /* GraphQL */ `
+  mutation UpdateSubParagraph(
+    $input: UpdateSubParagraphInput!
+    $condition: ModelSubParagraphConditionInput
+  ) {
+    updateSubParagraph(input: $input, condition: $condition) {
+      id
+      paragraph {
+        id
+        section {
+          id
+          partsOn
+          articlesOn
+          notes
+          createdAt
+          updatedAt
+        }
+        article
+        orderInArticle
+        content
+        isOn
+        subparagraphs {
+          nextToken
+        }
+        baseType
+        createdAt
+        updatedAt
+      }
+      orderInParagraph
+      content
+      isOn
+      baseType
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const deleteSubParagraph = /* GraphQL */ `
+  mutation DeleteSubParagraph(
+    $input: DeleteSubParagraphInput!
+    $condition: ModelSubParagraphConditionInput
+  ) {
+    deleteSubParagraph(input: $input, condition: $condition) {
+      id
+      paragraph {
+        id
+        section {
+          id
+          partsOn
+          articlesOn
+          notes
+          createdAt
+          updatedAt
+        }
+        article
+        orderInArticle
+        content
+        isOn
+        subparagraphs {
+          nextToken
+        }
+        baseType
+        createdAt
+        updatedAt
+      }
+      orderInParagraph
+      content
+      isOn
+      baseType
       createdAt
       updatedAt
     }
@@ -677,7 +851,19 @@ export const createSectionContent = /* GraphQL */ `
       }
       partsOn
       articlesOn
-      paragraphsOn
+      paragraphs {
+        items {
+          id
+          article
+          orderInArticle
+          content
+          isOn
+          baseType
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
       notes
       createdAt
       updatedAt
@@ -721,7 +907,19 @@ export const updateSectionContent = /* GraphQL */ `
       }
       partsOn
       articlesOn
-      paragraphsOn
+      paragraphs {
+        items {
+          id
+          article
+          orderInArticle
+          content
+          isOn
+          baseType
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
       notes
       createdAt
       updatedAt
@@ -765,7 +963,19 @@ export const deleteSectionContent = /* GraphQL */ `
       }
       partsOn
       articlesOn
-      paragraphsOn
+      paragraphs {
+        items {
+          id
+          article
+          orderInArticle
+          content
+          isOn
+          baseType
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
       notes
       createdAt
       updatedAt

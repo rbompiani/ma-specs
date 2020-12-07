@@ -1,0 +1,18 @@
+{
+  "__typename": "SectionContent",
+  "articlesOn": [
+
+  ],
+  "createdAt": "2020-11-18T04:43:38.788Z",
+  "id": "083e26b1-e6d6-46d0-be7e-1f05213a09ce",
+  "notes": null,
+  "paragraphsOn": [
+
+  ],
+  "partsOn": [
+
+  ],
+  "sectionContentProjectId": "1905",
+  "sectionContentSectionId": "000120",
+  "updatedAt": "2020-11-18T04:43:38.788Z"
+}

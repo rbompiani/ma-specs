@@ -4,7 +4,7 @@ type Project @model
   id: ID!
   title: String!
   sectionsOn: [String]
-  content: [Paragraph] @connection(name:"projectParagraphs")
+  content: [SectionContent] @connection(name:"projectSectionContents")
   baseType: String!
 }
  
@@ -46,34 +46,43 @@ type Article @model
   paragraphHints: [ParagraphHint] @connection(name:"articleParagraphs")
 }
 
-type Paragraph @model
-{
-  id: ID!
-  project: Project! @connection(name:"projectParagraphs")
-  section: String!
-  article: String!
-  orderInArticle: Int!
-  listTier: Int!
-  content: String!
-  isOn: Boolean!
-}
-
 type ParagraphHint @model
 {
   id: ID!
   article: Article! @connection(name:"articleParagraphs")
   orderInArticle: Int!
   content: String!
+}
+
+type Paragraph @model
+{
+  id: ID!
+  section: SectionContent @connection(name:"sectionContentParagraphs")
+  article: String!
+  orderInArticle: Int!
+  content: String!
   isOn: Boolean!
+  subparagraphs: [SubParagraph] @connection(name:"paragraphSubparagraphs")
+  baseType: String!
+}
+
+type SubParagraph @model
+{
+  id: ID!
+  paragraph: Paragraph! @connection(name:"paragraphSubparagraphs")
+  orderInParagraph: Int!
+  content: String!
+  isOn: Boolean!
+  baseType: String!
 }
 
 type SectionContent @model
 {
   id: ID!
-  project: Project! @connection
+  project: Project! @connection(name:"projectSectionContents")
   section: Section! @connection
   partsOn: [String]
   articlesOn: [String]
-  paragraphsOn: [String]
+  paragraphs: [Paragraph] @connection(name:"sectionContentParagraphs")
   notes: String
 }
