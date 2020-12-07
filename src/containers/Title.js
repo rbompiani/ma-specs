@@ -1,8 +1,8 @@
 import React, { useContext } from 'react'
-import { SpecContext } from '../context/SpecContext'
+import { ProjectContext } from '../context/ProjectContext'
 
 const Title = () => {
-    const currentSection = useContext(SpecContext).currentSection.section
+    const currentSection = useContext(ProjectContext).currentSection.section
 
     return (
         <h1>

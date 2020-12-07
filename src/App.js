@@ -1,20 +1,27 @@
 import React from 'react'
-import SpecContextProvider from './context/SpecContext'
 import { BrowserRouter } from 'react-router-dom'
+
+import ProjectContextProvider from './context/ProjectContext'
+import SpecOutlineContextProvider from './context/SpecOutlineContext';
+
 import Router from './routing/Router'
+
 import logo from './logo.svg';
 import './App.css';
 
 // AWS imports
 import { withAuthenticator, AmplifyGreetings } from '@aws-amplify/ui-react';
 
+
 const App = () => {
 
   return (
     <BrowserRouter>
-      <SpecContextProvider>
-        <Router />
-      </SpecContextProvider>
+      <ProjectContextProvider>
+        <SpecOutlineContextProvider>
+          <Router />
+        </SpecOutlineContextProvider>
+      </ProjectContextProvider>
     </BrowserRouter>
   )
 };

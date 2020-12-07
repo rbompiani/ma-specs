@@ -1,13 +1,15 @@
 import React, { useContext } from "react"
-import { SpecContext } from '../../context/SpecContext'
+import { SpecOutlineContext } from '../../context/SpecOutlineContext'
+import { ProjectContext } from '../../context/ProjectContext'
 import PartContainer from '../sectionContent/PartContainer'
 
 import './SectionContent.css'
 
 const SectionContent = () => {
-    const currentSection = useContext(SpecContext).currentSection;
-    const parts = useContext(SpecContext).parts
-    const partsOn = useContext(SpecContext).currentSection.partsOn
+    const currentSection = useContext(ProjectContext).currentSection;
+    const partsOn = useContext(ProjectContext).currentSection.partsOn
+    const parts = useContext(SpecOutlineContext).parts
+
 
     return (
         <div className="sectionContent" >

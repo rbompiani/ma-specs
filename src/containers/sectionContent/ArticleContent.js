@@ -1,5 +1,5 @@
 import React, { useState, useContext } from "react"
-import { SpecContext } from '../../context/SpecContext'
+import { ProjectContext } from '../../context/ProjectContext'
 // AWS imports
 import { API, graphqlOperation } from 'aws-amplify'
 // graphql imports
@@ -7,7 +7,7 @@ import { createParagraph } from '../../graphql/mutations'
 
 const ArticleContent = (props) => {
     // context
-    const currentSection = useContext(SpecContext).currentSection
+    const currentSection = useContext(ProjectContext).currentSection
     const paragraphsInArticle = currentSection.paragraphs.items.filter(par => par.article == props.articleId).sort((a, b) => a.orderInArticle - b.orderInArticle)
 
     // props
@@ -47,7 +47,12 @@ const ArticleContent = (props) => {
 
     return (
         <div>
-            {paragraphsInArticle.map(par => <p>{par.content}</p>)}
+            {paragraphsInArticle.map((par, index) => {
+                const numeral = 'abcdefghijklmnopqrstuvwxyz'.charAt(index);
+                return (
+                    <p>{numeral}. {par.content}</p>
+                )
+            })}
             {isActive ? (
                 <div>
                     <input

@@ -1,9 +1,9 @@
 import React, { useContext } from "react"
 import ArticleContent from './ArticleContent'
-import { SpecContext } from '../../context/SpecContext'
+import { ProjectContext } from '../../context/ProjectContext'
 
 const ArticleContainer = (props) => {
-    const checkHandler = useContext(SpecContext).contentCheckHandler;
+    const checkHandler = useContext(ProjectContext).contentCheckHandler;
 
     return (
         <div>

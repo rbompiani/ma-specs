@@ -1,10 +1,10 @@
 import React, { useContext } from 'react';
-import { SpecContext } from '../../context/SpecContext'
+import { ProjectContext } from '../../context/ProjectContext'
 //import { attachEventProps } from '@aws-amplify/ui-react/lib-esm/react-component-lib/utils';
 
 const BrowserItem = (props) => {
-    const checkHandler = useContext(SpecContext).browserCheckHandler
-    const sectionClickHandler = useContext(SpecContext).sectionClickHandler
+    const checkHandler = useContext(ProjectContext).browserCheckHandler
+    const sectionClickHandler = useContext(ProjectContext).sectionClickHandler
 
     return (
         <li

@@ -1,10 +1,10 @@
 import React, { useContext, useState } from 'react'
-import { SpecContext } from '../../context/SpecContext'
+import { ProjectContext } from '../../context/ProjectContext'
 import BrowserItem from './BrowserItem'
 import AddSection from './AddSection'
 
 const DivisionWrapper = (props) => {
-    const sectionsOn = useContext(SpecContext).project.sectionsOn;
+    const sectionsOn = useContext(ProjectContext).project.sectionsOn;
     const [isExpanded, setIsExpanded] = useState(true);
 
     const toggleExpandedHandler = () => {

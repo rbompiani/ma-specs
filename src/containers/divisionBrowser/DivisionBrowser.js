@@ -1,17 +1,17 @@
 import React, { useContext } from "react"
-import { SpecContext } from '../../context/SpecContext'
+import { SpecOutlineContext } from '../../context/SpecOutlineContext'
 
 import DivisionWrapper from './DivisionWrapper'
 
 import './DivisionBrowser.css'
 
 const DivisionBrowser = (props) => {
-    const specContext = useContext(SpecContext);
+    const specOutlineContext = useContext(SpecOutlineContext);
 
     return (
         <article className="divBrowser">
             <ul className="divisions">
-                {specContext.divisions.map((division) => {
+                {specOutlineContext.divisions.map((division) => {
                     return (
                         <DivisionWrapper {...division} key={division.id} />
                     )

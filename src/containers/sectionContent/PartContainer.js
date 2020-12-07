@@ -1,14 +1,14 @@
 import React, { useContext } from "react"
 import ArticleContainer from './ArticleContainer'
 import AddArticle from './AddArticle'
-import { SpecContext } from '../../context/SpecContext'
+import { ProjectContext } from '../../context/ProjectContext'
 
 import './SectionContent.css'
 
 const PartContainer = (props) => {
     const articles = props.articles.items.sort((a, b) => a.orderInPart - b.orderInPart);
-    const checkHandler = useContext(SpecContext).contentCheckHandler;
-    const articlesOn = useContext(SpecContext).currentSection.articlesOn;
+    const checkHandler = useContext(ProjectContext).contentCheckHandler;
+    const articlesOn = useContext(ProjectContext).currentSection.articlesOn;
 
     return (
         <div>
