@@ -16,7 +16,6 @@ const ArticleContent = (props) => {
     // state
     const [isActive, setIsActive] = useState(false);
     const [newParagraph, setNewParagraph] = useState({
-        paragraphSectionId: currentSection.id,
         article: props.articleId,
         orderInArticle: paragraphsInArticle.length,
         content: "",
@@ -41,7 +40,7 @@ const ArticleContent = (props) => {
     const submitParagraphHandler = async (e) => {
         e.preventDefault();
         console.log("Adding this to the database:", newParagraph)
-        await API.graphql(graphqlOperation(createParagraph, { input: newParagraph }))
+        await API.graphql(graphqlOperation(createParagraph, { input: { ...newParagraph, paragraphSectionId: currentSection.id } }))
         setIsActive(false);
         setNewParagraph({ ...newParagraph, content: "" })
     }

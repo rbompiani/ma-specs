@@ -77,6 +77,7 @@ const SpecContextProvider = (props) => {
                 const updatedSectionIndex = tempContent.items.findIndex(item => item.id === updatedSectionContent.id)
                 tempContent.items.splice(updatedSectionIndex, 1, updatedSectionContent)
                 setProject({ ...projectRef.current, content: tempContent })
+                setCurrentSection(tempContent)
             }
         })
 
@@ -166,9 +167,7 @@ const SpecContextProvider = (props) => {
             currentSectionContent = results.data.createSectionContent
         }
 
-        //setSectionsContent([...sectionsContent, currentSectionContent]);
         setCurrentSection(currentSectionContent);
-        console.log(currentSectionContent);
     }
 
     const contentCheckHandler = async (id, isOn, baseType) => {
