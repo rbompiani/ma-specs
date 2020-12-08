@@ -29,8 +29,10 @@ const ArticleContainer = (props) => {
                     })}
                     <AddParagraph
                         paragraphHints={props.paragraphHints.items}
-                        sectionID={props.sectionId}
+                        sectionId={props.sectionId}
+                        articleId={props.id}
                         contentCheckHandler={props.contentCheckHandler}
+                        numParagraphs={paragraphs.length}
                     />
                 </div>
             )}
