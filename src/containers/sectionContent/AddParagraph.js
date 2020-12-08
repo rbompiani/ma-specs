@@ -5,19 +5,17 @@ import { API, graphqlOperation } from 'aws-amplify'
 // graphql imports
 import { createParagraph } from '../../graphql/mutations'
 
-const ArticleContent = (props) => {
-    // context
-    const currentSection = useContext(ProjectContext).currentSection
-    const paragraphsInArticle = currentSection.paragraphs.items.filter(par => par.article == props.articleId).sort((a, b) => a.orderInArticle - b.orderInArticle)
+const AddParagraph = (props) => {
 
     // props
-    const paragraphHints = props.paragraphHints.sort((a, b) => a.orderInArticle - b.orderInArticle)
+    //const paragraphHints = props.paragraphHints.sort((a, b) => a.orderInArticle - b.orderInArticle)
 
     // state
     const [isActive, setIsActive] = useState(false);
     const [newParagraph, setNewParagraph] = useState({
+        paragraphSectionId: props.sectionId,
         article: props.articleId,
-        orderInArticle: paragraphsInArticle.length,
+        orderInArticle: props.numParagraphs,
         content: "",
         isOn: true,
         baseType: "paragraph"
@@ -40,19 +38,13 @@ const ArticleContent = (props) => {
     const submitParagraphHandler = async (e) => {
         e.preventDefault();
         console.log("Adding this to the database:", newParagraph)
-        await API.graphql(graphqlOperation(createParagraph, { input: { ...newParagraph, paragraphSectionId: currentSection.id } }))
+        await API.graphql(graphqlOperation(createParagraph, { input: { ...newParagraph } }))
         setIsActive(false);
         setNewParagraph({ ...newParagraph, content: "" })
     }
 
     return (
         <div>
-            {paragraphsInArticle.map((par, index) => {
-                const numeral = 'abcdefghijklmnopqrstuvwxyz'.charAt(index);
-                return (
-                    <p>{numeral}. {par.content}</p>
-                )
-            })}
             {isActive ? (
                 <div>
                     <input
@@ -70,13 +62,13 @@ const ArticleContent = (props) => {
                 )}
 
             <select className="paragraphHints" name="hint" id="hint" onChange={(e) => { console.log(e.target.value) }}>
-                {paragraphHints.map(hint => <option value={hint.content} className="paragraph">{hint.content}</option>)}
+                {props.paragraphHints.map(hint => <option value={hint.content} className="paragraph">{hint.content}</option>)}
             </select>
         </div>
     )
 }
 
-export default ArticleContent;
+export default AddParagraph;
 
 const AddParagraphPrompt = (props) => {
     return (

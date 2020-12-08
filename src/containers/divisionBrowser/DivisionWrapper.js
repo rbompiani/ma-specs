@@ -18,10 +18,12 @@ const DivisionWrapper = (props) => {
             <BrowserItem
                 id={props.id}
                 title={props.title}
-                class="division"
+                baseType={props.baseType}
                 isOn={sectionsOn.includes(props.id)}
                 toggleExpanded={toggleExpandedHandler}
                 isExpanded={isExpanded}
+                fetchSectionContent={props.fetchSectionContent}
+                updateSectionContent={props.updateSectionContent}
             />
 
             {/* map through sections in each division and create a browser item for each*/}
@@ -33,9 +35,10 @@ const DivisionWrapper = (props) => {
                                 key={sec.id}
                                 id={sec.id}
                                 title={sec.title}
-                                class="section"
                                 isOn={sectionsOn.includes(sec.id)}
                                 baseType={sec.baseType}
+                                fetchSectionContent={props.fetchSectionContent}
+                                updateSectionContent={props.updateSectionContent}
                             />
                         )
                     })

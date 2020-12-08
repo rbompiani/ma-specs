@@ -87,7 +87,6 @@ const SpecContextProvider = (props) => {
                 let tempContent = projectRef.current.content;
                 let contentIndex = tempContent.items.findIndex(cont => cont.id == newParagraphContent.section.id)
                 tempContent.items[contentIndex].paragraphs.items.push(newParagraphContent)
-                console.log(tempContent)
                 setProject({ ...projectRef.current, content: tempContent })
             }
         })

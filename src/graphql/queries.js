@@ -484,33 +484,9 @@ export const getSectionContent = /* GraphQL */ `
   query GetSectionContent($id: ID!) {
     getSectionContent(id: $id) {
       id
-      project {
-        id
-        title
-        sectionsOn
-        content {
-          nextToken
-        }
-        baseType
-        createdAt
-        updatedAt
-      }
       section {
         id
         title
-        division {
-          id
-          title
-          baseType
-          createdAt
-          updatedAt
-        }
-        baseType
-        parts {
-          nextToken
-        }
-        createdAt
-        updatedAt
       }
       partsOn
       articlesOn

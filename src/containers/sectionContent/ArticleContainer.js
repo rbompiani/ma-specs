@@ -1,9 +1,9 @@
-import React, { useContext } from "react"
-import ArticleContent from './ArticleContent'
-import { ProjectContext } from '../../context/ProjectContext'
+import React from "react"
+import ParagraphContainer from './ParagraphContainer'
+import AddParagraph from './AddParagraph'
 
 const ArticleContainer = (props) => {
-    const checkHandler = useContext(ProjectContext).contentCheckHandler;
+    const paragraphs = props.paragraphs.sort((a, b) => a.orderInArticle - b.orderInArticle)
 
     return (
         <div>
@@ -12,11 +12,28 @@ const ArticleContainer = (props) => {
                 id={props.id}
                 value={props.id}
                 className={`checkbox-${props.baseType} `}
-                onChange={(e) => checkHandler(props.id, props.isOn, "article")}
+                onChange={(e) => props.contentCheckHandler(props.id, props.isOn, props.baseType)}
                 checked={props.isOn}
             />
-            <div className="article">{props.title}</div>
-            { props.isOn && <ArticleContent paragraphHints={props.paragraphHints.items} articleId={props.id} />}
+            <div className={props.baseType}>{props.title}</div>
+            { props.isOn && (
+                <div>
+                    {paragraphs.map((par, index) => {
+                        return (
+                            <ParagraphContainer
+                                itemNo={par.orderInArticle}
+                                content={par.content}
+                                contentCheckHandler={props.contentCheckHandler}
+                            />
+                        )
+                    })}
+                    <AddParagraph
+                        paragraphHints={props.paragraphHints.items}
+                        sectionID={props.sectionId}
+                        contentCheckHandler={props.contentCheckHandler}
+                    />
+                </div>
+            )}
         </div>
     )
 }

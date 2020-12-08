@@ -5,17 +5,30 @@ import PartContainer from '../sectionContent/PartContainer'
 
 import './SectionContent.css'
 
-const SectionContent = () => {
-    const currentSection = useContext(ProjectContext).currentSection;
-    const partsOn = useContext(ProjectContext).currentSection.partsOn
+const SectionContent = (props) => {
     const parts = useContext(SpecOutlineContext).parts
+
+    let content;
+
+    if (props.currentSection && parts) {
+        const { partsOn, ...rest } = props.currentSection
+        content = parts.map((p) => {
+            return (
+                <PartContainer
+                    key={p.id}
+                    isOn={partsOn.includes(p.id)}
+                    {...p}
+                    currentSection={rest}
+                    contentCheckHandler={props.contentCheckHandler}
+                />
+            )
+        })
+    } else content = <div></div>
 
 
     return (
         <div className="sectionContent" >
-
-            {currentSection.id && parts.map((p) => <PartContainer key={p.id} isOn={partsOn.includes(p.id)} {...p} />)}
-
+            {content}
         </div>
     )
 }

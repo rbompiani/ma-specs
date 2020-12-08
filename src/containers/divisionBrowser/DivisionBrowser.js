@@ -13,7 +13,12 @@ const DivisionBrowser = (props) => {
             <ul className="divisions">
                 {specOutlineContext.divisions.map((division) => {
                     return (
-                        <DivisionWrapper {...division} key={division.id} />
+                        <DivisionWrapper
+                            key={division.id}
+                            {...division}
+                            fetchSectionContent={props.fetchSectionContent}
+                            updateSectionContent={props.updateSectionContent}
+                        />
                     )
                 })}
             </ul>

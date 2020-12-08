@@ -1,14 +1,14 @@
-import React, { useContext } from "react"
+import React from "react"
 import ArticleContainer from './ArticleContainer'
 import AddArticle from './AddArticle'
-import { ProjectContext } from '../../context/ProjectContext'
 
 import './SectionContent.css'
 
 const PartContainer = (props) => {
-    const articles = props.articles.items.sort((a, b) => a.orderInPart - b.orderInPart);
-    const checkHandler = useContext(ProjectContext).contentCheckHandler;
-    const articlesOn = useContext(ProjectContext).currentSection.articlesOn;
+    const articlesOn = props.currentSection.articlesOn
+    const articles = props.articles.items.sort((a, b) => a.orderInPart - b.orderInPart)
+    const paragraphs = props.currentSection.paragraphs.items
+    const sectionId = props.currentSection.id
 
     return (
         <div>
@@ -17,11 +17,23 @@ const PartContainer = (props) => {
                 id={props.id}
                 value={props.id}
                 className={`checkbox-${props.baseType} `}
-                onChange={(e) => checkHandler(props.id, props.isOn, "part")}
+                onChange={(e) => props.contentCheckHandler(props.id, props.isOn, "part")}
                 checked={props.isOn}
             />
             <div className="part">Part {props.id} - {props.title}</div>
-            {articles.map(art => <ArticleContainer key={art.id} isOn={articlesOn.includes(art.id)} {...art} />)}
+            {articles.map(art => {
+                const filteredParagraphs = paragraphs.filter(p => p.article === art.id)
+                return (
+                    <ArticleContainer
+                        key={art.id}
+                        isOn={articlesOn.includes(art.id)}
+                        {...art}
+                        paragraphs={filteredParagraphs}
+                        sectionId={sectionId}
+                        contentCheckHandler={props.contentCheckHandler}
+                    />
+                )
+            })}
             {/*<AddArticle id={props.id} nextNumberInPart={props.articles.items.length + 1} />*/}
         </div>
     )

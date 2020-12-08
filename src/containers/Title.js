@@ -1,12 +1,10 @@
 import React, { useContext } from 'react'
-import { ProjectContext } from '../context/ProjectContext'
 
-const Title = () => {
-    const currentSection = useContext(ProjectContext).currentSection.section
+const Title = (props) => {
 
     return (
         <h1>
-            {currentSection && `${currentSection.id} - ${currentSection.title}`}
+            {`${props.id} - ${props.title}`}
         </h1>
     )
 }
