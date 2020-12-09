@@ -1,8 +1,4 @@
-import React, { useState, useContext } from "react"
-// AWS imports
-import { API, graphqlOperation } from 'aws-amplify'
-// graphql imports
-import { createParagraph } from '../../graphql/mutations'
+import React, { useState } from "react"
 
 const ParagraphContainer = (props) => {
     // state

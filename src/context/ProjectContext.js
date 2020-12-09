@@ -5,7 +5,7 @@ import { API, graphqlOperation } from 'aws-amplify'
 
 // graphql imports
 import { getProject } from '../graphql/queries'
-import { createSectionContent, updateProject, updateSectionContent } from '../graphql/mutations'
+import { updateProject } from '../graphql/mutations'
 import { onCreateSectionContent, onUpdateSectionContent, onCreateParagraph } from '../graphql/subscriptions'
 
 export const ProjectContext = createContext();
@@ -22,11 +22,6 @@ const ProjectContextProvider = (props) => {
 
     const projectRef = useRef();
     projectRef.current = project;
-
-    // current display state
-    const [currentSection, setCurrentSection] = useState({});
-
-
 
     //-------- FETCHING DATA --------//
 
@@ -51,7 +46,6 @@ const ProjectContextProvider = (props) => {
                 const updatedSectionIndex = tempContent.items.findIndex(item => item.id === updatedSectionContent.id)
                 tempContent.items.splice(updatedSectionIndex, 1, updatedSectionContent)
                 setProject({ ...projectRef.current, content: tempContent })
-                setCurrentSection(tempContent)
             }
         })
 
@@ -59,7 +53,7 @@ const ProjectContextProvider = (props) => {
             next: createParagraphData => {
                 const newParagraphContent = createParagraphData.value.data.onCreateParagraph
                 let tempContent = projectRef.current.content;
-                let contentIndex = tempContent.items.findIndex(cont => cont.id == newParagraphContent.section.id)
+                let contentIndex = tempContent.items.findIndex(cont => cont.id === newParagraphContent.section.id)
                 tempContent.items[contentIndex].paragraphs.items.push(newParagraphContent)
                 setProject({ ...projectRef.current, content: tempContent })
             }
@@ -91,52 +85,8 @@ const ProjectContextProvider = (props) => {
         setProject({ ...project, [propName]: newArray });
     }
 
-    const sectionClickHandler = async (id) => {
-        let divisionId;
-        let sectionId;
-
-        if (id.length > 2) {
-            divisionId = id.slice(0, 2)
-            sectionId = id
-        } else {
-            divisionId = id
-            sectionId = id.concat("0000")
-        }
-
-        let currentSectionContent = project.content.items.find(sect => sect.section.id === sectionId);
-
-        if (!currentSectionContent) {
-            const newSectionContent = {
-                sectionContentProjectId: projectId,
-                sectionContentSectionId: sectionId,
-                partsOn: ["1", "2", "3"],
-                articlesOn: [],
-                notes: null
-            }
-
-            const results = await API.graphql(graphqlOperation(createSectionContent, { input: newSectionContent }))
-            currentSectionContent = results.data.createSectionContent
-        }
-
-        setCurrentSection(currentSectionContent);
-    }
-
-    const contentCheckHandler = async (id, isOn, baseType) => {
-        const propName = baseType + "sOn";
-        const oldArray = currentSection[propName]
-        let newArray;
-        if (isOn) {
-            newArray = oldArray.filter(item => item !== id)
-        } else {
-            newArray = [...oldArray, id]
-        }
-        await API.graphql(graphqlOperation(updateSectionContent, { input: { id: currentSection.id, [propName]: newArray } }))
-        setCurrentSection({ ...currentSection, [propName]: newArray });
-    }
-
-
     return (
-        <ProjectContext.Provider value={{ project, currentSection, browserCheckHandler, sectionClickHandler, contentCheckHandler }}>
+        <ProjectContext.Provider value={{ project, browserCheckHandler }}>
             {props.children}
         </ProjectContext.Provider>
     );

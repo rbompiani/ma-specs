@@ -6,7 +6,7 @@ import { ProjectContext } from '../../context/ProjectContext'
 import { API, graphqlOperation } from 'aws-amplify'
 
 // graphql imports
-import { createSectionContent, updateProject } from '../../graphql/mutations'
+import { createSectionContent } from '../../graphql/mutations'
 
 
 const BrowserItem = (props) => {
@@ -16,8 +16,8 @@ const BrowserItem = (props) => {
     //const sectionClickHandler = useContext(ProjectContext).sectionClickHandler
 
     const sectionClickHandler = async (id, baseType) => {
-        baseType == "division" ? id = id.concat("0000") : id = id
-        let newCurrentSection = projectContent.items.find(sectCont => sectCont.section.id == id)
+        id = baseType === "division" ? id = id.concat("0000") : id
+        let newCurrentSection = projectContent.items.find(sectCont => sectCont.section.id === id)
         if (newCurrentSection) {
             props.fetchSectionContent(newCurrentSection.id);
         } else {
@@ -28,7 +28,7 @@ const BrowserItem = (props) => {
                 articlesOn: [],
                 notes: null
             }
-            const results = await API.graphql(graphqlOperation(createSectionContent, { input: newSectionContent }))
+            await API.graphql(graphqlOperation(createSectionContent, { input: newSectionContent }))
             props.updateSectionContent(props.updateSectionContent)
         }
     }

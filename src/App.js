@@ -6,7 +6,7 @@ import SpecOutlineContextProvider from './context/SpecOutlineContext';
 
 import Router from './routing/Router'
 
-import logo from './logo.svg';
+//import logo from './logo.svg';
 import './App.css';
 
 // AWS imports

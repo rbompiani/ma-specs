@@ -1,14 +1,11 @@
-import React, { useState, useContext } from "react"
-import { ProjectContext } from '../../context/ProjectContext'
+import React, { useState } from "react"
+
 // AWS imports
 import { API, graphqlOperation } from 'aws-amplify'
 // graphql imports
 import { createParagraph } from '../../graphql/mutations'
 
 const AddParagraph = (props) => {
-
-    // props
-    //const paragraphHints = props.paragraphHints.sort((a, b) => a.orderInArticle - b.orderInArticle)
 
     // state
     const [isActive, setIsActive] = useState(false);

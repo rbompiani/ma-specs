@@ -1,6 +1,5 @@
 import React, { useContext } from "react"
 import { SpecOutlineContext } from '../../context/SpecOutlineContext'
-import { ProjectContext } from '../../context/ProjectContext'
 import PartContainer from '../sectionContent/PartContainer'
 
 import './SectionContent.css'

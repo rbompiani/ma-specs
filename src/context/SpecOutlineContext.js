@@ -5,7 +5,7 @@ import { API, graphqlOperation } from 'aws-amplify'
 
 // graphql imports
 import { divisionsByNumber, partsByNumber, } from '../graphql/queries'
-import { onCreateSection, onCreateSectionContent, onUpdateSectionContent, onCreateParagraph } from '../graphql/subscriptions'
+import { onCreateSection } from '../graphql/subscriptions'
 
 export const SpecOutlineContext = createContext();
 
@@ -31,7 +31,7 @@ const SpecOutlineContextProvider = (props) => {
             next: sectionData => {
                 const newSection = sectionData.value.data.onCreateSection
                 let tempDivisions = [...divisionsRef.current]
-                const divIndex = tempDivisions.findIndex(({ id }) => id == newSection.division.id)
+                const divIndex = tempDivisions.findIndex(({ id }) => id === newSection.division.id)
                 delete newSection.division
                 tempDivisions[divIndex].sections.items.push(newSection)
                 setDivisions(tempDivisions)
@@ -54,7 +54,9 @@ const SpecOutlineContextProvider = (props) => {
         tempParts.map(part => {
             return (
                 part.articles.items.sort((a, b) => a.orderInPart - b.orderInPart).map(art => {
-                    art.paragraphHints.items.sort((a, b) => a.orderIArticle - b.orderInArticle)
+                    return (
+                        art.paragraphHints.items.sort((a, b) => a.orderIArticle - b.orderInArticle)
+                    )
                 }
                 )
             )
