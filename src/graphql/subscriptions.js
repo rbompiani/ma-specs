@@ -1,6 +1,26 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
+export const onEditParagraphBySectionId = /* GraphQL */ `
+  subscription onEditParagraphBySectionId($section: String!) {
+    onEditParagraphBySectionId(section: $section) {
+      id
+      article 
+      orderInArticle  
+      content 
+      isOn  
+      subparagraphs {
+        items{
+          id
+          orderInParagraph
+          content
+          isOn
+          baseType
+        } 
+      }
+    }
+  }
+`;
 export const onCreateProject = /* GraphQL */ `
   subscription OnCreateProject {
     onCreateProject {
@@ -487,52 +507,15 @@ export const onDeleteParagraphHint = /* GraphQL */ `
 export const onCreateParagraph = /* GraphQL */ `
   subscription OnCreateParagraph {
     onCreateParagraph {
-      id
-      section {
-        id
-        project {
           id
-          title
-          sectionsOn
-          baseType
-          createdAt
-          updatedAt
-        }
-        section {
-          id
-          title
-          baseType
-          createdAt
-          updatedAt
-        }
-        partsOn
-        articlesOn
-        paragraphs {
-          nextToken
-        }
-        notes
-        createdAt
-        updatedAt
-      }
-      article
-      orderInArticle
-      content
-      isOn
-      subparagraphs {
-        items {
-          id
-          orderInParagraph
+          section {
+            id
+          }
+          article
+          orderInArticle
           content
           isOn
           baseType
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
-      baseType
-      createdAt
-      updatedAt
     }
   }
 `;

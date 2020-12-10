@@ -4,30 +4,25 @@ import React, { createContext, useState, useEffect, useRef } from 'react';
 import { API, graphqlOperation } from 'aws-amplify'
 
 // graphql imports
-import { getProject } from '../graphql/queries'
-import { updateProject } from '../graphql/mutations'
+import { getSectionContent } from '../graphql/queries'
+import { updateSectionContent } from '../graphql/mutations'
 import { onCreateSectionContent, onUpdateSectionContent, onCreateParagraph } from '../graphql/subscriptions'
 
-export const ProjectContext = createContext();
+export const SectionContext = createContext();
 
-const ProjectContextProvider = (props) => {
+const SectionContextProvider = (props) => {
 
     //-------- STATE --------//
+    const [activeSection, setActiveSection] = useState();
 
-    //TODO - update project id with selected value
-    const [projectId, setProjectId] = useState("1905")
-
-    // project state
-    const [project, setProject] = useState({})
-
-    const projectRef = useRef();
-    projectRef.current = project;
+    const activeSectionRef = useRef();
+    activeSection.current = activeSection;
 
     //-------- FETCHING DATA --------//
 
     // fetch outline data
     useEffect(() => {
-        fetchProject();
+        fetchSectionContent();
 
         // Listeners - onCreateSectionContent / onUpdateSectionContent
         // API.graphql(graphqlOperation(onCreateSectionContent)).subscribe({
@@ -59,37 +54,48 @@ const ProjectContextProvider = (props) => {
         //     }
         // })
 
-        //TODO - Add listener for onDeleteParagraph / onUpdateParagraph
+
     },
         []
     )
 
-    // fetch project specific data
-    const fetchProject = async () => {
-        const results = await API.graphql(graphqlOperation(getProject, { id: projectId }));
-        setProject(results.data.getProject)
-    }
+    // fetch current section content and set paragraph and subparagraph subscriptions
+    const fetchSectionContent = async (id) => {
+        const results = await API.graphql(graphqlOperation(getSectionContent, { id: id }));
+        setActiveSection(results.data.getSectionContent)
 
+        //TODO - Add listener for onDeleteParagraph / onUpdateParagraph
+        API.graphql(graphqlOperation(onCreateParagraph)).subscribe({
+            next: createParagraphData => {
+                const newParagraphContent = createParagraphData.value.data.onCreateParagraph
+                let tempContent = { ...activeSectionRef.current }
+                tempContent.paragraphs.items.push(newParagraphContent)
+                if (newParagraphContent.section.id === activeSectionRef.current.id) {
+                    setActiveSection(tempContent)
+                }
+            }
+        })
+    }
 
     //-------- HANDLERS --------//
-    const browserCheckHandler = async (id, isOn, baseType) => {
+    const contentCheckHandler = async (id, isOn, baseType) => {
         const propName = baseType + "sOn";
-        const oldArray = project[propName]
         let newArray;
         if (isOn) {
-            newArray = oldArray.filter(div => div !== id)
+            newArray = activeSection[propName].filter(item => item !== id)
         } else {
-            newArray = [...oldArray, id]
+            newArray = [...activeSection[propName], id]
         }
-        await API.graphql(graphqlOperation(updateProject, { input: { id: project.id, [propName]: newArray } }))
-        setProject({ ...project, [propName]: newArray });
+        await API.graphql(graphqlOperation(updateSectionContent, { input: { id: activeSection.id, [propName]: newArray } }))
+        setActiveSection({ ...activeSection, [propName]: newArray });
     }
 
+
     return (
-        <ProjectContext.Provider value={{ project, projectId, browserCheckHandler }}>
+        <SectionContext.Provider value={{ activeSection, contentCheckHandler }}>
             {props.children}
-        </ProjectContext.Provider>
+        </SectionContext.Provider>
     );
 };
 
-export default ProjectContextProvider;
+export default SectionContextProvider;

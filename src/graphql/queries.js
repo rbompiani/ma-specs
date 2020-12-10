@@ -6,36 +6,17 @@ export const getProject = /* GraphQL */ `
     getProject(id: $id) {
       id
       title
-      sectionsOn      
+      sectionsOn 
       content {
         items {
           id
-          section {
-              id
-              title
-          }
           partsOn
           articlesOn
-          paragraphs{
-            items{
-              id
-              article
-              orderInArticle
-              content
-              isOn
-              baseType
-              subparagraphs {
-                items{
-                  id
-                  orderInParagraph
-                  content
-                  isOn
-                  baseType
-                }
-              }
-            }
-          }
           notes
+          section {
+            id
+            title
+          }
         }
         nextToken
       }
@@ -484,9 +465,20 @@ export const getSectionContent = /* GraphQL */ `
   query GetSectionContent($id: ID!) {
     getSectionContent(id: $id) {
       id
+      project {
+        id
+        title
+      }
       section {
         id
         title
+        baseType
+        parts {
+          items{
+            id
+            title
+          }
+        }
       }
       partsOn
       articlesOn
@@ -498,14 +490,9 @@ export const getSectionContent = /* GraphQL */ `
           content
           isOn
           baseType
-          createdAt
-          updatedAt
         }
-        nextToken
       }
       notes
-      createdAt
-      updatedAt
     }
   }
 `;
@@ -603,7 +590,7 @@ export const divisionsByNumber = /* GraphQL */ `
             id
             title
             baseType
-            }
+          }
           nextToken
         }
         baseType
@@ -635,18 +622,17 @@ export const partsByNumber = /* GraphQL */ `
         id
         title
         articles {
-          items {
+          items{
             id
             title
             orderInPart
-            baseType
             paragraphHints {
-              items{
-                id
-                orderInArticle
+              items {
                 content
+                orderInArticle
               }
             }
+            baseType
           }
           nextToken
         }

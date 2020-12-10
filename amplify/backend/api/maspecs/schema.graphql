@@ -8,7 +8,7 @@ type Project @model
   baseType: String!
 }
  
-type Division @model 
+type Division @model
 @key(name: "byNumber", fields:["baseType", "id"], queryField: "divisionsByNumber" )
 {
   id: ID!
@@ -66,7 +66,7 @@ type Paragraph @model
   baseType: String!
 }
 
-type SubParagraph @model
+type SubParagraph @model 
 {
   id: ID!
   paragraph: Paragraph! @connection(name:"paragraphSubparagraphs")
@@ -76,7 +76,7 @@ type SubParagraph @model
   baseType: String!
 }
 
-type SectionContent @model
+type SectionContent @model 
 {
   id: ID!
   project: Project! @connection(name:"projectSectionContents")
