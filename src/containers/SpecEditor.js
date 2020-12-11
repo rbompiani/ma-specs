@@ -16,7 +16,7 @@ import { API, graphqlOperation } from 'aws-amplify'
 // graphql imports
 import { getSectionContent } from '../graphql/queries'
 import { updateSectionContent } from '../graphql/mutations'
-import { onCreateParagraph } from '../graphql/subscriptions'
+import { onCreateParagraph, onUpdateParagraph } from '../graphql/subscriptions'
 
 const SpecEditor = () => {
   // pass section content down as props to section content component and children
@@ -32,14 +32,31 @@ const SpecEditor = () => {
 
     API.graphql(graphqlOperation(onCreateParagraph)).subscribe({
       next: createParagraphData => {
+
         const newParagraphContent = createParagraphData.value.data.onCreateParagraph
-        let tempContent = { ...currentSectionRef.current }
-        tempContent.paragraphs.items.push(newParagraphContent)
+
         if (newParagraphContent.section.id === currentSectionRef.current.id) {
+          let tempContent = { ...currentSectionRef.current }
+          tempContent.paragraphs.items.push(newParagraphContent)
           setCurrentSectionContent(tempContent)
         }
       }
     })
+
+
+    API.graphql(graphqlOperation(onUpdateParagraph)).subscribe({
+      next: updateParagraphData => {
+        const updatedParagraph = updateParagraphData.value.data.onUpdateParagraph
+        if (updatedParagraph.section.id === currentSectionRef.current.id) {
+          let tempContent = { ...currentSectionRef.current }
+          const parIndex = tempContent.paragraphs.items.findIndex(p => p.id === updatedParagraph.id)
+          tempContent.paragraphs.items[parIndex] = updatedParagraph
+          setCurrentSectionContent(tempContent)
+        }
+      }
+    })
+
+
   }
 
   const contentCheckHandler = async (id, isOn, baseType) => {

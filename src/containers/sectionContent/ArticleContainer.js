@@ -20,11 +20,7 @@ const ArticleContainer = (props) => {
                 <div>
                     {paragraphs.map((par, index) => {
                         return (
-                            <ParagraphContainer
-                                itemNo={par.orderInArticle}
-                                content={par.content}
-                                contentCheckHandler={props.contentCheckHandler}
-                            />
+                            <ParagraphContainer {...par} />
                         )
                     })}
                     <AddParagraph
