@@ -2,8 +2,52 @@ import React from "react"
 import ParagraphContainer from './ParagraphContainer'
 import AddParagraph from './AddParagraph'
 
+// AWS imports
+import { API, graphqlOperation } from 'aws-amplify'
+// graphql imports
+import { updateParagraph, deleteParagraph } from '../../graphql/mutations'
+
+
 const ArticleContainer = (props) => {
     const paragraphs = props.paragraphs.sort((a, b) => a.orderInArticle - b.orderInArticle)
+
+    const reOrderParagraphs = async (indexToUpdate, action, deleteId) => {
+        let paragraphsToUpdate = []
+        let itemUp
+        let itemDown
+        switch (action) {
+            case "delete":
+                for (let i = indexToUpdate + 1; i < paragraphs.length; i++) {
+                    itemUp = paragraphs[i]
+                    itemUp.orderInArticle--
+                    paragraphsToUpdate.push(itemUp)
+                }
+                break
+            case "moveUp":
+                itemUp = paragraphs[indexToUpdate]
+                itemDown = paragraphs[indexToUpdate - 1]
+                itemUp.orderInArticle--
+                itemDown.orderInArticle++
+                paragraphsToUpdate.push(itemUp)
+                paragraphsToUpdate.push(itemDown)
+                break
+            case "moveDown":
+                itemDown = paragraphs[indexToUpdate]
+                itemUp = paragraphs[indexToUpdate + 1]
+                itemUp.orderInArticle--
+                itemDown.orderInArticle++
+                paragraphsToUpdate.push(itemUp)
+                paragraphsToUpdate.push(itemDown)
+                break
+        }
+        console.log(paragraphsToUpdate);
+        paragraphsToUpdate.map(async (par) => {
+            (
+                await API.graphql(graphqlOperation(updateParagraph, { input: { id: par.id, orderInArticle: par.orderInArticle } }))
+            )
+        })
+        action === "delete" && await API.graphql(graphqlOperation(deleteParagraph, { input: { id: deleteId } }))
+    }
 
     return (
         <div>
@@ -20,7 +64,7 @@ const ArticleContainer = (props) => {
                 <div>
                     {paragraphs.map((par, index) => {
                         return (
-                            <ParagraphContainer {...par} />
+                            <ParagraphContainer key={par.id} {...par} reOrderParagraphs={reOrderParagraphs} />
                         )
                     })}
                     <AddParagraph

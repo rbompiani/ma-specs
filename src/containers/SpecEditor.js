@@ -16,7 +16,7 @@ import { API, graphqlOperation } from 'aws-amplify'
 // graphql imports
 import { getSectionContent } from '../graphql/queries'
 import { updateSectionContent } from '../graphql/mutations'
-import { onCreateParagraph, onUpdateParagraph } from '../graphql/subscriptions'
+import { onCreateParagraph, onUpdateParagraph, onDeleteParagraph } from '../graphql/subscriptions'
 
 const SpecEditor = () => {
   // pass section content down as props to section content component and children
@@ -52,6 +52,16 @@ const SpecEditor = () => {
           const parIndex = tempContent.paragraphs.items.findIndex(p => p.id === updatedParagraph.id)
           tempContent.paragraphs.items[parIndex] = updatedParagraph
           setCurrentSectionContent(tempContent)
+        }
+      }
+    })
+
+    API.graphql(graphqlOperation(onDeleteParagraph)).subscribe({
+      next: deletedParagraphData => {
+        const deletedParagraph = deletedParagraphData.value.data.onDeleteParagraph
+        if (deletedParagraph.section.id === currentSectionRef.current.id) {
+          let tempParagraphs = currentSectionRef.current.paragraphs.items.filter(p => p.id !== deletedParagraph.id)
+          setCurrentSectionContent({ ...currentSectionRef.current, paragraphs: { items: tempParagraphs } })
         }
       }
     })

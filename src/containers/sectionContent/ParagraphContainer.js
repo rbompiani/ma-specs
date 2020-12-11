@@ -3,7 +3,7 @@ import React, { useState } from "react"
 // AWS imports
 import { API, graphqlOperation } from 'aws-amplify'
 // graphql imports
-import { updateParagraph } from '../../graphql/mutations'
+import { updateParagraph, deleteParagraph } from '../../graphql/mutations'
 
 
 const ParagraphContainer = (props) => {
@@ -37,17 +37,21 @@ const ParagraphContainer = (props) => {
         onEditHandler();
     }
 
+
     return (
         !isActive ? (
             <div className={`paragraph active`} >
                 <p>{numeral}. {props.content}</p>
                 <button onClick={onEditHandler}>edit</button>
+                <button onClick={() => props.reOrderParagraphs(props.orderInArticle, "moveUp")}>up</button>
+                <button onClick={() => props.reOrderParagraphs(props.orderInArticle, "moveDown")}>down</button>
             </div>
         ) : (
                 <div className={`paragraph inactive`} >
                     <p>{numeral}.</p>
                     <input value={paragraph.content} onChange={onChangeHandler} />
                     <button onClick={updateParagraphHandler}>save</button>
+                    <button onClick={() => props.reOrderParagraphs(props.orderInArticle, "delete", props.id)}>delete</button>
                 </div>
             )
     )
