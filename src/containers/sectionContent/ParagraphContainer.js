@@ -43,8 +43,8 @@ const ParagraphContainer = (props) => {
             <div className={`paragraph active`} >
                 <p>{numeral}. {props.content}</p>
                 <button onClick={onEditHandler}>edit</button>
-                <button onClick={() => props.reOrderParagraphs(props.orderInArticle, "moveUp")}>up</button>
-                <button onClick={() => props.reOrderParagraphs(props.orderInArticle, "moveDown")}>down</button>
+                {props.orderInArticle > 0 && <button onClick={() => props.reOrderParagraphs(props.orderInArticle, "moveUp")}>up</button>}
+                {props.orderInArticle < props.numParagraphs - 1 && <button onClick={() => props.reOrderParagraphs(props.orderInArticle, "moveDown")}>down</button>}
             </div>
         ) : (
                 <div className={`paragraph inactive`} >

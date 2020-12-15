@@ -64,7 +64,7 @@ const ArticleContainer = (props) => {
                 <div>
                     {paragraphs.map((par, index) => {
                         return (
-                            <ParagraphContainer key={par.id} {...par} reOrderParagraphs={reOrderParagraphs} />
+                            <ParagraphContainer key={par.id} {...par} reOrderParagraphs={reOrderParagraphs} numParagraphs={paragraphs.length} />
                         )
                     })}
                     <AddParagraph
