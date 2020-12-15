@@ -21,8 +21,6 @@ const AddParagraph = (props) => {
         baseType: "paragraph"
     })
 
-    //TODO - Determine how many paragraphs exist in the current article, auto increment new paragraph to be next
-
     // handlers
     const addParagraphHandler = () => {
         setIsActive(true);

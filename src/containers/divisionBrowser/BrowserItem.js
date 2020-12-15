@@ -34,36 +34,6 @@ const BrowserItem = (props) => {
         }
     }
 
-    // const sectionClickHandler = async (id) => {
-    //     let divisionId;
-    //     let sectionId;
-
-    //     if (id.length > 2) {
-    //         divisionId = id.slice(0, 2)
-    //         sectionId = id
-    //     } else {
-    //         divisionId = id
-    //         sectionId = id.concat("0000")
-    //     }
-
-    //     let currentSectionContent = project.content.items.find(sect => sect.section.id === sectionId);
-
-    //     if (!currentSectionContent) {
-    //         const newSectionContent = {
-    //             sectionContentProjectId: projectId,
-    //             sectionContentSectionId: sectionId,
-    //             partsOn: ["1", "2", "3"],
-    //             articlesOn: [],
-    //             notes: null
-    //         }
-
-    //         const results = await API.graphql(graphqlOperation(createSectionContent, { input: newSectionContent }))
-    //         currentSectionContent = results.data.createSectionContent
-    //     }
-
-    //     setCurrentSection(currentSectionContent);
-    // }
-
     return (
         <li
             className={
