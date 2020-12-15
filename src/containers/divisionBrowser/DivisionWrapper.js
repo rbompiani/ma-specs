@@ -22,8 +22,6 @@ const DivisionWrapper = (props) => {
                 isOn={sectionsOn.includes(props.id)}
                 toggleExpanded={toggleExpandedHandler}
                 isExpanded={isExpanded}
-                fetchSectionContent={props.fetchSectionContent}
-                updateSectionContent={props.updateSectionContent}
             />
 
             {/* map through sections in each division and create a browser item for each*/}
@@ -37,8 +35,6 @@ const DivisionWrapper = (props) => {
                                 title={sec.title}
                                 isOn={sectionsOn.includes(sec.id)}
                                 baseType={sec.baseType}
-                                fetchSectionContent={props.fetchSectionContent}
-                                updateSectionContent={props.updateSectionContent}
                             />
                         )
                     })

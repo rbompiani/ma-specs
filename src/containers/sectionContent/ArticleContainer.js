@@ -1,4 +1,5 @@
-import React from "react"
+import React, { useContext } from "react"
+import { SectionContext } from '../../context/SectionContext'
 import ParagraphContainer from './ParagraphContainer'
 import AddParagraph from './AddParagraph'
 
@@ -9,7 +10,13 @@ import { updateParagraph, deleteParagraph } from '../../graphql/mutations'
 
 
 const ArticleContainer = (props) => {
-    const paragraphs = props.paragraphs.sort((a, b) => a.orderInArticle - b.orderInArticle)
+
+    let paragraphs = useContext(SectionContext).activeSection.paragraphs
+    paragraphs = paragraphs.items
+        .filter(p => p.article === props.id)
+        .sort((a, b) => a.orderInArticle - b.orderInArticle)
+
+    const contentCheckHandler = useContext(SectionContext).contentCheckHandler
 
     const reOrderParagraphs = async (indexToUpdate, action, deleteId) => {
         let paragraphsToUpdate = []
@@ -56,22 +63,25 @@ const ArticleContainer = (props) => {
                 id={props.id}
                 value={props.id}
                 className={`checkbox-${props.baseType} `}
-                onChange={(e) => props.contentCheckHandler(props.id, props.isOn, props.baseType)}
+                onChange={(e) => contentCheckHandler(props.id, props.isOn, props.baseType)}
                 checked={props.isOn}
             />
             <div className={props.baseType}>{props.title}</div>
             { props.isOn && (
                 <div>
-                    {paragraphs.map((par, index) => {
+                    {paragraphs.map((par) => {
                         return (
-                            <ParagraphContainer key={par.id} {...par} reOrderParagraphs={reOrderParagraphs} numParagraphs={paragraphs.length} />
+                            <ParagraphContainer
+                                key={par.id}
+                                {...par}
+                                reOrderParagraphs={reOrderParagraphs}
+                                numParagraphs={paragraphs.length}
+                            />
                         )
                     })}
                     <AddParagraph
                         paragraphHints={props.paragraphHints.items}
-                        sectionId={props.sectionId}
                         articleId={props.id}
-                        contentCheckHandler={props.contentCheckHandler}
                         numParagraphs={paragraphs.length}
                     />
                 </div>

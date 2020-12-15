@@ -16,8 +16,6 @@ const DivisionBrowser = (props) => {
                         <DivisionWrapper
                             key={division.id}
                             {...division}
-                            fetchSectionContent={props.fetchSectionContent}
-                            updateSectionContent={props.updateSectionContent}
                         />
                     )
                 })}

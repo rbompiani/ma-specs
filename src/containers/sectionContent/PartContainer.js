@@ -1,4 +1,6 @@
-import React from "react"
+import React, { useContext } from "react"
+
+import { SectionContext } from '../../context/SectionContext'
 
 import ArticleContainer from './ArticleContainer'
 import AddArticle from './AddArticle'
@@ -6,10 +8,10 @@ import AddArticle from './AddArticle'
 import './SectionContent.css'
 
 const PartContainer = (props) => {
-    const articlesOn = props.currentSection.articlesOn
+    const articlesOn = useContext(SectionContext).activeSection.articlesOn
+
     const articles = props.articles.items.sort((a, b) => a.orderInPart - b.orderInPart)
-    const paragraphs = props.currentSection.paragraphs.items
-    const sectionId = props.currentSection.id
+
 
     return (
         <div>
@@ -23,15 +25,11 @@ const PartContainer = (props) => {
             />
             <div className="part">Part {props.id} - {props.title}</div>
             {articles.map(art => {
-                const filteredParagraphs = paragraphs.filter(p => p.article === art.id)
                 return (
                     <ArticleContainer
                         key={art.id}
                         isOn={articlesOn.includes(art.id)}
                         {...art}
-                        paragraphs={filteredParagraphs}
-                        sectionId={sectionId}
-                        contentCheckHandler={props.contentCheckHandler}
                     />
                 )
             })}

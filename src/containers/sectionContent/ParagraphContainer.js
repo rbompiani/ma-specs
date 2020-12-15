@@ -40,14 +40,13 @@ const ParagraphContainer = (props) => {
 
     return (
         !isActive ? (
-            <div className={`paragraph active`} >
+            <div className={`paragraph inactive`} onClick={onEditHandler}>
                 <p>{numeral}. {props.content}</p>
-                <button onClick={onEditHandler}>edit</button>
                 {props.orderInArticle > 0 && <button onClick={() => props.reOrderParagraphs(props.orderInArticle, "moveUp")}>up</button>}
                 {props.orderInArticle < props.numParagraphs - 1 && <button onClick={() => props.reOrderParagraphs(props.orderInArticle, "moveDown")}>down</button>}
             </div>
         ) : (
-                <div className={`paragraph inactive`} >
+                <div className={`paragraph active`} >
                     <p>{numeral}.</p>
                     <input value={paragraph.content} onChange={onChangeHandler} />
                     <button onClick={updateParagraphHandler}>save</button>

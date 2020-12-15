@@ -3,6 +3,7 @@ import { BrowserRouter } from 'react-router-dom'
 
 import ProjectContextProvider from './context/ProjectContext'
 import SpecOutlineContextProvider from './context/SpecOutlineContext';
+import SectionContextProvider from './context/SectionContext';
 
 import Router from './routing/Router'
 
@@ -19,7 +20,9 @@ const App = () => {
     <BrowserRouter>
       <ProjectContextProvider>
         <SpecOutlineContextProvider>
-          <Router />
+          <SectionContextProvider>
+            <Router />
+          </SectionContextProvider>
         </SpecOutlineContextProvider>
       </ProjectContextProvider>
     </BrowserRouter>

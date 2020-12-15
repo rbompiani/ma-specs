@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
 import { ProjectContext } from '../../context/ProjectContext'
+import { SectionContext } from '../../context/SectionContext'
 //import { attachEventProps } from '@aws-amplify/ui-react/lib-esm/react-component-lib/utils';
 
 // AWS imports
@@ -12,14 +13,14 @@ import { createSectionContent } from '../../graphql/mutations'
 const BrowserItem = (props) => {
     const checkHandler = useContext(ProjectContext).browserCheckHandler
     const { id: projectId, content: projectContent } = useContext(ProjectContext).project
-
-    //const sectionClickHandler = useContext(ProjectContext).sectionClickHandler
+    const fetchSectionContent = useContext(SectionContext).fetchSectionContent
+    const setActiveSection = useContext(SectionContext).setActiveSection
 
     const sectionClickHandler = async (id, baseType) => {
         id = baseType === "division" ? id = id.concat("0000") : id
         let newCurrentSection = projectContent.items.find(sectCont => sectCont.section.id === id)
         if (newCurrentSection) {
-            props.fetchSectionContent(newCurrentSection.id);
+            fetchSectionContent(newCurrentSection.id);
         } else {
             const newSectionContent = {
                 sectionContentProjectId: projectId,
@@ -28,8 +29,8 @@ const BrowserItem = (props) => {
                 articlesOn: [],
                 notes: null
             }
-            await API.graphql(graphqlOperation(createSectionContent, { input: newSectionContent }))
-            props.updateSectionContent(props.updateSectionContent)
+            const results = await API.graphql(graphqlOperation(createSectionContent, { input: newSectionContent }))
+            setActiveSection(results)
         }
     }
 

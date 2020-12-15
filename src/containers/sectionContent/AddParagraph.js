@@ -1,4 +1,6 @@
-import React, { useState } from "react"
+import React, { useState, useContext } from "react"
+
+import { SectionContext } from '../../context/SectionContext'
 
 // AWS imports
 import { API, graphqlOperation } from 'aws-amplify'
@@ -6,11 +8,12 @@ import { API, graphqlOperation } from 'aws-amplify'
 import { createParagraph } from '../../graphql/mutations'
 
 const AddParagraph = (props) => {
+    const activeSectionId = useContext(SectionContext).activeSection.id
 
     // state
     const [isActive, setIsActive] = useState(false);
     const [newParagraph, setNewParagraph] = useState({
-        paragraphSectionId: props.sectionId,
+        paragraphSectionId: activeSectionId,
         article: props.articleId,
         orderInArticle: props.numParagraphs,
         content: "",
@@ -58,7 +61,7 @@ const AddParagraph = (props) => {
                     <AddParagraphPrompt addParagraphHandler={addParagraphHandler} />
                 )}
 
-            {props.paragraphHints.length && (
+            {props.paragraphHints.length > 0 && (
                 <select className="paragraphHints" name="hint" id="hint" onChange={(e) => { console.log(e.target.value) }}>
                     {props.paragraphHints.map(hint => <option value={hint.content} className="paragraph">{hint.content}</option>)}
                 </select>
