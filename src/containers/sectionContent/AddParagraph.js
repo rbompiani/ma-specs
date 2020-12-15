@@ -58,9 +58,11 @@ const AddParagraph = (props) => {
                     <AddParagraphPrompt addParagraphHandler={addParagraphHandler} />
                 )}
 
-            <select className="paragraphHints" name="hint" id="hint" onChange={(e) => { console.log(e.target.value) }}>
-                {props.paragraphHints.map(hint => <option value={hint.content} className="paragraph">{hint.content}</option>)}
-            </select>
+            {props.paragraphHints.length && (
+                <select className="paragraphHints" name="hint" id="hint" onChange={(e) => { console.log(e.target.value) }}>
+                    {props.paragraphHints.map(hint => <option value={hint.content} className="paragraph">{hint.content}</option>)}
+                </select>
+            )}
         </div>
     )
 }
