@@ -9,7 +9,7 @@ import Header from '../containers/Header'
 import Title from '../containers/Title'
 import DivisionBrowser from '../containers/divisionBrowser/DivisionBrowser'
 import SectionContent from '../containers/sectionContent/SectionContent'
-import Notes from '../containers/Notes'
+import NotesContainer from '../containers/Notes/NotesContainer'
 
 const SpecEditor = () => {
 
@@ -19,7 +19,7 @@ const SpecEditor = () => {
       <Title />
       <DivisionBrowser />
       <SectionContent />
-      <Notes />
+      <NotesContainer />
     </main>
   )
 }

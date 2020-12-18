@@ -1,4 +1,5 @@
-import React, { useState } from "react"
+import React, { useState, useContext, useRef } from "react"
+import { SectionContext } from '../../context/SectionContext'
 
 // AWS imports
 import { API, graphqlOperation } from 'aws-amplify'
@@ -18,12 +19,15 @@ const ParagraphContainer = (props) => {
         baseType: "paragraph"
     })
 
-    const numeral = 'abcdefghijklmnopqrstuvwxyz'.charAt(props.orderInArticle);
+    // context
+    const useOutsideClick = useContext(SectionContext).useOutsideClick
+    const ref = useRef();
 
-    // handlers
-    const onEditHandler = () => {
-        setIsActive(!isActive);
-    }
+    useOutsideClick(ref, () => {
+        if (isActive) setIsActive(false);
+    });
+
+    const numeral = 'abcdefghijklmnopqrstuvwxyz'.charAt(props.orderInArticle);
 
     const onChangeHandler = (e) => {
         setParagraph({ ...paragraph, content: e.target.value })
@@ -34,19 +38,18 @@ const ParagraphContainer = (props) => {
         console.log("Updating to this in the database:", paragraph)
         await API.graphql(graphqlOperation(updateParagraph, { input: { id: props.id, content: paragraph.content } }))
         setIsActive(false);
-        onEditHandler();
     }
 
 
     return (
         !isActive ? (
-            <div className={`paragraph inactive`} onClick={onEditHandler}>
+            <div ref={ref} className={`paragraph inactive`} onClick={() => setIsActive(!isActive)}>
                 <p>{numeral}. {props.content}</p>
                 {props.orderInArticle > 0 && <button onClick={() => props.reOrderParagraphs(props.orderInArticle, "moveUp")}>up</button>}
                 {props.orderInArticle < props.numParagraphs - 1 && <button onClick={() => props.reOrderParagraphs(props.orderInArticle, "moveDown")}>down</button>}
             </div>
         ) : (
-                <div className={`paragraph active`} >
+                <div ref={ref} className={`paragraph active`} >
                     <p>{numeral}.</p>
                     <input value={paragraph.content} onChange={onChangeHandler} />
                     <button onClick={updateParagraphHandler}>save</button>

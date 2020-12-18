@@ -6,7 +6,7 @@ import { API, graphqlOperation } from 'aws-amplify'
 // graphql imports
 import { getSectionContent } from '../graphql/queries'
 import { updateSectionContent } from '../graphql/mutations'
-import { onCreateParagraph, onUpdateParagraph, onDeleteParagraph } from '../graphql/subscriptions'
+import { onCreateParagraph, onUpdateParagraph, onDeleteParagraph, onUpdateSectionContent } from '../graphql/subscriptions'
 
 export const SectionContext = createContext();
 
@@ -60,7 +60,14 @@ const SectionContextProvider = (props) => {
             }
         })
 
-
+        API.graphql(graphqlOperation(onUpdateSectionContent)).subscribe({
+            next: updatedSection => {
+                const newSection = updatedSection.value.data.onUpdateSectionContent
+                if (newSection.id === activeSectionRef.current.id) {
+                    setActiveSection({ ...activeSectionRef.current, notes: newSection.notes })
+                }
+            }
+        })
     }
 
     //-------- HANDLERS --------//
@@ -77,9 +84,25 @@ const SectionContextProvider = (props) => {
         setActiveSection({ ...activeSectionRef.current, [propName]: newArray });
     }
 
+    //---------- HOOKS -------------//
+    const useOutsideClick = (ref, callback) => {
+        const handleClick = e => {
+            if (ref.current && !ref.current.contains(e.target)) {
+                callback();
+            }
+        };
+
+        useEffect(() => {
+            document.addEventListener("click", handleClick);
+
+            return () => {
+                document.removeEventListener("click", handleClick);
+            };
+        });
+    };
 
     return (
-        <SectionContext.Provider value={{ activeSection, setActiveSection, fetchSectionContent, contentCheckHandler }}>
+        <SectionContext.Provider value={{ activeSection, setActiveSection, fetchSectionContent, contentCheckHandler, useOutsideClick }}>
             {props.children}
         </SectionContext.Provider>
     );
