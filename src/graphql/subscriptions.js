@@ -516,6 +516,15 @@ export const onCreateParagraph = /* GraphQL */ `
           content
           isOn
           baseType
+          subparagraphs{
+            items{
+              id
+              orderInParagraph
+              content
+              isOn
+              baseType
+            }
+          }
     }
   }
 `;
@@ -560,8 +569,6 @@ export const onUpdateParagraph = /* GraphQL */ `
           content
           isOn
           baseType
-          createdAt
-          updatedAt
         }
         nextToken
       }
@@ -612,8 +619,6 @@ export const onDeleteParagraph = /* GraphQL */ `
           content
           isOn
           baseType
-          createdAt
-          updatedAt
         }
         nextToken
       }
@@ -641,12 +646,7 @@ export const onCreateSubParagraph = /* GraphQL */ `
         orderInArticle
         content
         isOn
-        subparagraphs {
-          nextToken
-        }
         baseType
-        createdAt
-        updatedAt
       }
       orderInParagraph
       content
@@ -769,6 +769,15 @@ export const onCreateSectionContent = /* GraphQL */ `
           baseType
           createdAt
           updatedAt
+          subparagraphs{
+            items{
+              id
+              orderInParagraph
+              content
+              isOn
+              baseType
+            }
+          }
         }
         nextToken
       }
@@ -822,6 +831,15 @@ export const onUpdateSectionContent = /* GraphQL */ `
           baseType
           createdAt
           updatedAt
+          subparagraphs {
+            items {
+              id
+              orderInParagraph
+              content
+              isOn
+              baseType
+            }
+          }
         }
         nextToken
       }

@@ -8,9 +8,9 @@ import { createSubParagraph } from '../../graphql/mutations'
 const AddSubParagraph = (props) => {
 
     // state
-    const [isActive, setIsActive] = useState(false);
+    //const [isActive, setIsActive] = useState(false);
     const [newSubParagraph, setNewSubParagraph] = useState({
-        paragraph: props.paragraphId,
+        subParagraphParagraphId: props.paragraphId,
         orderInParagraph: props.numSubParagraphs,
         content: "",
         isOn: true,
@@ -20,9 +20,9 @@ const AddSubParagraph = (props) => {
     //TODO - Determine how many paragraphs exist in the current article, auto increment new paragraph to be next
 
     // handlers
-    const addSubParagraphHandler = () => {
-        setIsActive(true);
-    }
+    // const addSubParagraphHandler = () => {
+    //     setIsActive(true);
+    // }
 
     const subParagraphChangeHandler = (e) => {
         setNewSubParagraph({
@@ -34,39 +34,39 @@ const AddSubParagraph = (props) => {
     const submitSubParagraphHandler = async (e) => {
         e.preventDefault();
         console.log("Adding this to the database:", newSubParagraph)
-        await API.graphql(graphqlOperation(createSubParagraph, { input: { ...newSubParagraph } }))
-        setIsActive(false);
-        setNewParagraph({ ...newSubParagraph, content: "" })
+        await API.graphql(graphqlOperation(createSubParagraph, { input: { ...newSubParagraph, orderInParagraph: props.numSubParagraphs } }))
+        //setIsActive(false);
+        setNewSubParagraph({ ...newSubParagraph, content: "" })
     }
 
     return (
         <div>
-            {isActive ? (
-                <div>
-                    <input
-                        type="text"
-                        placeholder="Add subparagraph content"
-                        value={newSubParagraph.content}
-                        onChange={subParagraphChangeHandler}
-                    >
-                    </input>
-                    <button>...</button>
-                    <button onClick={submitSubParagraphHandler}>Save</button>
-                </div>
-            ) : (
-                    <AddSubParagraphPrompt addParagraphHandler={addParagraphHandler} />
-                )}
+            {/* {isActive ? ( */}
+            <div>
+                <input
+                    type="text"
+                    placeholder="Add subparagraph content"
+                    value={newSubParagraph.content}
+                    onChange={subParagraphChangeHandler}
+                >
+                </input>
+                <button>...</button>
+                <button onClick={submitSubParagraphHandler}>Save</button>
+            </div>
+            {/* ) : (
+                    //<AddSubParagraphPrompt addSubParagraphHandler={addSubParagraphHandler} />
+                )} */}
         </div>
     )
 }
 
 export default AddSubParagraph;
 
-const AddSubParagraphPrompt = (props) => {
-    return (
-        <div>
-            <button onClick={props.addSubParagraphHandler}>+</button>
-            <p>Add new subparagraph</p>
-        </div>
-    )
-}
+// const AddSubParagraphPrompt = (props) => {
+//     return (
+//         <div>
+//             <button onClick={props.addSubParagraphHandler}>+</button>
+//             <p>Add new subparagraph</p>
+//         </div>
+//     )
+// }

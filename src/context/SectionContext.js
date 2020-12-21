@@ -6,7 +6,7 @@ import { API, graphqlOperation } from 'aws-amplify'
 // graphql imports
 import { getSectionContent } from '../graphql/queries'
 import { updateSectionContent } from '../graphql/mutations'
-import { onCreateParagraph, onUpdateParagraph, onDeleteParagraph, onUpdateSectionContent } from '../graphql/subscriptions'
+import { onCreateParagraph, onUpdateParagraph, onDeleteParagraph, onCreateSubParagraph, onUpdateSubParagraph, onDeleteSubParagraph, onUpdateSectionContent } from '../graphql/subscriptions'
 
 export const SectionContext = createContext();
 
@@ -56,6 +56,44 @@ const SectionContextProvider = (props) => {
                 if (deletedParagraph.section.id === activeSectionRef.current.id) {
                     let tempParagraphs = activeSectionRef.current.paragraphs.items.filter(p => p.id !== deletedParagraph.id)
                     setActiveSection({ ...activeSectionRef.current, paragraphs: { items: tempParagraphs } })
+                }
+            }
+        })
+
+        API.graphql(graphqlOperation(onCreateSubParagraph)).subscribe({
+            next: createSubParagraphData => {
+
+                const newSubParagraphContent = createSubParagraphData.value.data.onCreateSubParagraph
+                const paragraphIndex = activeSectionRef.current.paragraphs.items.findIndex(par => par.id === newSubParagraphContent.paragraph.id)
+                if (paragraphIndex > -1) {
+                    let tempContent = { ...activeSectionRef.current }
+                    tempContent.paragraphs.items[paragraphIndex].subparagraphs.items.push(newSubParagraphContent)
+                    setActiveSection(tempContent)
+                }
+            }
+        })
+
+        API.graphql(graphqlOperation(onUpdateSubParagraph)).subscribe({
+            next: updateSubParagraphData => {
+                const updatedSubParagraph = updateSubParagraphData.value.data.onUpdateSubParagraph
+                if (activeSectionRef.current.paragraphs.items.find(par => par.id === updatedSubParagraph.paragraph.id)) {
+                    let tempContent = { ...activeSectionRef.current }
+                    const parIndex = tempContent.paragraphs.items.findIndex(p => p.id === updatedSubParagraph.paragraph.id)
+                    const subIndex = tempContent.paragraphs.items[parIndex].subparagraphs.items.findIndex(sub => sub.id === updatedSubParagraph.id)
+                    tempContent.paragraphs.items[parIndex].subparagraphs.items[subIndex] = updatedSubParagraph
+                    setActiveSection(tempContent)
+                }
+            }
+        })
+
+        API.graphql(graphqlOperation(onDeleteSubParagraph)).subscribe({
+            next: deletedSubParagraphData => {
+                const deletedSubParagraph = deletedSubParagraphData.value.data.onDeleteSubParagraph
+                const paragraphIndex = activeSectionRef.current.paragraphs.items.findIndex(par => par.id === deletedSubParagraph.paragraph.id)
+                if (paragraphIndex > -1) {
+                    let tempParagraphs = { ...activeSectionRef.current.paragraphs }
+                    tempParagraphs.items[paragraphIndex].subparagraphs.items = tempParagraphs.items[paragraphIndex].subparagraphs.items.filter(sub => sub.id !== deletedSubParagraph.id)
+                    setActiveSection({ ...activeSectionRef.current, paragraphs: tempParagraphs })
                 }
             }
         })

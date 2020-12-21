@@ -490,6 +490,15 @@ export const getSectionContent = /* GraphQL */ `
           content
           isOn
           baseType
+          subparagraphs {
+            items {
+              id
+              orderInParagraph
+              content
+              isOn
+              baseType
+            }
+          }
         }
       }
       notes
