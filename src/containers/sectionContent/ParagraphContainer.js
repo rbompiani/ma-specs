@@ -76,7 +76,6 @@ const ParagraphContainer = (props) => {
                 subParagraphsToUpdate.push(itemDown)
                 break
         }
-        console.log(subParagraphsToUpdate);
         subParagraphsToUpdate.map(async (sub) => {
             (
                 await API.graphql(graphqlOperation(updateSubParagraph, { input: { id: sub.id, orderInParagraph: sub.orderInParagraph } }))

@@ -49,14 +49,14 @@ const SubParagraphContainer = (props) => {
 
     return (
         !isActive ? (
-            <div className={`subParagraph active`} onClick={() => setIsActive(true)}>
+            <div ref={ref} className={`subParagraph active`} onClick={() => setIsActive(true)}>
                 <p>{numeral}. {props.content}</p>
                 <button onClick={onEditHandler}>edit</button>
                 <button onClick={() => props.reOrderSubParagraphs(props.orderInParagraph, "moveUp")}>up</button>
                 <button onClick={() => props.reOrderSubParagraphs(props.orderInParagraph, "moveDown")}>down</button>
             </div>
         ) : (
-                <div className={`subParagraph inactive`} >
+                <div ref={ref} className={`subParagraph inactive`} >
                     <p>{numeral}.</p>
                     <input value={subParagraph.content} onChange={onChangeHandler} />
                     <button onClick={updateSubParagraphHandler}>save</button>
