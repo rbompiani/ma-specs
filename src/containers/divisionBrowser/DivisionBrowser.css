@@ -1,39 +1,47 @@
+/* -----WRAPPERS----- */ 
 .divBrowser {
   border: 1px solid red;
-  margin: 5px;
 }
 
 .divBrowser ul  {
   list-style-type: none;
   padding: 0px;
-}
-
-.divisionWrapper {
-  margin-bottom: 8px;
-}
-
-.sections {
-  margin: 0px 0px 0px 24px;
-}
-
-.division {
-  font-size: 16px
-}
-
-.section {
-  font-size: 12px
-}
-
-.browserItem {
-  display: grid;
-  grid-template-columns: 24px auto 16px;
+  margin: 0px;
 }
 
 .browserItem:hover {
   background-color: #f3f3f3;
 }
 
+.division {
+  display: grid;
+  grid-template-columns: 24px 32px auto 16px;
+  margin-bottom: 8px;
+  font-size: 16px;
+  text-transform: uppercase ;
+}
 
+.section {
+  display: grid;
+  margin-left: 24px;
+  grid-template-columns: 32px 54px auto 16px;
+  font-size: 12px
+}
+
+.addSection {
+  display: grid;
+  margin-left: 54px;
+  grid-template-columns: 50px auto 24px;
+  column-gap: 4px;
+  font-size: 12px
+}
+
+.addSection input {
+  font-size: 12px
+}
+
+
+/* -----DYNAMIC CLASSES----- */ 
 .expanded {
   border: 1px solid #999999
 }

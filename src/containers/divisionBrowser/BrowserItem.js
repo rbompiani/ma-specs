@@ -49,7 +49,8 @@ const BrowserItem = (props) => {
                 onChange={(e) => checkHandler(props.id, props.isOn, "section")}
                 checked={props.isOn}
             />
-            <label onClick={() => sectionClickHandler(props.id, props.baseType)} >{props.id} - {props.title}</label>
+            <span>{props.id} -</span>
+            <label onClick={() => sectionClickHandler(props.id, props.baseType)} >{props.title}</label>
             {props.toggleExpanded && <div className={props.isExpanded ? "arrow-up" : "arrow-down"} onClick={props.toggleExpanded}></div>}
         </li>
     )

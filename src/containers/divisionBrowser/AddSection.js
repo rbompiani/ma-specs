@@ -27,7 +27,7 @@ const AddSection = (props) => {
     }
 
     return (
-        <div>
+        <div className="addSection">
             <input type="text" name="id" value={newSection.id} onChange={sectionInputHandler} />
             <input type="tet" name="title" value={newSection.title} onChange={sectionInputHandler} />
             <button onClick={submitSectionHandler}>+</button>
