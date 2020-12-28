@@ -1,12 +1,17 @@
 /* -----WRAPPERS----- */ 
 .divBrowser {
-  border: 1px solid red;
+  margin: 8px
 }
 
 .divBrowser ul  {
   list-style-type: none;
   padding: 0px;
   margin: 0px;
+}
+
+.divisionWrapper {
+  margin-bottom: 8px;
+  padding: 8px
 }
 
 .browserItem:hover {
@@ -31,13 +36,20 @@
 .addSection {
   display: grid;
   margin-left: 54px;
-  grid-template-columns: 50px auto 24px;
+  grid-template-columns: 48px auto 20px;
   column-gap: 4px;
   font-size: 12px
 }
 
 .addSection input {
-  font-size: 12px
+  box-sizing: border-box;
+  border: 1px solid #999999;
+  margin: 0px;
+  padding: 4px;
+  font-size: 11px
+}
+.addButton {
+  padding:0px;
 }
 
 
