@@ -88,8 +88,9 @@ const ParagraphContainer = (props) => {
     return (
         <div>
             {!isActive ? (
-                <div ref={ref} className={`paragraph inactive`} onClick={() => setIsActive(true)}>
-                    <p>{numeral}. {props.content}</p>
+                <div ref={ref} className='paragraph' onClick={() => setIsActive(true)}>
+                    <span className='numeral'>{numeral}.</span>
+                    <p className='paragraphContent'>{props.content}</p>
                     {props.orderInArticle > 0 && <button onClick={() => props.reOrderParagraphs(props.orderInArticle, "moveUp")}>up</button>}
                     {props.orderInArticle < props.numParagraphs - 1 && <button onClick={() => props.reOrderParagraphs(props.orderInArticle, "moveDown")}>down</button>}
                 </div>
@@ -102,15 +103,18 @@ const ParagraphContainer = (props) => {
                         <AddSubParagraph paragraphId={props.id} numSubParagraphs={subParagraphs.length} />
                     </div>
                 )}
-            {subParagraphs.map((sub) => {
-                return (
-                    <SubParagraphContainer
-                        key={sub.id}
-                        {...sub}
-                        reOrderSubParagraphs={reOrderSubParagraphs}
-                    />
-                )
-            })}
+            <div className='subparagraphWrapper'>
+                {subParagraphs.map((sub) => {
+                    return (
+                        <SubParagraphContainer
+                            key={sub.id}
+                            {...sub}
+                            reOrderSubParagraphs={reOrderSubParagraphs}
+                        />
+                    )
+                })}
+
+            </div>
         </div>
     )
 }

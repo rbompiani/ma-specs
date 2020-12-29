@@ -1,24 +1,63 @@
-.part {
-    display: inline-block;
-    font-size: 14px;
-    text-transform: uppercase;
-    margin-bottom: 12px;
+.sectionContent {
+    padding: 12px;
 }
 
-.article {
+.sectionContent input[type='checkbox'] {
+    margin-right: 12px;
+ }
+
+.partWrapper {
+    font-size: 14px;
+    margin-bottom: 16px;
+}
+
+.part {
+    margin-bottom: 24px;
+}
+
+.partTitle {
     display: inline-block;
+    text-transform: uppercase;
+}
+
+ .articleWrapper {
+    margin: 26px;
     font-size: 12px;
-    margin-left: 24px;
-    margin-bottom: 12px;
+ }
+
+.articleTitle {
+    display: inline-block;
+}
+
+.paragraphWrapper {
+    margin: 12px 0px 12px 32px;
 }
 
 .paragraph {
-    margin-left: 48px;
-    margin-bottom: 12px;
+    display:grid;
+    grid-template-columns: 24px auto 24px;
+}
+
+.paragraphContent {
+    display: inline-block;
+    margin: 0px
 }
 
 .paragraphHints{
     display: block
+}
+
+.subparagraphWrapper {
+    margin: 8px 0px 16px 24px;
+}
+
+.subParagraph {
+    display:grid;
+    grid-template-columns: 24px auto 24px;
+}
+
+.subparagraphContent {
+    margin: 0px
 }
 
 input {

@@ -57,18 +57,20 @@ const ArticleContainer = (props) => {
     }
 
     return (
-        <div>
-            <input
-                type="checkbox"
-                id={props.id}
-                value={props.id}
-                className={`checkbox-${props.baseType} `}
-                onChange={(e) => contentCheckHandler(props.id, props.isOn, props.baseType)}
-                checked={props.isOn}
-            />
-            <div className={props.baseType}>{props.title}</div>
+        <div className={`articleWrapper ${!props.isOn && "inactive"}`} >
+            <div className="article">
+                <input
+                    type="checkbox"
+                    id={props.id}
+                    value={props.id}
+                    className={`checkbox-${props.baseType} `}
+                    onChange={(e) => contentCheckHandler(props.id, props.isOn, props.baseType)}
+                    checked={props.isOn}
+                />
+                <div className={`${props.baseType}Title`}>{props.title}</div>
+            </div>
             { props.isOn && (
-                <div>
+                <div className='paragraphWrapper'>
                     {paragraphs.map((par) => {
                         return (
                             <ParagraphContainer
@@ -86,7 +88,7 @@ const ArticleContainer = (props) => {
                     />
                 </div>
             )}
-        </div>
+        </div >
     )
 }
 

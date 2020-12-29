@@ -14,16 +14,22 @@ const PartContainer = (props) => {
 
 
     return (
-        <div>
-            <input
-                type="checkbox"
-                id={props.id}
-                value={props.id}
-                className={`checkbox-${props.baseType} `}
-                onChange={(e) => props.contentCheckHandler(props.id, props.isOn, "part")}
-                checked={props.isOn}
-            />
-            <div className="part">Part {props.id} - {props.title}</div>
+        <div className={
+            `partWrapper 
+            ${!props.isOn && "inactive"}`
+        }>
+            <div className={`part 
+            ${!props.isOn && "inactive"}`}>
+                <input
+                    type="checkbox"
+                    id={props.id}
+                    value={props.id}
+                    className={`checkbox-${props.baseType} `}
+                    onChange={(e) => props.contentCheckHandler(props.id, props.isOn, "part")}
+                    checked={props.isOn}
+                />
+                <div className="partTitle">Part {props.id} - {props.title}</div>
+            </div>
             {articles.map(art => {
                 return (
                     <ArticleContainer
