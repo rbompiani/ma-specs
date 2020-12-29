@@ -2,12 +2,15 @@ import React, { useState, useContext, useRef } from "react"
 import { SectionContext } from '../../context/SectionContext'
 import SubParagraphContainer from './SubParagraphContainer'
 import AddSubParagraph from './AddSubparagraph'
+import EditBar from './EditBar'
 
 // AWS imports
 import { API, graphqlOperation } from 'aws-amplify'
 // graphql imports
 import { updateParagraph, deleteSubParagraph, updateSubParagraph } from '../../graphql/mutations'
-
+// react icon imports
+import { TiDelete } from 'react-icons/ti';
+import { CgArrowLongDownE, CgArrowLongUpE } from 'react-icons/cg'
 
 const ParagraphContainer = (props) => {
     // state
@@ -20,6 +23,7 @@ const ParagraphContainer = (props) => {
         isOn: true,
         baseType: "paragraph"
     })
+    const [textAreaHeight, setTextAreaHeight] = useState(2)
 
     // context
     const useOutsideClick = useContext(SectionContext).useOutsideClick
@@ -30,11 +34,23 @@ const ParagraphContainer = (props) => {
     const numeral = 'abcdefghijklmnopqrstuvwxyz'.charAt(props.orderInArticle);
 
     // handlers
+    function calcHeight(text, width) {
+        let numberOfLineBreaks = (text.match(/\n/g) || []).length;
+        let newRows = Math.ceil((text.length * 8) / width) + numberOfLineBreaks + 1;
+        return newRows;
+    }
+
+    const prepTextArea = (e) => {
+        setIsActive(true);
+        setTextAreaHeight(calcHeight(paragraph.content, e.currentTarget.offsetWidth))
+    }
+
     useOutsideClick(ref, () => {
         if (isActive) setIsActive(false);
     });
 
     const onChangeHandler = (e) => {
+        setTextAreaHeight(calcHeight(e.target.value, e.currentTarget.offsetWidth));
         setParagraph({ ...paragraph, content: e.target.value })
     }
 
@@ -43,6 +59,11 @@ const ParagraphContainer = (props) => {
         console.log("Updating to this in the database:", paragraph)
         await API.graphql(graphqlOperation(updateParagraph, { input: { id: props.id, content: paragraph.content } }))
         setIsActive(false);
+    }
+
+    const resetParagraphContent = (e) => {
+        setTextAreaHeight(calcHeight(props.content, e.currentTarget.offsetWidth));
+        setParagraph({ ...paragraph, content: props.content })
     }
 
     const reOrderSubParagraphs = async (indexToUpdate, action, deleteId) => {
@@ -86,21 +107,32 @@ const ParagraphContainer = (props) => {
 
 
     return (
-        <div>
+        <div ref={ref}>
             {!isActive ? (
-                <div ref={ref} className='paragraph' onClick={() => setIsActive(true)}>
+                <div className='paragraph' onClick={prepTextArea}>
                     <span className='numeral'>{numeral}.</span>
                     <p className='paragraphContent'>{props.content}</p>
-                    {props.orderInArticle > 0 && <button onClick={() => props.reOrderParagraphs(props.orderInArticle, "moveUp")}>up</button>}
-                    {props.orderInArticle < props.numParagraphs - 1 && <button onClick={() => props.reOrderParagraphs(props.orderInArticle, "moveDown")}>down</button>}
                 </div>
             ) : (
-                    <div ref={ref} className={`paragraph active`} >
-                        <p>{numeral}.</p>
-                        <input value={paragraph.content} onChange={onChangeHandler} />
-                        <button onClick={updateParagraphHandler}>save</button>
-                        <button onClick={() => props.reOrderParagraphs(props.orderInArticle, "delete", props.id)}>delete</button>
-                        <AddSubParagraph paragraphId={props.id} numSubParagraphs={subParagraphs.length} />
+                    <div>
+                        <div className={`paragraph active`} >
+                            <p>{numeral}.</p>
+                            <textarea value={paragraph.content} rows={textAreaHeight} onChange={onChangeHandler} />
+                            {/* <button onClick={updateParagraphHandler}>save</button> */}
+                        </div>
+                        <EditBar
+                            id={props.id}
+                            reOrder={props.reOrderParagraphs}
+                            order={props.orderInArticle}
+                            save={updateParagraphHandler}
+                            reset={resetParagraphContent}
+                            listLength={props.numParagraphs}
+                        />
+                        {/* <div>
+                         {props.orderInArticle > 0 && <button onClick={() => props.reOrderParagraphs(props.orderInArticle, "moveUp")}>up</button>}
+                         {props.orderInArticle < props.numParagraphs - 1 && <button onClick={() => props.reOrderParagraphs(props.orderInArticle, "moveDown")}>down</button>}
+                         <AddSubParagraph paragraphId={props.id} numSubParagraphs={subParagraphs.length} />
+                     </div> */}
                     </div>
                 )}
             <div className='subparagraphWrapper'>

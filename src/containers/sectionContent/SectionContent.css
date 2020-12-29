@@ -35,7 +35,7 @@
 
 .paragraph {
     display:grid;
-    grid-template-columns: 24px auto 24px;
+    grid-template-columns: 24px auto;
 }
 
 .paragraphContent {
@@ -58,6 +58,37 @@
 
 .subparagraphContent {
     margin: 0px
+}
+
+.editBar {
+    display:grid;
+    grid-template-columns: 3fr 1fr 1fr 1fr 1fr;
+    margin: 8px 0px 0px 24px;
+    justify-items: center;
+    align-items: center;
+}
+
+.editBar > button {
+    justify-self: stretch;
+}
+
+.editBar > svg {
+    height:16px;
+    width: 16px;
+    cursor: pointer;
+}
+
+.editBar .disabled {
+    fill: #999999;
+    cursor: auto;
+}
+
+.deleteIcon {
+    fill: #AC0000;
+}
+
+textarea {
+    font-size: 12px;
 }
 
 input {

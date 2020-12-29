@@ -9,6 +9,8 @@ import { API, graphqlOperation } from 'aws-amplify'
 // graphql imports
 import { createSectionContent } from '../../graphql/mutations'
 
+// react icon imports
+import { BsCaretDown, BsFillCaretUpFill } from 'react-icons/bs'
 
 const BrowserItem = (props) => {
     const checkHandler = useContext(ProjectContext).browserCheckHandler
@@ -51,7 +53,8 @@ const BrowserItem = (props) => {
             />
             <span>{props.id} -</span>
             <label onClick={() => sectionClickHandler(props.id, props.baseType)} >{props.title}</label>
-            {props.toggleExpanded && <div className={props.isExpanded ? "arrow-up" : "arrow-down"} onClick={props.toggleExpanded}></div>}
+            {props.toggleExpanded && (props.isExpanded ? <BsFillCaretUpFill onClick={props.toggleExpanded} /> : <BsCaretDown onClick={props.toggleExpanded} />)}
+            {/* {props.toggleExpanded && <div className={props.isExpanded ? "arrow-up" : "arrow-down"} onClick={props.toggleExpanded}></div>} */}
         </li>
     )
 }

@@ -57,31 +57,3 @@
 .expanded {
   border: 1px solid #999999
 }
-
-.arrow-up {
-  margin-top: 8px;
-  width: 0; 
-  height: 0; 
-  border-left: 6px solid transparent;
-  border-right: 6px solid transparent;
-  
-  border-bottom: 6px solid #666;
-}
-
-.arrow-up:hover {
-  border-bottom: 6px solid black;
-}
-
-.arrow-down {
-  margin-top: 8px;
-  width: 0; 
-  height: 0; 
-  border-left: 6px solid transparent;
-  border-right: 6px solid transparent;
-  
-  border-top: 6px solid #666;
-}
-
-.arrow-down:hover {
-  border-top: 6px solid black;
-}

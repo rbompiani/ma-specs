@@ -17,10 +17,23 @@ const SubParagraphContainer = (props) => {
         isOn: true,
         baseType: "subparagraph"
     })
+    const [textAreaHeight, setTextAreaHeight] = useState(2)
 
     const numeral = ['i', 'ii', 'iii', 'iv', 'v', 'vi', 'vii', 'viii', 'ix', 'x'][props.orderInParagraph];
 
     // handlers
+    // handlers
+    function calcHeight(text, width) {
+        let numberOfLineBreaks = (text.match(/\n/g) || []).length;
+        let newRows = Math.ceil((text.length * 8) / width) + numberOfLineBreaks + 1;
+        return newRows;
+    }
+
+    const prepTextArea = (e) => {
+        setIsActive(true);
+        setTextAreaHeight(calcHeight(subParagraph.content, e.currentTarget.offsetWidth))
+    }
+
     const onEditHandler = () => {
         setIsActive(!isActive);
     }
@@ -49,17 +62,16 @@ const SubParagraphContainer = (props) => {
 
     return (
         !isActive ? (
-            <div ref={ref} className={`subParagraph active`} onClick={() => setIsActive(true)}>
-                <span clasName="numeral">{numeral}.</span>
+            <div ref={ref} className={`subParagraph`} onClick={prepTextArea}>
+                <span className="numeral">{numeral}.</span>
                 <p className="subparagraphContent">{props.content}</p>
-                <button onClick={onEditHandler}>edit</button>
                 {props.orderInParagraph > 0 && <button onClick={() => props.reOrderSubParagraphs(props.orderInParagraph, "moveUp")}>up</button>}
                 {props.orderInParagraph < props.numSubParagraphs && <button onClick={() => props.reOrderSubParagraphs(props.orderInParagraph, "moveDown")}>down</button>}
             </div>
         ) : (
-                <div ref={ref} className={`subParagraph inactive`} >
+                <div ref={ref} className={`subParagraph active`} >
                     <p>{numeral}.</p>
-                    <input value={subParagraph.content} onChange={onChangeHandler} />
+                    <textarea value={subParagraph.content} onChange={onChangeHandler} />
                     <button onClick={updateSubParagraphHandler}>save</button>
                     <button onClick={() => props.reOrderSubParagraphs(props.orderInParagraph, "delete", props.id)}>delete</button>
                 </div>
