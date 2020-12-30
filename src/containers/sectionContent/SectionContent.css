@@ -1,4 +1,5 @@
 .sectionContent {
+    margin: 8px;
     padding: 12px;
 }
 
@@ -48,22 +49,60 @@
 }
 
 .subparagraphWrapper {
-    margin: 8px 0px 16px 24px;
+    margin: 24px 0px 32px 24px;
 }
 
 .subParagraph {
     display:grid;
     grid-template-columns: 24px auto 24px;
+    margin: 12px 0px 0px 0px;
 }
 
 .subparagraphContent {
     margin: 0px
 }
 
+.addSubparagraph {
+    margin: 12px 0px 0px 0px;
+}
+
+.addSubparagraphPrompt {
+    display:grid;
+    grid-template-columns: 24px auto;
+    align-items: center;
+    color: #999999;
+    cursor: pointer;
+}
+
+.addSubparagraphPrompt:hover {
+    color: black;
+    fill: black;
+}
+
+.addSubparagraphPrompt:hover > svg {
+    fill: black;
+}
+
+.addSubparagraphPrompt > svg {
+    height:16px;
+    width: 16px;
+    fill: #999999;
+}
+
+.addSubparagraphPrompt > p {
+    margin: 0px
+}
+
+.addSubparagraphInput {
+    display:grid;
+    grid-template-columns: 24px auto;
+    align-items: center;
+}
+
 .editBar {
     display:grid;
     grid-template-columns: 3fr 1fr 1fr 1fr 1fr;
-    margin: 8px 0px 0px 24px;
+    margin: 8px 0px 24px 24px;
     justify-items: center;
     align-items: center;
 }

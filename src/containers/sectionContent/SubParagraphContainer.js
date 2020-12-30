@@ -1,5 +1,6 @@
 import React, { useState, useContext, useRef } from "react"
 import { SectionContext } from '../../context/SectionContext'
+import EditBar from './EditBar'
 
 // AWS imports
 import { API, graphqlOperation } from 'aws-amplify'
@@ -59,23 +60,41 @@ const SubParagraphContainer = (props) => {
         onEditHandler();
     }
 
+    const resetParagraphContent = (e) => {
+        setTextAreaHeight(calcHeight(props.content, 500));
+        setSubParagraph({ ...subParagraph, content: props.content })
+    }
+
 
     return (
-        !isActive ? (
-            <div ref={ref} className={`subParagraph`} onClick={prepTextArea}>
-                <span className="numeral">{numeral}.</span>
-                <p className="subparagraphContent">{props.content}</p>
-                {props.orderInParagraph > 0 && <button onClick={() => props.reOrderSubParagraphs(props.orderInParagraph, "moveUp")}>up</button>}
-                {props.orderInParagraph < props.numSubParagraphs && <button onClick={() => props.reOrderSubParagraphs(props.orderInParagraph, "moveDown")}>down</button>}
-            </div>
-        ) : (
-                <div ref={ref} className={`subParagraph active`} >
-                    <p>{numeral}.</p>
-                    <textarea value={subParagraph.content} onChange={onChangeHandler} />
-                    <button onClick={updateSubParagraphHandler}>save</button>
-                    <button onClick={() => props.reOrderSubParagraphs(props.orderInParagraph, "delete", props.id)}>delete</button>
+        <div ref={ref}>{
+            !isActive ? (
+                <div className={`subParagraph`} onClick={prepTextArea}>
+                    <span className="numeral">{numeral}.</span>
+                    <p className="subparagraphContent">{props.content}</p>
+                    {/* {props.orderInParagraph > 0 && <button onClick={() => props.reOrderSubParagraphs(props.orderInParagraph, "moveUp")}>up</button>}
+                {props.orderInParagraph < props.numSubParagraphs && <button onClick={() => props.reOrderSubParagraphs(props.orderInParagraph, "moveDown")}>down</button>} */}
                 </div>
-            )
+            ) : (
+                    <div>
+                        <div className={`subParagraph active`} >
+                            <p>{numeral}.</p>
+                            <textarea value={subParagraph.content} onChange={onChangeHandler} />
+                            {/* <button onClick={updateSubParagraphHandler}>save</button>
+                    <button onClick={() => props.reOrderSubParagraphs(props.orderInParagraph, "delete", props.id)}>delete</button> */}
+                        </div>
+                        <EditBar
+                            id={props.id}
+                            reOrder={props.reOrderSubParagraphs}
+                            order={props.orderInParagraph}
+                            save={updateSubParagraphHandler}
+                            reset={resetParagraphContent}
+                            listLength={props.numSubParagraphs}
+                        />
+                    </div>
+                )
+        }
+        </div>
     )
 }
 

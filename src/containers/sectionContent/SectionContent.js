@@ -26,9 +26,9 @@ const SectionContent = () => {
 
 
     return (
-        <div className="sectionContent" >
+        <section className="sectionContent" >
             {content}
-        </div>
+        </section>
     )
 }
 

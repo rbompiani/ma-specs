@@ -11,15 +11,7 @@ header {
 h1 {
   grid-column-start: 2;
   grid-column-end: 4;
-  font-size: 36px
-}
-
-.sectionContent {
-  border: 1px solid green
-}
-
-aside {
-  border: 1px solid blue
+  font-size: 24px
 }
 
 .checkbox-division {

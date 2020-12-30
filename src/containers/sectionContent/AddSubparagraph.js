@@ -1,14 +1,17 @@
 import React, { useState } from "react"
+import EditBar from './EditBar'
 
 // AWS imports
 import { API, graphqlOperation } from 'aws-amplify'
 // graphql imports
 import { createSubParagraph } from '../../graphql/mutations'
+// react icon imports
+import { MdAddBox } from 'react-icons/md';
 
 const AddSubParagraph = (props) => {
 
     // state
-    //const [isActive, setIsActive] = useState(false);
+    const [isActive, setIsActive] = useState(false);
     const [newSubParagraph, setNewSubParagraph] = useState({
         subParagraphParagraphId: props.paragraphId,
         orderInParagraph: props.numSubParagraphs,
@@ -16,15 +19,18 @@ const AddSubParagraph = (props) => {
         isOn: true,
         baseType: "subparagraph"
     })
+    const [textAreaHeight, setTextAreaHeight] = useState(2)
 
-    //TODO - Determine how many paragraphs exist in the current article, auto increment new paragraph to be next
+    const numeral = ['i', 'ii', 'iii', 'iv', 'v', 'vi', 'vii', 'viii', 'ix', 'x'][props.numSubParagraphs];
 
-    // handlers
-    // const addSubParagraphHandler = () => {
-    //     setIsActive(true);
-    // }
+    function calcHeight(text, width) {
+        let numberOfLineBreaks = (text.match(/\n/g) || []).length;
+        let newRows = Math.ceil((text.length * 8) / width) + numberOfLineBreaks + 1;
+        return newRows;
+    }
 
     const subParagraphChangeHandler = (e) => {
+        setTextAreaHeight(calcHeight(e.target.value, e.currentTarget.offsetWidth));
         setNewSubParagraph({
             ...newSubParagraph,
             content: e.target.value
@@ -35,38 +41,44 @@ const AddSubParagraph = (props) => {
         e.preventDefault();
         console.log("Adding this to the database:", newSubParagraph)
         await API.graphql(graphqlOperation(createSubParagraph, { input: { ...newSubParagraph, orderInParagraph: props.numSubParagraphs } }))
-        //setIsActive(false);
+        setIsActive(false);
         setNewSubParagraph({ ...newSubParagraph, content: "" })
     }
 
+    const resetContent = (e) => {
+        setTextAreaHeight(2);
+        setNewSubParagraph({ ...newSubParagraph, content: "" })
+        setIsActive(false)
+    }
+
     return (
-        <div>
-            {/* {isActive ? ( */}
-            <div>
-                <input
-                    type="text"
-                    placeholder="Add subparagraph content"
-                    value={newSubParagraph.content}
-                    onChange={subParagraphChangeHandler}
-                >
-                </input>
-                <button>...</button>
-                <button onClick={submitSubParagraphHandler}>Save</button>
-            </div>
-            {/* ) : (
-                    //<AddSubParagraphPrompt addSubParagraphHandler={addSubParagraphHandler} />
-                )} */}
+        <div className="addSubparagraph">
+            {isActive ? (
+                <div>
+                    <div className="addSubparagraphInput">
+                        <div>{numeral}.</div>
+                        <textarea
+                            type="text"
+                            placeholder="Add subparagraph content"
+                            value={newSubParagraph.content}
+                            rows={textAreaHeight}
+                            onChange={subParagraphChangeHandler}
+                        />
+                        <div></div>
+                        <div>
+                            <button onClick={submitSubParagraphHandler}>Save</button>
+                            <button onClick={resetContent}>Cancel</button>
+                        </div>
+                    </div>
+                </div>
+            ) : (
+                    <div className="addSubparagraphPrompt" onClick={() => setIsActive(true)} >
+                        <MdAddBox />
+                        <p>Add new subparagraph</p>
+                    </div>
+                )}
         </div>
     )
 }
 
 export default AddSubParagraph;
-
-// const AddSubParagraphPrompt = (props) => {
-//     return (
-//         <div>
-//             <button onClick={props.addSubParagraphHandler}>+</button>
-//             <p>Add new subparagraph</p>
-//         </div>
-//     )
-// }

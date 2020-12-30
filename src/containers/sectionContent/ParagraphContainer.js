@@ -31,7 +31,7 @@ const ParagraphContainer = (props) => {
 
     // local variables and props
     const subParagraphs = props.subparagraphs.items.sort((a, b) => a.orderInParagraph - b.orderInParagraph);
-    const numeral = 'abcdefghijklmnopqrstuvwxyz'.charAt(props.orderInArticle);
+    const numeral = 'ABCDEFGHIJKLMNOPQRSTUV'.charAt(props.orderInArticle);
 
     // handlers
     function calcHeight(text, width) {
@@ -62,7 +62,7 @@ const ParagraphContainer = (props) => {
     }
 
     const resetParagraphContent = (e) => {
-        setTextAreaHeight(calcHeight(props.content, e.currentTarget.offsetWidth));
+        setTextAreaHeight(calcHeight(props.content, 500));
         setParagraph({ ...paragraph, content: props.content })
     }
 
@@ -118,7 +118,6 @@ const ParagraphContainer = (props) => {
                         <div className={`paragraph active`} >
                             <p>{numeral}.</p>
                             <textarea value={paragraph.content} rows={textAreaHeight} onChange={onChangeHandler} />
-                            {/* <button onClick={updateParagraphHandler}>save</button> */}
                         </div>
                         <EditBar
                             id={props.id}
@@ -128,11 +127,6 @@ const ParagraphContainer = (props) => {
                             reset={resetParagraphContent}
                             listLength={props.numParagraphs}
                         />
-                        {/* <div>
-                         {props.orderInArticle > 0 && <button onClick={() => props.reOrderParagraphs(props.orderInArticle, "moveUp")}>up</button>}
-                         {props.orderInArticle < props.numParagraphs - 1 && <button onClick={() => props.reOrderParagraphs(props.orderInArticle, "moveDown")}>down</button>}
-                         <AddSubParagraph paragraphId={props.id} numSubParagraphs={subParagraphs.length} />
-                     </div> */}
                     </div>
                 )}
             <div className='subparagraphWrapper'>
@@ -145,6 +139,9 @@ const ParagraphContainer = (props) => {
                         />
                     )
                 })}
+                <div>
+                    <AddSubParagraph paragraphId={props.id} numSubParagraphs={subParagraphs.length} />
+                </div>
 
             </div>
         </div>
